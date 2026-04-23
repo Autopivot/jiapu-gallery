@@ -281,6 +281,22 @@
   .modal-labels { pointer-events: none; }
   .modal-rel-label { font-family: 'Inter','Segoe UI',sans-serif; }
 
+  /* language toggle */
+  .lang-toggle {
+    display: flex; align-items: center;
+    border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+    margin-left: 12px;
+  }
+  .lang-btn {
+    background: transparent; border: none; color: var(--muted);
+    padding: 4px 11px; font-size: 12px; cursor: pointer;
+    font-weight: 600; letter-spacing: .4px; line-height: 1;
+    transition: color .12s, background .12s;
+  }
+  .lang-btn + .lang-btn { border-left: 1px solid var(--border); }
+  .lang-btn.active { background: #252940; color: var(--text); }
+  .lang-btn:hover:not(.active) { color: var(--text); }
+
   /* keyboard hint */
   .modal-keyhint {
     flex-shrink: 0;
@@ -298,8 +314,8 @@
 <body>
 
 <header>
-  <h1>Pre-Marriage Kinship Motif Catalog</h1>
-  <p>
+  <h1 data-i18n="title">Pre-Marriage Kinship Motif Catalog</h1>
+  <p data-i18n-html="header_desc">
     Top 50 recurring subgraph structures extracted by heterogeneous SEAL from 3,130 distinct motifs
     found in 4,000 training-set marriage pairs (train ≤ 1860). Each graph shows the 2-hop enclosing
     kinship subgraph around a husband–wife pair <span style="color:var(--gold)">●</span> after
@@ -310,42 +326,46 @@
 
 <div class="controls">
   <div class="legend">
-    <div class="legend-item" data-type="r_fs" title="Toggle father→child edges">
+    <div class="legend-item" data-type="r_fs" data-i18n-title="toggle_fs" title="Toggle father→child edges">
       <div class="legend-swatch arrow-swatch fs"></div>
-      <span>r_fs · father→child</span>
+      <span data-i18n="legend_fs">r_fs · father→child</span>
     </div>
-    <div class="legend-item" data-type="r_ms" title="Toggle mother→child edges">
+    <div class="legend-item" data-type="r_ms" data-i18n-title="toggle_ms" title="Toggle mother→child edges">
       <div class="legend-swatch arrow-swatch ms"></div>
-      <span>r_ms · mother→child</span>
+      <span data-i18n="legend_ms">r_ms · mother→child</span>
     </div>
-    <div class="legend-item" data-type="r_sib" title="Toggle sibling edges">
+    <div class="legend-item" data-type="r_sib" data-i18n-title="toggle_sib" title="Toggle sibling edges">
       <div class="legend-swatch sib"></div>
-      <span>r_sib · sibling</span>
+      <span data-i18n="legend_sib">r_sib · sibling</span>
     </div>
-    <div class="legend-item" data-type="r_hh" title="Toggle household co-residence regions">
+    <div class="legend-item" data-type="r_hh" data-i18n-title="toggle_hh" title="Toggle household co-residence regions">
       <div class="legend-swatch hh"></div>
-      <span>r_hh · household</span>
+      <span data-i18n="legend_hh">r_hh · household</span>
     </div>
   </div>
 
   <div class="sep"></div>
 
   <div class="stats-pill">
-    <span>Motifs: <b id="shown-count">50</b></span>
-    <span>Distinct: <b>3,130</b></span>
-    <span>Pairs sampled: <b>4,000</b></span>
+    <span><span data-i18n="stat_motifs">Motifs</span>: <b id="shown-count">50</b></span>
+    <span><span data-i18n="stat_distinct">Distinct</span>: <b>3,130</b></span>
+    <span><span data-i18n="stat_pairs">Pairs sampled</span>: <b>4,000</b></span>
     <span>SEAL AUC: <b>0.9912</b></span>
   </div>
 
   <div class="sort-group">
-    <label for="sort-sel">Sort by</label>
+    <label for="sort-sel" data-i18n="sort_label">Sort by</label>
     <select id="sort-sel">
-      <option value="rank">Rank (count ↓ score ↓)</option>
-      <option value="score">Avg SEAL score ↓</option>
-      <option value="count">Occurrence count ↓</option>
-      <option value="nodes">Node count ↓</option>
-      <option value="edges">Kin edge count ↓</option>
+      <option value="rank" data-i18n-opt="sort_rank">Rank (count ↓ score ↓)</option>
+      <option value="score" data-i18n-opt="sort_score">Avg SEAL score ↓</option>
+      <option value="count" data-i18n-opt="sort_count">Occurrence count ↓</option>
+      <option value="nodes" data-i18n-opt="sort_nodes">Node count ↓</option>
+      <option value="edges" data-i18n-opt="sort_edges">Kin edge count ↓</option>
     </select>
+  </div>
+  <div class="lang-toggle" id="lang-toggle">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
   </div>
 </div>
 
@@ -374,86 +394,86 @@
     <div class="modal-body">
       <div class="modal-svg-wrap" id="modal-svg-wrap">
         <svg id="modal-svg" xmlns="http://www.w3.org/2000/svg"></svg>
-        <div class="drag-hint">scroll to zoom · drag to pan</div>
+        <div class="drag-hint" data-i18n="drag_hint">scroll to zoom · drag to pan</div>
         <div class="zoom-controls">
-          <div class="zoom-btn" id="zoom-in"  title="Zoom in (+)">+</div>
-          <div class="zoom-btn reset" id="zoom-reset" title="Fit view (0)">fit</div>
-          <div class="zoom-btn" id="zoom-out" title="Zoom out (−)">−</div>
+          <div class="zoom-btn" id="zoom-in"  data-i18n-title="zoom_in_title" title="Zoom in (+)">+</div>
+          <div class="zoom-btn reset" id="zoom-reset" data-i18n-title="zoom_reset_title" title="Fit view (0)" data-i18n="zoom_fit">fit</div>
+          <div class="zoom-btn" id="zoom-out" data-i18n-title="zoom_out_title" title="Zoom out (−)">−</div>
           <div id="zoom-pct">100%</div>
         </div>
       </div>
 
       <div class="modal-meta">
         <div class="meta-section">
-          <h4>Statistics</h4>
-          <div class="meta-row"><span>Rank</span>         <b id="mm-rank">—</b></div>
-          <div class="meta-row"><span>Occurrences</span>  <b id="mm-count">—</b></div>
-          <div class="meta-row"><span>Avg SEAL score</span><b id="mm-score">—</b></div>
-          <div class="meta-row"><span>Avg subgraph size</span><b id="mm-size">—</b></div>
-          <div class="meta-row"><span>Person nodes</span> <b id="mm-nodes">—</b></div>
-          <div class="meta-row"><span>Kin edges</span>    <b id="mm-edges">—</b></div>
-          <div style="margin-top:4px" class="meta-row"><span>Edge types</span></div>
+          <h4 data-i18n="meta_stats">Statistics</h4>
+          <div class="meta-row"><span data-i18n="row_rank">Rank</span>         <b id="mm-rank">—</b></div>
+          <div class="meta-row"><span data-i18n="row_occ">Occurrences</span>  <b id="mm-count">—</b></div>
+          <div class="meta-row"><span data-i18n="row_score">Avg SEAL score</span><b id="mm-score">—</b></div>
+          <div class="meta-row"><span data-i18n="row_size">Avg subgraph size</span><b id="mm-size">—</b></div>
+          <div class="meta-row"><span data-i18n="row_persons">Person nodes</span> <b id="mm-nodes">—</b></div>
+          <div class="meta-row"><span data-i18n="row_edges">Kin edges</span>    <b id="mm-edges">—</b></div>
+          <div style="margin-top:4px" class="meta-row"><span data-i18n="row_etypes">Edge types</span></div>
           <div class="meta-etypes" id="mm-etypes"></div>
         </div>
 
         <div class="meta-section">
-          <h4>Edge Legend</h4>
+          <h4 data-i18n="meta_edge_legend">Edge Legend</h4>
           <div class="meta-legend">
             <div class="meta-legend-row">
               <div class="meta-swatch" style="background:#4a7fe5"></div>
-              <span>r_fs · father → child</span>
+              <span data-i18n="legend_fs_long">r_fs · father → child</span>
             </div>
             <div class="meta-legend-row">
               <div class="meta-swatch" style="background:#b55fd6"></div>
-              <span>r_ms · mother → child</span>
+              <span data-i18n="legend_ms_long">r_ms · mother → child</span>
             </div>
             <div class="meta-legend-row">
               <div class="meta-swatch" style="background:#3dba5f"></div>
-              <span>r_sib · sibling ↔ sibling</span>
+              <span data-i18n="legend_sib_long">r_sib · sibling ↔ sibling</span>
             </div>
             <div class="meta-legend-row">
               <div class="meta-swatch" style="background:rgba(45,181,109,0.3);border:1.5px dashed #2db56d;height:10px;border-radius:2px"></div>
-              <span>r_hh · household region</span>
+              <span data-i18n="legend_hh_long">r_hh · household region</span>
             </div>
           </div>
         </div>
 
         <div class="meta-section">
-          <h4>Node Legend</h4>
+          <h4 data-i18n="meta_node_legend">Node Legend</h4>
           <div class="node-legend">
             <div class="node-legend-row">
               <div class="node-dot" style="background:#f5c842; border:1.5px solid #f0b800"></div>
-              <span><b>H</b> / <b>W</b> — marriage pair</span>
+              <span data-i18n-html="node_pair"><b>H</b> / <b>W</b> — marriage pair</span>
             </div>
             <div class="node-legend-row">
               <div class="node-dot" style="background:#4a5070; border:1.5px solid #6a7090"></div>
-              <span>kin node (1–2 hop)</span>
+              <span data-i18n="node_kin">kin node (1–2 hop)</span>
             </div>
           </div>
-          <p style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5">
+          <p data-i18n="node_size_hint" style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5">
             Node size ∝ closeness (DRNL label). Larger = closer to the pair.
           </p>
         </div>
 
         <div class="meta-section" id="mm-pattern-section" style="display:none">
-          <h4>Family Pattern</h4>
+          <h4 data-i18n="meta_pattern">Family Pattern</h4>
           <p class="meta-pattern-title" id="mm-pattern-title"></p>
           <p class="meta-desc" id="mm-desc"></p>
         </div>
 
         <div class="meta-section">
-          <h4>SEAL Score</h4>
-          <span class="score-info-toggle" id="score-toggle">What does the score mean?</span>
+          <h4 data-i18n="meta_seal">SEAL Score</h4>
+          <span class="score-info-toggle" id="score-toggle" data-i18n="score_toggle">What does the score mean?</span>
           <div class="score-info-body" id="score-info-body"></div>
         </div>
       </div>
     </div>
 
     <div class="modal-keyhint">
-      <span><kbd>←</kbd> <kbd>→</kbd> navigate</span>
-      <span><kbd>+</kbd> <kbd>−</kbd> zoom</span>
-      <span><kbd>0</kbd> fit view</span>
-      <span><kbd>Esc</kbd> close</span>
+      <span><kbd>←</kbd> <kbd>→</kbd> <span data-i18n="keyhint_nav">navigate</span></span>
+      <span><kbd>+</kbd> <kbd>−</kbd> <span data-i18n="keyhint_zoom">zoom</span></span>
+      <span><kbd>0</kbd> <span data-i18n="keyhint_fit">fit view</span></span>
+      <span><kbd>Esc</kbd> <span data-i18n="keyhint_close">close</span></span>
     </div>
   </div>
 </div>
@@ -477,6 +497,105 @@ const MW = 640, MH = 480, MP = 36;
 
 let activeFilters = new Set(['r_fs', 'r_ms', 'r_sib', 'r_hh']);
 let allMotifs = [];
+
+// ── i18n ───────────────────────────────────────────────────────────────────
+let currentLang = 'en';
+
+const STRINGS = {
+  en: {
+    page_title: 'Pre-Marriage Kinship Motif Catalog — RuleVis',
+    title: 'Pre-Marriage Kinship Motif Catalog',
+    header_desc: 'Top 50 recurring subgraph structures extracted by heterogeneous SEAL from 3,130 distinct motifs found in 4,000 training-set marriage pairs (train ≤ 1860). Each graph shows the 2-hop enclosing kinship subgraph around a husband–wife pair <span style="color:var(--gold)">●</span> after applying temporal cutoff (no post-marriage edges) and downward truncation (no shared children). Household co-residence shown as shaded regions. <strong style="color:var(--text)">Click any card to zoom.</strong>',
+    legend_fs: 'r_fs · father→child', legend_ms: 'r_ms · mother→child',
+    legend_sib: 'r_sib · sibling',    legend_hh: 'r_hh · household',
+    toggle_fs: 'Toggle father→child edges',         toggle_ms: 'Toggle mother→child edges',
+    toggle_sib: 'Toggle sibling edges',              toggle_hh: 'Toggle household co-residence regions',
+    stat_motifs: 'Motifs', stat_distinct: 'Distinct', stat_pairs: 'Pairs sampled',
+    sort_label: 'Sort by',
+    sort_rank: 'Rank (count ↓ score ↓)', sort_score: 'Avg SEAL score ↓',
+    sort_count: 'Occurrence count ↓',    sort_nodes: 'Node count ↓', sort_edges: 'Kin edge count ↓',
+    drag_hint: 'scroll to zoom · drag to pan',
+    zoom_in_title: 'Zoom in (+)', zoom_reset_title: 'Fit view (0)', zoom_out_title: 'Zoom out (−)',
+    zoom_fit: 'fit',
+    meta_stats: 'Statistics',
+    row_rank: 'Rank', row_occ: 'Occurrences', row_score: 'Avg SEAL score',
+    row_size: 'Avg subgraph size', row_persons: 'Person nodes', row_edges: 'Kin edges', row_etypes: 'Edge types',
+    meta_edge_legend: 'Edge Legend',
+    legend_fs_long: 'r_fs · father → child', legend_ms_long: 'r_ms · mother → child',
+    legend_sib_long: 'r_sib · sibling ↔ sibling', legend_hh_long: 'r_hh · household region',
+    meta_node_legend: 'Node Legend',
+    node_pair: '<b>H</b> / <b>W</b> — marriage pair',
+    node_kin: 'kin node (1–2 hop)',
+    node_size_hint: 'Node size ∝ closeness (DRNL label). Larger = closer to the pair.',
+    meta_pattern: 'Family Pattern', meta_seal: 'SEAL Score',
+    score_toggle: 'What does the score mean?', score_toggle_hide: 'Hide explanation',
+    keyhint_nav: 'navigate', keyhint_zoom: 'zoom', keyhint_fit: 'fit view', keyhint_close: 'close',
+    card_score: 'Score', card_nodes_edges: 'Nodes / edges', card_pairs: 'pairs',
+    card_isolated: 'isolated', card_zoom_hint: 'click to zoom',
+    tip_occ: 'Occurrence count', tip_score: 'Avg SEAL score', tip_size: 'Avg subgraph size',
+    tip_persons: 'Person nodes', tip_kin_edges: 'Kin edges', tip_etypes: 'Edge types',
+    rel_child: 'child', rel_father: 'father', rel_mother: 'mother', rel_sibling: 'sibling',
+    edge_fs: 'father → child', edge_ms: 'mother → child',
+    edge_sib: 'sibling ↔ sibling', edge_hh: 'household',
+    label_h: 'H', label_w: 'W',
+  },
+  zh: {
+    page_title: '婚前亲属关系模体目录 — 规则可视化',
+    title: '婚前亲属关系模体目录',
+    header_desc: '从4,000对训练集婚姻配对（训练集≤1860年）中，通过异质SEAL提取的3,130个独特模体里，出现频率最高的前50种子图结构。每张图展示了夫妻配对<span style="color:var(--gold)">●</span>周围2跳封闭亲属子图，应用了时间截断（不含婚后关系边）和下行截断（不含共同子女）。阴影区域表示共居家户。<strong style="color:var(--text)">点击任意卡片可放大查看。</strong>',
+    legend_fs: 'r_fs · 父→子', legend_ms: 'r_ms · 母→子',
+    legend_sib: 'r_sib · 兄弟姐妹', legend_hh: 'r_hh · 家户',
+    toggle_fs: '切换父→子关系边', toggle_ms: '切换母→子关系边',
+    toggle_sib: '切换兄弟姐妹关系边', toggle_hh: '切换家户共居区域',
+    stat_motifs: '模体', stat_distinct: '独特结构', stat_pairs: '采样对数',
+    sort_label: '排序方式',
+    sort_rank: '排名（次数↓ 得分↓）', sort_score: '平均SEAL得分↓',
+    sort_count: '出现次数↓', sort_nodes: '节点数↓', sort_edges: '亲属边数↓',
+    drag_hint: '滚轮缩放 · 拖动平移',
+    zoom_in_title: '放大 (+)', zoom_reset_title: '适配视图 (0)', zoom_out_title: '缩小 (−)',
+    zoom_fit: '适配',
+    meta_stats: '统计信息',
+    row_rank: '排名', row_occ: '出现次数', row_score: '平均SEAL得分',
+    row_size: '平均子图大小', row_persons: '人物节点数', row_edges: '亲属关系边数', row_etypes: '边类型',
+    meta_edge_legend: '边图例',
+    legend_fs_long: 'r_fs · 父 → 子', legend_ms_long: 'r_ms · 母 → 子',
+    legend_sib_long: 'r_sib · 兄弟姐妹 ↔ 兄弟姐妹', legend_hh_long: 'r_hh · 家户区域',
+    meta_node_legend: '节点图例',
+    node_pair: '<b>夫</b> / <b>妻</b> — 婚姻配对',
+    node_kin: '亲属节点（1–2跳）',
+    node_size_hint: '节点大小 ∝ 接近度（DRNL标签）。越大表示与配对越近。',
+    meta_pattern: '家庭模式', meta_seal: 'SEAL得分',
+    score_toggle: '得分是什么意思？', score_toggle_hide: '隐藏说明',
+    keyhint_nav: '导航', keyhint_zoom: '缩放', keyhint_fit: '适配视图', keyhint_close: '关闭',
+    card_score: '得分', card_nodes_edges: '节点 / 边', card_pairs: '对',
+    card_isolated: '孤立', card_zoom_hint: '点击放大',
+    tip_occ: '出现次数', tip_score: '平均SEAL得分', tip_size: '平均子图大小',
+    tip_persons: '人物节点', tip_kin_edges: '亲属关系边', tip_etypes: '边类型',
+    rel_child: '子女', rel_father: '父亲', rel_mother: '母亲', rel_sibling: '兄弟姐妹',
+    edge_fs: '父 → 子', edge_ms: '母 → 子',
+    edge_sib: '兄弟姐妹 ↔ 兄弟姐妹', edge_hh: '家户',
+    label_h: '夫', label_w: '妻',
+  },
+};
+
+function T(key) {
+  return (STRINGS[currentLang] || STRINGS.en)[key] ?? STRINGS.en[key] ?? key;
+}
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.title = T('page_title');
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = T(el.dataset.i18nHtml); });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = T(el.dataset.i18nTitle); });
+  document.querySelectorAll('[data-i18n-opt]').forEach(el => { el.textContent = T(el.dataset.i18nOpt); });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  if (allMotifs.length > 0) renderAll();
+  if (document.getElementById('modal').classList.contains('open')) renderModal();
+}
 let sortedMotifs = [];  // current display order
 let sortKey = 'rank';
 let scoreExplanation = '';
@@ -489,9 +608,9 @@ let modalZoomK = 1;    // current zoom scale (for interaction handlers)
 
 // ── relation label helper ──────────────────────────────────────────────────
 function neighborRelLabel(etype, dir) {
-  if (etype === 'r_fs') return dir === 'out' ? 'child' : 'father';
-  if (etype === 'r_ms') return dir === 'out' ? 'child' : 'mother';
-  if (etype === 'r_sib') return 'sibling';
+  if (etype === 'r_fs') return dir === 'out' ? T('rel_child') : T('rel_father');
+  if (etype === 'r_ms') return dir === 'out' ? T('rel_child') : T('rel_mother');
+  if (etype === 'r_sib') return T('rel_sibling');
   return etype;
 }
 
@@ -725,7 +844,7 @@ function drawMotif(motif, svgEl, w, h, pad, nodeScale, uid) {
        .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
        .attr('font-size', Math.max(6, r * 0.85))
        .attr('font-weight', '700').attr('fill', '#1a1d27')
-       .text(n.isSrc ? 'H' : 'W');
+       .text(n.isSrc ? T('label_h') : T('label_w'));
     }
     nodeElems.push({ g, circle, ring, textEl, baseR: r, nodeData: n });
   }
@@ -746,7 +865,7 @@ function renderCard(motif, rank, sortedIdx) {
 
   const hdr = document.createElement('div');
   hdr.className = 'card-header';
-  hdr.innerHTML = `<span class="rank-badge">#${rank}</span><span class="count-badge"><b>${motif.count}</b> pairs</span>`;
+  hdr.innerHTML = `<span class="rank-badge">#${rank}</span><span class="count-badge"><b>${motif.count}</b> ${T('card_pairs')}</span>`;
   card.appendChild(hdr);
 
   const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -759,18 +878,18 @@ function renderCard(motif, rank, sortedIdx) {
   footer.className = 'card-footer';
   footer.innerHTML = `
     ${motif.title ? `<div class="card-title-text">${motif.title}</div>` : ''}
-    <div class="card-stat"><span>Score</span><b style="color:${scoreColor}">${scoreVal.toFixed(4)}</b></div>
-    <div class="card-stat"><span>Nodes / edges</span><b>${rawNodes.length} / ${personEdges.length}</b></div>
+    <div class="card-stat"><span>${T('card_score')}</span><b style="color:${scoreColor}">${scoreVal.toFixed(4)}</b></div>
+    <div class="card-stat"><span>${T('card_nodes_edges')}</span><b>${rawNodes.length} / ${personEdges.length}</b></div>
     <div class="etype-pills">
       ${etypesPresent.map(et => `<span class="epill ${et}">${et}</span>`).join('')}
-      ${!etypesPresent.length ? '<span class="epill" style="background:#333">isolated</span>' : ''}
+      ${!etypesPresent.length ? `<span class="epill" style="background:#333">${T('card_isolated')}</span>` : ''}
     </div>
   `;
   card.appendChild(footer);
 
   const hint = document.createElement('div');
   hint.className = 'zoom-hint';
-  hint.textContent = 'click to zoom';
+  hint.textContent = T('card_zoom_hint');
   card.appendChild(hint);
 
   // tooltip
@@ -792,11 +911,11 @@ function showTip(ev, motif, rawNodes, personEdges, etypesPresent) {
   tip.innerHTML = `
     ${titleLine}
     <span style="color:var(--muted);font-size:10px">${motif.id}</span><br>
-    Occurrence count: <b>${motif.count}</b><br>
-    Avg SEAL score: <b>${scoreVal.toFixed(4)}</b><br>
-    Avg subgraph size: <b>${motif.avg_size?.toFixed(1) ?? '—'}</b><br>
-    Person nodes: <b>${rawNodes.length}</b> · Kin edges: <b>${personEdges.length}</b><br>
-    Edge types: <b>${etypesPresent.join(', ') || 'none'}</b><br>
+    ${T('tip_occ')}: <b>${motif.count}</b><br>
+    ${T('tip_score')}: <b>${scoreVal.toFixed(4)}</b><br>
+    ${T('tip_size')}: <b>${motif.avg_size?.toFixed(1) ?? '—'}</b><br>
+    ${T('tip_persons')}: <b>${rawNodes.length}</b> · ${T('tip_kin_edges')}: <b>${personEdges.length}</b><br>
+    ${T('tip_etypes')}: <b>${etypesPresent.join(', ') || 'none'}</b><br>
     <span class="hash">${motif.hash?.slice(0, 90) ?? ''}…</span>
   `;
   tip.style.display = 'block';
@@ -968,7 +1087,7 @@ function renderModal() {
     }
     const mx = (srcNode.x + tgtNode.x) / 2, my = (srcNode.y + tgtNode.y) / 2;
     const etype = edgeData.etype;
-    const eLabel = { r_fs: 'father → child', r_ms: 'mother → child', r_sib: 'sibling ↔ sibling', r_hh: 'household' }[etype] || etype;
+    const eLabel = { r_fs: T('edge_fs'), r_ms: T('edge_ms'), r_sib: T('edge_sib'), r_hh: T('edge_hh') }[etype] || etype;
     const col = EDGE_COLOR[etype] || '#aaa';
     labelG.append('text')
       .attr('x', mx).attr('y', my - 8 / k)
@@ -1165,7 +1284,12 @@ document.getElementById('score-toggle').addEventListener('click', () => {
   const body = document.getElementById('score-info-body');
   body.classList.toggle('open');
   document.getElementById('score-toggle').textContent =
-    body.classList.contains('open') ? 'Hide explanation' : 'What does the score mean?';
+    body.classList.contains('open') ? T('score_toggle_hide') : T('score_toggle');
+});
+
+// ── language toggle ────────────────────────────────────────────────────────
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
 });
 
 // ── load ───────────────────────────────────────────────────────────────────
