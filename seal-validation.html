@@ -209,6 +209,8 @@
   <a href="motifs-gallery.html" data-i18n="nav_motifs">Motif Catalog</a>
   <span>›</span>
   <span data-i18n="nav_current">Hard-Negative Validation</span>
+  <span>›</span>
+  <a href="seal-motif-comparison.html" data-i18n="nav_motif_cmp">Motif Comparison Gallery</a>
 </nav>
 
 <div class="main" id="app">
@@ -227,6 +229,7 @@ const STRINGS = {
     header_desc: 'Re-evaluates the trained SEAL classifier under three negative-sampling conditions to validate whether AUC 0.9912 reflects genuine motif discrimination or a simpler <em>connectivity collapse</em> artifact.',
     nav_motifs: 'Motif Catalog',
     nav_current: 'Hard-Negative Validation',
+    nav_motif_cmp: 'Motif Comparison Gallery',
     loading: 'Loading results…',
     error: 'Could not load hard_neg_eval.json — run evaluate_seal_hard_negatives.py first.',
 
@@ -294,6 +297,7 @@ const STRINGS = {
     header_desc: '在三种负采样条件下重新评估训练好的SEAL分类器，验证AUC 0.9912是否反映了真正的模体判别能力，还是更简单的<em>连通性崩塌</em>现象。',
     nav_motifs: '模体目录',
     nav_current: '强负样本验证',
+    nav_motif_cmp: '模体对比图库',
     loading: '加载结果中…',
     error: '无法加载 hard_neg_eval.json — 请先运行 evaluate_seal_hard_negatives.py',
 
