@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Marriage Kinship Motif Catalog — RuleVis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0f1117;
+    --surface:  #1a1d27;
+    --border:   #2e3346;
+    --text:     #e2e4ef;
+    --muted:    #7a7f9a;
+    --gold:     #f5c842;
+    --c-fs:     #4a7fe5;
+    --c-ms:     #b55fd6;
+    --c-sib:    #3dba5f;
+    --c-hh:     #2db56d;
+    --card-w:   180px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+  }
+
+  /* ── header ── */
+  header {
+    padding: 32px 40px 24px;
+    border-bottom: 1px solid var(--border);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  header h1 { font-size: 22px; font-weight: 600; letter-spacing: -.3px; color: #fff; margin-bottom: 6px; }
+  header p  { color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 720px; }
+
+  /* ── controls ── */
+  .controls {
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    padding: 16px 40px; border-bottom: 1px solid var(--border);
+    max-width: 1400px; margin: 0 auto;
+  }
+  .legend { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    cursor: pointer; user-select: none;
+    padding: 4px 10px; border-radius: 20px;
+    border: 1.5px solid transparent; transition: border-color .15s, opacity .15s;
+  }
+  .legend-item.off { opacity: .3; }
+  .legend-item:hover { border-color: var(--border); }
+  .legend-swatch { width: 22px; height: 3px; border-radius: 2px; }
+  .legend-swatch.arrow-swatch { position: relative; height: 3px; }
+  .legend-swatch.arrow-swatch::after {
+    content: ''; position: absolute; right: -1px; top: 50%;
+    transform: translateY(-50%);
+    border: 4px solid transparent; border-left-width: 6px;
+  }
+  .legend-swatch.fs { background: var(--c-fs); }
+  .legend-swatch.fs::after { border-left-color: var(--c-fs); }
+  .legend-swatch.ms { background: var(--c-ms); }
+  .legend-swatch.ms::after { border-left-color: var(--c-ms); }
+  .legend-swatch.sib { background: var(--c-sib); }
+  .legend-swatch.hh {
+    background: rgba(45,181,109,0.18);
+    border: 1.5px dashed #2db56d;
+    height: 12px; width: 22px;
+    border-radius: 3px;
+  }
+  .sep { width: 1px; height: 24px; background: var(--border); }
+  .stats-pill { display: flex; gap: 16px; color: var(--muted); font-size: 12px; }
+  .stats-pill span b { color: var(--text); font-weight: 600; }
+  .sort-group { display: flex; gap: 8px; align-items: center; margin-left: auto; }
+  .sort-group label { color: var(--muted); font-size: 12px; }
+  .sort-group select {
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 4px 8px; font-size: 12px; cursor: pointer;
+  }
+
+  /* ── grid ── */
+  .grid-wrap { max-width: 1400px; margin: 0 auto; padding: 28px 40px 60px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--card-w));
+    gap: 16px;
+  }
+
+  /* ── card ── */
+  .card {
+    width: var(--card-w);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+    transition: border-color .15s, transform .15s, box-shadow .15s;
+    cursor: pointer;
+  }
+  .card:hover { border-color: #4a5180; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,.4); }
+  .card.disabled { opacity: .35; filter: grayscale(1); }
+  .card-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 10px 0;
+  }
+  .rank-badge {
+    background: #252940; color: var(--muted);
+    font-size: 10px; font-weight: 600;
+    padding: 2px 6px; border-radius: 4px; letter-spacing: .3px;
+  }
+  .count-badge { font-size: 11px; color: var(--muted); }
+  .count-badge b { color: var(--text); }
+  .card svg { display: block; width: 100%; height: 150px; }
+  .card-footer { padding: 6px 10px 9px; display: flex; flex-direction: column; gap: 3px; }
+  .card-stat { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+  .card-stat b { color: var(--text); font-weight: 500; }
+  .etype-pills { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 2px; }
+  .epill {
+    font-size: 9px; padding: 1px 5px; border-radius: 3px;
+    font-weight: 600; letter-spacing: .2px; color: #fff;
+  }
+  .epill.r_fs  { background: #2d52a8; }
+  .epill.r_ms  { background: #7a3fa0; }
+  .epill.r_sib { background: #277a3f; }
+  .epill.r_hh  { background: #1d7a52; }
+  .zoom-hint {
+    font-size: 9px; color: var(--muted); text-align: center;
+    padding: 2px 0 4px; opacity: 0; transition: opacity .15s;
+    pointer-events: none;
+  }
+  .card:hover .zoom-hint { opacity: 1; }
+
+  /* ── tooltip ── */
+  #tooltip {
+    position: fixed; pointer-events: none; z-index: 900;
+    background: #0d0f19; border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 12px; font-size: 11px; line-height: 1.7; color: var(--text);
+    max-width: 280px; box-shadow: 0 8px 32px rgba(0,0,0,.5); display: none;
+  }
+  #tooltip b { color: #fff; font-weight: 600; }
+  #tooltip .hash { font-family: monospace; color: var(--muted); font-size: 10px; word-break: break-all; }
+
+  /* ── modal overlay ── */
+  #modal {
+    display: none;
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0, 0, 0, .75);
+    backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+  }
+  #modal.open { display: flex; }
+
+  .modal-panel {
+    background: #13161f;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    width: min(900px, 95vw);
+    max-height: 92vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,.7);
+    overflow: hidden;
+  }
+
+  /* title bar */
+  .modal-title {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .modal-rank { font-size: 11px; font-weight: 700; color: var(--muted); background: #252940; padding: 2px 7px; border-radius: 5px; }
+  .modal-id   { font-size: 12px; font-family: monospace; color: #8090c0; }
+  .modal-score { font-size: 12px; }
+  .modal-nav  { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+  .modal-nav button, .modal-close {
+    background: #252940; border: 1px solid var(--border); color: var(--text);
+    border-radius: 6px; cursor: pointer; font-size: 13px;
+    padding: 4px 10px; transition: background .12s;
+    line-height: 1;
+  }
+  .modal-nav button:hover, .modal-close:hover { background: #33375a; }
+  .modal-nav-pos { font-size: 11px; color: var(--muted); min-width: 48px; text-align: center; }
+  .modal-close { padding: 4px 9px; font-size: 15px; }
+
+  /* body: svg + meta side-by-side */
+  .modal-body {
+    display: flex; flex: 1; min-height: 0; overflow: hidden;
+  }
+
+  /* svg area */
+  .modal-svg-wrap {
+    flex: 1; position: relative; overflow: hidden;
+    background: #0d0f18;
+    border-right: 1px solid var(--border);
+  }
+  #modal-svg {
+    width: 100%; height: 100%;
+    display: block;
+  }
+
+  /* zoom controls */
+  .zoom-controls {
+    position: absolute; bottom: 14px; right: 14px;
+    display: flex; flex-direction: column; gap: 4px; align-items: center;
+  }
+  .zoom-btn {
+    width: 30px; height: 30px;
+    background: #252940; border: 1px solid var(--border); color: var(--text);
+    border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .12s; user-select: none;
+  }
+  .zoom-btn:hover { background: #33375a; }
+  .zoom-btn.reset { font-size: 11px; }
+  #zoom-pct {
+    font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums;
+    min-width: 34px; text-align: center;
+  }
+
+  /* drag hint */
+  .drag-hint {
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; color: var(--muted); pointer-events: none;
+    opacity: 0; transition: opacity .3s;
+  }
+  .modal-svg-wrap:hover .drag-hint { opacity: 1; }
+
+  /* right meta panel */
+  .modal-meta {
+    width: 220px; flex-shrink: 0;
+    padding: 20px 16px; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .meta-section h4 {
+    font-size: 10px; font-weight: 700; letter-spacing: .6px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+  }
+  .meta-row {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--muted); margin-bottom: 5px;
+  }
+  .meta-row b { color: var(--text); font-weight: 500; }
+  .meta-etypes { display: flex; gap: 4px; flex-wrap: wrap; }
+  .meta-legend { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .meta-legend-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+  .meta-swatch { width: 18px; height: 3px; border-radius: 1px; flex-shrink: 0; }
+  .node-legend { display: flex; flex-direction: column; gap: 6px; }
+  .node-legend-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+  .node-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+  /* card title */
+  .card-title-text {
+    font-size: 10px; font-weight: 600; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    line-height: 1.3; padding-bottom: 3px;
+    border-bottom: 1px solid var(--border); margin-bottom: 2px;
+  }
+
+  /* modal description */
+  .meta-pattern-title {
+    font-size: 12px; font-weight: 700; color: #fff;
+    line-height: 1.4; margin-bottom: 7px;
+  }
+  .meta-desc {
+    font-size: 11px; color: var(--muted); line-height: 1.65;
+  }
+  .score-info-toggle {
+    font-size: 10px; color: #5a6090; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 2px;
+    margin-top: 5px; display: inline-block;
+  }
+  .score-info-body {
+    font-size: 10.5px; color: #606480; line-height: 1.6; margin-top: 6px;
+    display: none;
+  }
+  .score-info-body.open { display: block; }
+
+  /* interaction labels in modal */
+  .modal-labels { pointer-events: none; }
+  .modal-rel-label { font-family: 'Inter','Segoe UI',sans-serif; }
+
+  /* language toggle */
+  .lang-toggle {
+    display: flex; align-items: center;
+    border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+    margin-left: 12px;
+  }
+  .lang-btn {
+    background: transparent; border: none; color: var(--muted);
+    padding: 4px 11px; font-size: 12px; cursor: pointer;
+    font-weight: 600; letter-spacing: .4px; line-height: 1;
+    transition: color .12s, background .12s;
+  }
+  .lang-btn + .lang-btn { border-left: 1px solid var(--border); }
+  .lang-btn.active { background: #252940; color: var(--text); }
+  .lang-btn:hover:not(.active) { color: var(--text); }
+
+  /* keyboard hint */
+  .modal-keyhint {
+    flex-shrink: 0;
+    padding: 6px 18px;
+    border-top: 1px solid var(--border);
+    font-size: 10px; color: #44485a;
+    display: flex; gap: 16px;
+  }
+  .modal-keyhint kbd {
+    background: #252940; border: 1px solid #363a55; border-radius: 3px;
+    padding: 1px 5px; font-family: inherit; font-size: 9px; color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 data-i18n="title">Pre-Marriage Kinship Motif Catalog</h1>
+  <p data-i18n-html="header_desc">
+    Top 50 recurring subgraph structures extracted by heterogeneous SEAL from 3,130 distinct motifs
+    found in 4,000 training-set marriage pairs (train ≤ 1860). Each graph shows the 2-hop enclosing
+    kinship subgraph around a husband–wife pair <span style="color:var(--gold)">●</span> after
+    applying temporal cutoff (no post-marriage edges) and downward truncation (no shared children).
+    Household co-residence shown as shaded regions. <strong style="color:var(--text)">Click any card to zoom.</strong>
+  </p>
+</header>
+
+<div class="controls">
+  <div class="legend">
+    <div class="legend-item" data-type="r_fs" data-i18n-title="toggle_fs" title="Toggle father→child edges">
+      <div class="legend-swatch arrow-swatch fs"></div>
+      <span data-i18n="legend_fs">r_fs · father→child</span>
+    </div>
+    <div class="legend-item" data-type="r_ms" data-i18n-title="toggle_ms" title="Toggle mother→child edges">
+      <div class="legend-swatch arrow-swatch ms"></div>
+      <span data-i18n="legend_ms">r_ms · mother→child</span>
+    </div>
+    <div class="legend-item" data-type="r_sib" data-i18n-title="toggle_sib" title="Toggle sibling edges">
+      <div class="legend-swatch sib"></div>
+      <span data-i18n="legend_sib">r_sib · sibling</span>
+    </div>
+    <div class="legend-item" data-type="r_hh" data-i18n-title="toggle_hh" title="Toggle household co-residence regions">
+      <div class="legend-swatch hh"></div>
+      <span data-i18n="legend_hh">r_hh · household</span>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="stats-pill">
+    <span><span data-i18n="stat_motifs">Motifs</span>: <b id="shown-count">50</b></span>
+    <span><span data-i18n="stat_distinct">Distinct</span>: <b>3,130</b></span>
+    <span><span data-i18n="stat_pairs">Pairs sampled</span>: <b>4,000</b></span>
+    <span>SEAL AUC: <b>0.9912</b> <a href="seal-validation.html" style="color:var(--gold);font-size:11px;text-decoration:none;margin-left:4px" data-i18n="link_validation">→ validation</a> <a href="seal-motif-comparison.html" style="color:#3dba5f;font-size:11px;text-decoration:none;margin-left:4px" data-i18n="link_motif_cmp">→ motif comparison</a></span>
+  </div>
+
+  <div class="sort-group">
+    <label for="sort-sel" data-i18n="sort_label">Sort by</label>
+    <select id="sort-sel">
+      <option value="rank" data-i18n-opt="sort_rank">Rank (count ↓ score ↓)</option>
+      <option value="score" data-i18n-opt="sort_score">Avg SEAL score ↓</option>
+      <option value="count" data-i18n-opt="sort_count">Occurrence count ↓</option>
+      <option value="nodes" data-i18n-opt="sort_nodes">Node count ↓</option>
+      <option value="edges" data-i18n-opt="sort_edges">Kin edge count ↓</option>
+    </select>
+  </div>
+  <div class="lang-toggle" id="lang-toggle">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+  </div>
+</div>
+
+<div class="grid-wrap">
+  <div class="grid" id="grid"></div>
+</div>
+
+<div id="tooltip"></div>
+
+<!-- ── modal ── -->
+<div id="modal" role="dialog" aria-modal="true">
+  <div class="modal-panel">
+
+    <div class="modal-title">
+      <span class="modal-rank" id="m-rank">#1</span>
+      <span class="modal-id"  id="m-id">—</span>
+      <span class="modal-score" id="m-score"></span>
+      <div class="modal-nav">
+        <button id="modal-prev" title="Previous (←)">&#8592;</button>
+        <span class="modal-nav-pos" id="m-nav-pos">1 / 50</span>
+        <button id="modal-next" title="Next (→)">&#8594;</button>
+      </div>
+      <button class="modal-close" id="modal-close" title="Close (Esc)">&#10005;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-svg-wrap" id="modal-svg-wrap">
+        <svg id="modal-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="drag-hint" data-i18n="drag_hint">scroll to zoom · drag to pan</div>
+        <div class="zoom-controls">
+          <div class="zoom-btn" id="zoom-in"  data-i18n-title="zoom_in_title" title="Zoom in (+)">+</div>
+          <div class="zoom-btn reset" id="zoom-reset" data-i18n-title="zoom_reset_title" title="Fit view (0)" data-i18n="zoom_fit">fit</div>
+          <div class="zoom-btn" id="zoom-out" data-i18n-title="zoom_out_title" title="Zoom out (−)">−</div>
+          <div id="zoom-pct">100%</div>
+        </div>
+      </div>
+
+      <div class="modal-meta">
+        <div class="meta-section">
+          <h4 data-i18n="meta_stats">Statistics</h4>
+          <div class="meta-row"><span data-i18n="row_rank">Rank</span>         <b id="mm-rank">—</b></div>
+          <div class="meta-row"><span data-i18n="row_occ">Occurrences</span>  <b id="mm-count">—</b></div>
+          <div class="meta-row"><span data-i18n="row_score">Avg SEAL score</span><b id="mm-score">—</b></div>
+          <div class="meta-row"><span data-i18n="row_size">Avg subgraph size</span><b id="mm-size">—</b></div>
+          <div class="meta-row"><span data-i18n="row_persons">Person nodes</span> <b id="mm-nodes">—</b></div>
+          <div class="meta-row"><span data-i18n="row_edges">Kin edges</span>    <b id="mm-edges">—</b></div>
+          <div style="margin-top:4px" class="meta-row"><span data-i18n="row_etypes">Edge types</span></div>
+          <div class="meta-etypes" id="mm-etypes"></div>
+        </div>
+
+        <div class="meta-section">
+          <h4 data-i18n="meta_edge_legend">Edge Legend</h4>
+          <div class="meta-legend">
+            <div class="meta-legend-row">
+              <div class="meta-swatch" style="background:#4a7fe5"></div>
+              <span data-i18n="legend_fs_long">r_fs · father → child</span>
+            </div>
+            <div class="meta-legend-row">
+              <div class="meta-swatch" style="background:#b55fd6"></div>
+              <span data-i18n="legend_ms_long">r_ms · mother → child</span>
+            </div>
+            <div class="meta-legend-row">
+              <div class="meta-swatch" style="background:#3dba5f"></div>
+              <span data-i18n="legend_sib_long">r_sib · sibling ↔ sibling</span>
+            </div>
+            <div class="meta-legend-row">
+              <div class="meta-swatch" style="background:rgba(45,181,109,0.3);border:1.5px dashed #2db56d;height:10px;border-radius:2px"></div>
+              <span data-i18n="legend_hh_long">r_hh · household region</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="meta-section">
+          <h4 data-i18n="meta_node_legend">Node Legend</h4>
+          <div class="node-legend">
+            <div class="node-legend-row">
+              <div class="node-dot" style="background:#f5c842; border:1.5px solid #f0b800"></div>
+              <span data-i18n-html="node_pair"><b>H</b> / <b>W</b> — marriage pair</span>
+            </div>
+            <div class="node-legend-row">
+              <div class="node-dot" style="background:#4a5070; border:1.5px solid #6a7090"></div>
+              <span data-i18n="node_kin">kin node (1–2 hop)</span>
+            </div>
+          </div>
+          <p data-i18n="node_size_hint" style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5">
+            Node size ∝ closeness (DRNL label). Larger = closer to the pair.
+          </p>
+        </div>
+
+        <div class="meta-section" id="mm-pattern-section" style="display:none">
+          <h4 data-i18n="meta_pattern">Family Pattern</h4>
+          <p class="meta-pattern-title" id="mm-pattern-title"></p>
+          <p class="meta-desc" id="mm-desc"></p>
+        </div>
+
+        <div class="meta-section">
+          <h4 data-i18n="meta_seal">SEAL Score</h4>
+          <span class="score-info-toggle" id="score-toggle" data-i18n="score_toggle">What does the score mean?</span>
+          <div class="score-info-body" id="score-info-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-keyhint">
+      <span><kbd>←</kbd> <kbd>→</kbd> <span data-i18n="keyhint_nav">navigate</span></span>
+      <span><kbd>+</kbd> <kbd>−</kbd> <span data-i18n="keyhint_zoom">zoom</span></span>
+      <span><kbd>0</kbd> <span data-i18n="keyhint_fit">fit view</span></span>
+      <span><kbd>Esc</kbd> <span data-i18n="keyhint_close">close</span></span>
+    </div>
+  </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+// ── constants ──────────────────────────────────────────────────────────────
+const EDGE_COLOR = { r_fs: '#4a7fe5', r_ms: '#b55fd6', r_sib: '#3dba5f' };
+const HH_PALETTE = [
+  { fill: 'rgba(45,181,109,0.13)',  stroke: '#2db56d' },
+  { fill: 'rgba(90,110,200,0.13)',  stroke: '#5a6ec8' },
+  { fill: 'rgba(220,150,40,0.13)', stroke: '#dc9628' },
+  { fill: 'rgba(200,80,80,0.13)',   stroke: '#c85050' },
+  { fill: 'rgba(160,100,220,0.13)', stroke: '#a064dc' },
+];
+
+// card SVG dimensions
+const CW = 180, CH = 150, CP = 18;
+// modal SVG natural dimensions (force runs in this space)
+const MW = 640, MH = 480, MP = 36;
+
+let activeFilters = new Set(['r_fs', 'r_ms', 'r_sib', 'r_hh']);
+let allMotifs = [];
+
+// ── i18n ───────────────────────────────────────────────────────────────────
+let currentLang = 'en';
+
+const STRINGS = {
+  en: {
+    page_title: 'Pre-Marriage Kinship Motif Catalog — RuleVis',
+    title: 'Pre-Marriage Kinship Motif Catalog',
+    header_desc: 'Top 50 recurring subgraph structures extracted by heterogeneous SEAL from 3,130 distinct motifs found in 4,000 training-set marriage pairs (train ≤ 1860). Each graph shows the 2-hop enclosing kinship subgraph around a husband–wife pair <span style="color:var(--gold)">●</span> after applying temporal cutoff (no post-marriage edges) and downward truncation (no shared children). Household co-residence shown as shaded regions. <strong style="color:var(--text)">Click any card to zoom.</strong>',
+    legend_fs: 'r_fs · father→child', legend_ms: 'r_ms · mother→child',
+    legend_sib: 'r_sib · sibling',    legend_hh: 'r_hh · household',
+    toggle_fs: 'Toggle father→child edges',         toggle_ms: 'Toggle mother→child edges',
+    toggle_sib: 'Toggle sibling edges',              toggle_hh: 'Toggle household co-residence regions',
+    stat_motifs: 'Motifs', stat_distinct: 'Distinct', stat_pairs: 'Pairs sampled',
+    sort_label: 'Sort by',
+    sort_rank: 'Rank (count ↓ score ↓)', sort_score: 'Avg SEAL score ↓',
+    sort_count: 'Occurrence count ↓',    sort_nodes: 'Node count ↓', sort_edges: 'Kin edge count ↓',
+    link_validation: '→ validation',
+    link_motif_cmp: '→ motif comparison',
+    drag_hint: 'scroll to zoom · drag to pan',
+    zoom_in_title: 'Zoom in (+)', zoom_reset_title: 'Fit view (0)', zoom_out_title: 'Zoom out (−)',
+    zoom_fit: 'fit',
+    meta_stats: 'Statistics',
+    row_rank: 'Rank', row_occ: 'Occurrences', row_score: 'Avg SEAL score',
+    row_size: 'Avg subgraph size', row_persons: 'Person nodes', row_edges: 'Kin edges', row_etypes: 'Edge types',
+    meta_edge_legend: 'Edge Legend',
+    legend_fs_long: 'r_fs · father → child', legend_ms_long: 'r_ms · mother → child',
+    legend_sib_long: 'r_sib · sibling ↔ sibling', legend_hh_long: 'r_hh · household region',
+    meta_node_legend: 'Node Legend',
+    node_pair: '<b>H</b> / <b>W</b> — marriage pair',
+    node_kin: 'kin node (1–2 hop)',
+    node_size_hint: 'Node size ∝ closeness (DRNL label). Larger = closer to the pair.',
+    meta_pattern: 'Family Pattern', meta_seal: 'SEAL Score',
+    score_toggle: 'What does the score mean?', score_toggle_hide: 'Hide explanation',
+    keyhint_nav: 'navigate', keyhint_zoom: 'zoom', keyhint_fit: 'fit view', keyhint_close: 'close',
+    card_score: 'Score', card_nodes_edges: 'Nodes / edges', card_pairs: 'pairs',
+    card_isolated: 'isolated', card_zoom_hint: 'click to zoom',
+    tip_occ: 'Occurrence count', tip_score: 'Avg SEAL score', tip_size: 'Avg subgraph size',
+    tip_persons: 'Person nodes', tip_kin_edges: 'Kin edges', tip_etypes: 'Edge types',
+    rel_child: 'child', rel_father: 'father', rel_mother: 'mother', rel_sibling: 'sibling',
+    edge_fs: 'father → child', edge_ms: 'mother → child',
+    edge_sib: 'sibling ↔ sibling', edge_hh: 'household',
+    label_h: 'H', label_w: 'W',
+    score_explanation: 'The SEAL score is the output of the trained SEAL classifier applied to this 2-hop enclosing subgraph pattern. It estimates the probability that this local pre-marriage kinship structure is associated with a real marriage event in the Qing Liaoning registers. Score 1.0 means the model assigns near-certainty to any marriage pair that shows this local kin topology. Score 0.85 (isolated pair) reflects high demographic confidence (age + banner match) even without visible kin structure. Score 0.90 (partial household link) reflects moderate structural evidence. Score 0.077 (pure household co-residence) is the only negative-signal motif: shared residence alone, without kinship edges, is a weak local predictor because co-residents include servants, lodgers, and non-marriage-eligible household members. Note that r_hh carries 60% of HGT global attention — the household signal operates at the network-wide level, not in local 2-hop subgraphs.',
+  },
+  zh: {
+    page_title: '婚前亲属关系模体目录 — 规则可视化',
+    title: '婚前亲属关系模体目录',
+    header_desc: '从4,000对训练集婚姻配对（训练集≤1860年）中，通过异质SEAL提取的3,130个独特模体里，出现频率最高的前50种子图结构。每张图展示了夫妻配对<span style="color:var(--gold)">●</span>周围2跳封闭亲属子图，应用了时间截断（不含婚后关系边）和下行截断（不含共同子女）。阴影区域表示共居家户。<strong style="color:var(--text)">点击任意卡片可放大查看。</strong>',
+    legend_fs: 'r_fs · 父→子', legend_ms: 'r_ms · 母→子',
+    legend_sib: 'r_sib · 兄弟姐妹', legend_hh: 'r_hh · 家户',
+    toggle_fs: '切换父→子关系边', toggle_ms: '切换母→子关系边',
+    toggle_sib: '切换兄弟姐妹关系边', toggle_hh: '切换家户共居区域',
+    stat_motifs: '模体', stat_distinct: '独特结构', stat_pairs: '采样对数',
+    sort_label: '排序方式',
+    sort_rank: '排名（次数↓ 得分↓）', sort_score: '平均SEAL得分↓',
+    sort_count: '出现次数↓', sort_nodes: '节点数↓', sort_edges: '亲属边数↓',
+    link_validation: '→ 验证实验',
+    link_motif_cmp: '→ 模体对比',
+    drag_hint: '滚轮缩放 · 拖动平移',
+    zoom_in_title: '放大 (+)', zoom_reset_title: '适配视图 (0)', zoom_out_title: '缩小 (−)',
+    zoom_fit: '适配',
+    meta_stats: '统计信息',
+    row_rank: '排名', row_occ: '出现次数', row_score: '平均SEAL得分',
+    row_size: '平均子图大小', row_persons: '人物节点数', row_edges: '亲属关系边数', row_etypes: '边类型',
+    meta_edge_legend: '边图例',
+    legend_fs_long: 'r_fs · 父 → 子', legend_ms_long: 'r_ms · 母 → 子',
+    legend_sib_long: 'r_sib · 兄弟姐妹 ↔ 兄弟姐妹', legend_hh_long: 'r_hh · 家户区域',
+    meta_node_legend: '节点图例',
+    node_pair: '<b>夫</b> / <b>妻</b> — 婚姻配对',
+    node_kin: '亲属节点（1–2跳）',
+    node_size_hint: '节点大小 ∝ 接近度（DRNL标签）。越大表示与配对越近。',
+    meta_pattern: '家庭模式', meta_seal: 'SEAL得分',
+    score_toggle: '得分是什么意思？', score_toggle_hide: '隐藏说明',
+    keyhint_nav: '导航', keyhint_zoom: '缩放', keyhint_fit: '适配视图', keyhint_close: '关闭',
+    card_score: '得分', card_nodes_edges: '节点 / 边', card_pairs: '对',
+    card_isolated: '孤立', card_zoom_hint: '点击放大',
+    tip_occ: '出现次数', tip_score: '平均SEAL得分', tip_size: '平均子图大小',
+    tip_persons: '人物节点', tip_kin_edges: '亲属关系边', tip_etypes: '边类型',
+    rel_child: '子女', rel_father: '父亲', rel_mother: '母亲', rel_sibling: '兄弟姐妹',
+    edge_fs: '父 → 子', edge_ms: '母 → 子',
+    edge_sib: '兄弟姐妹 ↔ 兄弟姐妹', edge_hh: '家户',
+    label_h: '夫', label_w: '妻',
+    score_explanation: 'SEAL得分是训练好的SEAL分类器对该2跳封闭子图模式的输出结果。它估计了局部婚前亲属结构与清代辽宁人口登记册中真实婚姻事件相关联的概率。得分1.0意味着模型对呈现该局部亲属拓扑的任何配对几乎确定无疑。得分0.85（孤立配对）反映人口统计置信度（年龄 + 旗籍匹配）即使无可见亲属结构时依然较高。得分0.90（部分家户联系）反映中等程度的结构证据。得分0.077（纯家户共居）是唯一的负信号模体：仅凭共居而无亲属边是较弱的局部预测，因为共居者中包括仆役、房客及不具婚配资格的家户成员。注意：r_hh在HGT全局注意力中占60%——家户信号在全图层面发挥作用，而非局限于局部2跳子图。',
+  },
+};
+
+const MOTIF_TITLES_ZH = {
+  'Isolated pair': '孤立配对',
+  'Shared mother (maternal half-siblings)': '共母（同母异父兄弟姐妹）',
+  'Full-sibling family of 4': '四子女同父同母家庭',
+  'Compact nuclear family (2 siblings)': '核心家庭（2名兄弟姐妹）',
+  'Large sibling family (6 children)': '六子女大型兄弟姐妹家庭',
+  'Full-sibling family of 3': '三子女同父同母家庭',
+  'Shared mother (3 maternal children)': '共母（3名母方子女）',
+  'Full-sibling family of 5': '五子女同父同母家庭',
+  'Full-sibling family of 7': '七子女同父同母家庭',
+  'Asymmetric 7-node family (more mothers than fathers)': '非对称七节点家庭（母多于父）',
+  'Pure household co-residence (no kinship)': '纯家户共居（无血缘关系）',
+  '9-person family with asymmetric parents': '九人家庭（亲本不对称）',
+  'Extended family of 10 siblings': '十兄弟姐妹大家庭',
+  'Full-sibling family of 8': '八子女同父同母家庭',
+  'Full-sibling family + 2 shared households': '同父同母家庭 + 2个共居家户',
+  '9-sibling family (slightly asymmetric parents)': '九兄弟姐妹家庭（亲本略有不对称）',
+  'Blended family (one father, two mothers)': '重组家庭（一父两母）',
+  '4-sibling family shared across 4 households': '四兄弟姐妹家庭跨4个家户',
+  'Full-sibling family of 9': '九子女同父同母家庭',
+  '9-person family (more maternal links)': '九人家庭（母方联系较多）',
+  '8-person family (mixed parental records)': '八人家庭（混合亲本记录）',
+  'Shared mother + shared household': '共母 + 共居家户',
+  'Shared mother + two household registrations': '共母 + 两次家户登记',
+  'Extended family of 11 siblings': '十一兄弟姐妹大家庭',
+  'Household-linked pair with weak kin signal': '家户关联配对（亲属信号较弱）',
+  'Mega-clan (52 nodes)': '超大宗族（52节点）',
+  '5-sibling family + shared household': '五兄弟姐妹家庭 + 共居家户',
+  'Extended family of 12 siblings': '十二兄弟姐妹大家庭',
+  'Full-sibling family of 7 (symmetric)': '七子女同父同母家庭（对称型）',
+  'Multi-household clan (44 nodes, 13 households)': '多家户宗族（44节点，13个家户）',
+  'Paternal-dominant lineage (father-only side visible)': '父系主导（仅父方可见）',
+  'Small family + single shared household': '小型家庭 + 单一共居家户',
+  'Large family + 4 shared households': '大型家庭 + 4个共居家户',
+  'Asymmetric 8-node family': '非对称八节点家庭',
+  'Nuclear family of 3 (slightly asymmetric)': '三人核心家庭（略有不对称）',
+  '6-household extended clan': '六家户大家庭',
+  'Compact nuclear family + single household': '紧凑核心家庭 + 单一家户',
+  '9-household sprawling clan': '九家户散居宗族',
+  '5-household extended family': '五家户大家庭',
+  'Mother-heavy 3-sibling family': '母方偏重三兄弟姐妹家庭',
+  '8-sibling family (father-heavy)': '八兄弟姐妹家庭（父方偏重）',
+  '6-household extended clan (symmetric parents)': '六家户大家庭（对称亲本）',
+  'Complex family + single household (asymmetric)': '复杂家庭 + 单一家户（非对称）',
+  'Compact 4-sibling family (dense)': '紧凑四兄弟姐妹家庭（密集型）',
+  'Paternal-only 8-sibling family': '纯父系八兄弟姐妹家庭',
+  '4-household sprawling clan (mother-heavy)': '四家户散居宗族（母方偏重）',
+  '4-sibling family + household (variant A)': '四兄弟姐妹家庭 + 家户（变体A）',
+  '4-sibling family + household (variant B)': '四兄弟姐妹家庭 + 家户（变体B）',
+  'Nuclear pair + shared household': '核心配对 + 共居家户',
+  '4-household medium clan': '四家户中型宗族',
+};
+
+const MOTIF_DESCS_ZH = {
+  'Isolated pair': '两名候选人2跳范围内均无亲属关系边。婚姻完全在可观测家庭网络之外缔结（或两家在辽宁的登记册中均无先前记录）。尽管不含任何结构信息，SEAL仍将这些配对评分为0.85——置信度来自人口统计特征通道（年龄、旗籍归属），而非亲属拓扑。这是出现最频繁的模体（503个训练样本），反映了清代辽宁大多数婚姻跨越无联系宗族的历史现实。',
+  'Shared mother (maternal half-siblings)': '单一女性在婚前登记册中同时出现为新郎和新娘的母亲。这形成一个以母亲为中心、通过r_ms边连接两名候选人的3节点星形结构。候选人可能是同母异父的兄妹（父亲不同），或该模体反映了三年户籍调查中的记录关联异常。SEAL将此模式评分为1.0——共母拓扑是整个目录中局部婚姻预测最强的单一因子，共出现158次。在历史背景下，这很可能反映了以母亲扩展家庭网络为纽带的跨户媒妁之言。',
+  'Full-sibling family of 4': '两名候选人共享一位父亲（r_fs）和一位母亲（r_ms），形成一个有4名子女的完整核心家庭：该配对加上2名额外兄弟姐妹。所有兄弟姐妹对通过双向r_sib边相连。新郎和新娘占据两个DRNL-1（中心）位置；父母和额外兄弟姐妹占据DRNL-2位置。42个样本中得分1.0。从社会学角度看，这种密集的核心结构表明近亲联姻，或共同家户的子女被户籍管理员系统性地配对。',
+  'Compact nuclear family (2 siblings)': '最简核心兄弟姐妹模体：两名候选人共享一位父亲和一位母亲，在2跳窗口内互为唯一记录在册的兄弟姐妹。共4个节点——父亲、母亲、新郎、新娘——每位父母通过r_fs和r_ms边连接两名子女，配对之间有一条双向r_sib链接。42个样本中得分1.0。这一紧凑结构是CMGPD登记册中经典核心家户的特征指纹：同一家庭的两名子女是结构上最可预测的婚配候选人。',
+  'Large sibling family (6 children)': '两名候选人共享双亲，家户共有6名子女（配对加上4名额外兄弟姐妹）。30条双向r_sib边构成完全连接的兄弟姐妹团。29个样本中得分1.0。清代辽宁登记册中的大型兄弟姐妹群体代表社会凝聚力强的多子家庭；SEAL识别出此类家庭的子女频繁相互配对或与结构相似的联盟家庭子女缔婚。',
+  'Full-sibling family of 3': '配对加上一名额外兄弟姐妹，共享双亲：一个5节点核心家庭。r_fs x3，r_ms x3，r_sib x6。18个样本中得分1.0。三子女家户是辽宁的主要家庭规模；此模体捕捉了最常见的核心家庭联姻模式——同一家户三名兄弟姐妹中的两人组成婚姻配对。',
+  'Shared mother (3 maternal children)': '以共同母亲为根节点的4节点星形结构：r_ms x3，将母亲连接至新郎、新娘及一名额外子女。配对的父亲未出现在2跳窗口内。15个样本中得分1.0。这一扩展同母模式表明母亲的亲属网络或再婚家户是媒妁纽带——与同父同母模体构成不同的社会学信号。',
+  'Full-sibling family of 5': '7个节点：配对加上3名额外兄弟姐妹，共享双亲。r_fs x5，r_ms x5，r_sib x20。14个样本中得分1.0。与较大家庭模体一致：随着家户规模扩大，家庭内兄弟姐妹边的密度增加，为SEAL提供更丰富的结构指纹和最大预测置信度。',
+  'Full-sibling family of 7': '9个节点：配对加上5名额外兄弟姐妹，双亲均在。42条双向r_sib边构成7名兄弟姐妹的完全团。6个样本中得分1.0。这一大型家庭模式在辽宁登记册中较为罕见，但SEAL置信度最高，表明多子女家户形成了高度可预测的婚配网络。',
+  'Asymmetric 7-node family (more mothers than fathers)': '7个节点，r_fs x4，r_ms x6：存在两个父系和三个母系谱系节点，表明子图跨越一个重组或再婚家户，新娘在登记册中可见的母系亲属更多。6个样本中得分1.0。父系与母系边数的不对称暗示清代系统中男女谱系成员的户籍登记差异。',
+  'Pure household co-residence (no kinship)': '仅含r_hh边：两名候选人共享一个家户节点，2跳范围内无血缘亲属边（r_fs、r_ms、r_sib）。得分0.077——这是唯一具有近零预测力的模体。在局部子图层面，无记录亲属关系的共居实际上是婚姻的负信号。这一看似悖论的结果与宏观规律相符：r_hh在全局HGT注意力中占60%信号权重，但在局部2跳层面，无亲属结构的共居家户可能包含仆役、房客或无婚配资格的共居成员，而非婚配候选人。',
+  '9-person family with asymmetric parents': '9个节点：r_fs x7，r_ms x6，构成7名兄弟姐妹的家户，其中一方父母少记录一名子女。5个样本中得分1.0。轻微不对称（7条父系vs 6条母系记录）可能反映再婚、仅以父名记录的非婚生子女，或三年调查的转录遗漏。',
+  'Extended family of 10 siblings': '12个节点：配对加上8名额外兄弟姐妹，共享双亲。r_sib x90（10名兄弟姐妹的完全团）。5个样本中得分1.0。最大的对称家庭模体：辽宁特大型家户似乎形成了高度结构化的婚配网络，SEAL能完美捕捉其子图拓扑。',
+  'Full-sibling family of 8': '10个节点，双亲在，8名子女（配对加上6名兄弟姐妹）。r_fs x8，r_ms x8，r_sib x56。5个样本中得分1.0。在历史辽宁，有8名以上子女的家户不常见但确实存在；其子女形成了SEAL捕捉为最大婚配预测力的密集社会网络。',
+  'Full-sibling family + 2 shared households': '8个节点（6人 + 2个家户节点）：配对及2名兄弟姐妹共享双亲，同时在两个家户中均有登记。r_hh x16将所有家庭成员链接至两个家户，表明家庭跨两个已登记居住单元分割——在家户分支时很常见。4个样本中得分1.0。这是最简的家户增强模体：由多次共同登记记录佐证的亲属结构。',
+  '9-sibling family (slightly asymmetric parents)': '10个节点：r_fs x8，r_ms x7，r_sib x56。新娘少一条母系边，可能表明某位子女来自不同母亲，或存在登记遗漏。4个样本中得分1.0。在结构上与对称9兄弟姐妹模体接近，但细微的登记不对称使SEAL将其归为不同的模体哈希。',
+  'Blended family (one father, two mothers)': '5个节点：r_fs x2（一位父亲连接两名候选人），r_ms x4（两位不同母亲，各与一名或两名候选人相连）。4个样本中得分1.0。这一重组家庭模式可能反映再婚鳏夫的情形：新郎和新娘通过父亲为同父异母兄妹，但各有不同的母亲——这在清代登记册中确有记录，因配偶死亡后再婚较为常见。',
+  '4-sibling family shared across 4 households': '10个节点（6人 + 4个家户节点）：一个4子女家庭（双亲均在）跨四次家户登记共同注册。r_hh x28显示出密集的多家户成员资格，典型于在旧家户和分支后新家户均保留登记的宗族支系。3个样本中得分1.0。',
+  'Full-sibling family of 9': '11个节点：配对加上7名兄弟姐妹，双亲在。r_fs x9，r_ms x9，r_sib x72。3个样本中得分1.0。较大的对称兄弟姐妹家庭模体之一，反映了亲本记录完整的多子女家户。',
+  '9-person family (more maternal links)': '9个节点：r_fs x6，r_ms x8，r_sib x30。母系边较多，表明该家户母系记录更为完整，或家庭中含有额外的同母异父兄弟姐妹。3个样本中得分1.0。',
+  '8-person family (mixed parental records)': '8个节点：r_fs x5，r_ms x7，r_sib x20。母系与父系边数不平衡（7 vs 5）指向扩展家庭，其中母亲可能与另一联盟有额外子女，或父亲的父系联系在登记册中仅被部分记录。3个样本中得分1.0。',
+  'Shared mother + shared household': '4个节点（3人 + 1个家户）：新郎和新娘共享一位母亲（r_ms x2），且在同一家户中共同登记（r_hh x2）。母亲与家户的双重共同登记同时确认了婚前的居住和血缘接近性。3个样本中得分1.0。',
+  'Shared mother + two household registrations': '5个节点（3人 + 2个家户节点）：与模体#2相同的共母核心，但增加了两条家户链接（r_hh x4），表明该家庭在两次连续家户登记中均有条目。3个样本中得分1.0。双家户登记与相邻两次三年调查间发生分户的家庭相符。',
+  'Extended family of 11 siblings': '13个节点：配对加上9名兄弟姐妹，双亲在。r_sib x110。3个样本中得分1.0。这个接近最大规模的兄弟姐妹团代表了结构最丰富的亲属模式之一：每位成员通过兄弟姐妹链接和父母链接与其他所有成员相连，为SEAL提供了明确的拓扑签名。',
+  'Household-linked pair with weak kin signal': '8个节点：孤立配对（DRNL=0，无亲属路径），但通过r_hh连接至共同家户，同时存在1条r_fs和1条r_ms边。得分0.903——接近最高分但略有下降，因为亲属连接较细（一条父系、一条母系链接），主要连接通过家户节点。此模体在结构上介于纯家户负信号模体（#11）和完整亲属模体之间。',
+  'Mega-clan (52 nodes)': '目录中最大的模体：52人加1个家户节点，r_fs x36，r_ms x50，r_sib x532，r_hh x84。这代表一个多世代扩展宗族，所有成员均在婚姻配对的2跳范围内。2个样本中得分1.0。历史上，如此密集的亲属网络对应清代旗籍名门望族，其多世代登记册保存完整。SEAL的最高置信度反映了密集超级宗族内的婚姻遵循高度可预测的结构路径。',
+  '5-sibling family + shared household': '8个节点（7人 + 1个家户）：r_fs x5，r_ms x5，r_sib x20，r_hh x10。配对加上3名兄弟姐妹共享双亲，且全部在单一家户中共同登记。2个样本中得分1.0。家户佐证强化了亲属信号：同一登记条目中的共居与共同亲本几乎是决定性证据。',
+  'Extended family of 12 siblings': '14个节点：r_fs x12，r_ms x11，r_sib x132。亲本记录略有不对称（12 vs 11条链接）。2个样本中得分1.0。子女数量最多的模体之一，132条兄弟姐妹边在12名子女中形成近完全团。',
+  'Full-sibling family of 7 (symmetric)': '9个节点：r_fs x6，r_ms x6，r_sib x30——7名兄弟姐妹家户的父系和母系记录完全均衡。2个样本中得分1.0。对称的亲本记录使该模体在结构上比非对称7兄弟姐妹变体更为清晰。',
+  'Multi-household clan (44 nodes, 13 households)': '第二大模体：31人 + 13个家户节点。r_fs x29，r_ms x27，r_sib x412，r_hh x294。这个散居宗族跨越13次家户登记，与在多个三年调查周期中保持登记条目的重要宗族支系相符。2个样本中得分1.0。极高的家户密度表明这是一个精英清代旗籍家族，其财产在多个行政家户单元中均有登记。',
+  'Paternal-dominant lineage (father-only side visible)': '12个节点：r_fs x11，r_ms x2，r_sib x74。极端的不对称（11条父系 vs 2条母系边）表明子图捕捉了一个母系记录稀少的父系宗族群体——这在清代登记册中很常见，因为女性来源的记录不如男性详尽。2个样本中得分1.0。历史上，这反映了八旗家户登记制度的父系偏向。',
+  'Small family + single shared household': '8个节点（7人 + 1个家户）：r_fs x3，r_ms x3，r_sib x2，r_hh x12。一个紧凑的3兄弟姐妹核心家庭（配对之外有1名额外兄弟姐妹），家户共同登记密集（12条r_hh边）。2个样本中得分1.0。相对于家庭规模偏高的r_hh数量表明所有家庭成员在多次三年调查周期中均出现在家户名册上。',
+  'Large family + 4 shared households': '18个节点（14人 + 4个家户节点）：r_fs x12，r_ms x12，r_sib x68，r_hh x48。一个对称的12兄弟姐妹家庭分布于4次家户登记中。2个样本中得分1.0。最大亲属密度与多家户分布的组合标识了一个殷实的宗族支系。',
+  'Asymmetric 8-node family': '8个节点：r_fs x6，r_ms x5，r_sib x30。7名兄弟姐妹家户中少一条母系边，形成轻微不对称。2个样本中得分1.0。由于缺失一条母系链接，在结构上有别于对称7兄弟姐妹模体（#29）——可能是该群体中有一名同父异母兄弟姐妹。',
+  'Nuclear family of 3 (slightly asymmetric)': '5个节点：r_fs x3，r_ms x2，r_sib x6。一个3子女核心家庭，其中一名子女仅有父系（无母系）链接——可能是父亲一侧的同父异母兄弟姐妹。2个样本中得分1.0。',
+  '6-household extended clan': '20个节点（14人 + 6个家户节点）：r_fs x12，r_ms x12，r_sib x80，r_hh x72。一个12名兄弟姐妹分布于6次家户登记中的大宗族。2个样本中得分1.0。6家户分布加上对称亲本记录，表明一个富裕宗族在保持亲属记录的同时，将自身主动分配至多个行政家户。',
+  'Compact nuclear family + single household': '5个节点（4人 + 1个家户）：r_fs x2，r_ms x2，r_sib x2，r_hh x4。最简家户增强模体：新郎、新娘及双亲均在同一家户中共同登记。2个样本中得分1.0。这是婚前家户共居与共同亲本的最简同步确认。',
+  '9-household sprawling clan': '31个节点（22人 + 9个家户节点）：r_fs x17，r_ms x13，r_sib x158，r_hh x156。一个亲本记录不对称（17父系 vs 13母系）、分布于9个家户的散居扩展家庭。2个样本中得分1.0。父系偏向与极端家户分布的组合是大型旗籍支系宗族的特征。',
+  '5-household extended family': '24个节点（19人 + 5个家户节点）：r_fs x17，r_ms x14，r_sib x212，r_hh x44。一个大型兄弟姐妹群体，分布于5个家户，父系略有偏向。2个样本中得分1.0。212条兄弟姐妹边表明约14-15名兄弟姐妹组成复杂网络，是目录中结构最丰富的家户-亲属组合之一。',
+  'Mother-heavy 3-sibling family': '6个节点：r_fs x3，r_ms x5，r_sib x6。3子女家户中母系边（5条）多于父系（3条）。2个样本中得分1.0。母系偏向是父系主导模体的镜像：此处母亲一侧的记录更为详尽，可能反映一个母系家户分支，或辽宁旗籍登记中有记录特别完整的女性祖先。',
+  '8-sibling family (father-heavy)': '10个节点：r_fs x8，r_ms x6，r_sib x56。8名兄弟姐妹群体中父系边（8条）多于母系（6条）。2个样本中得分1.0。与CMGPD的普遍模式一致：父亲姓名在多次登记中的记录比母亲更为可靠。',
+  '6-household extended clan (symmetric parents)': '22个节点（16人 + 6个家户节点）：r_fs x14，r_ms x14，r_sib x84，r_hh x72。6家户网络中父系和母系记录完全对称。2个样本中得分1.0。对称性将此宗族与非对称6家户模体（#36）区分开来：所有支系中双亲的记录质量同等完整。',
+  'Complex family + single household (asymmetric)': '10个节点（9人 + 1个家户）：r_fs x6，r_ms x8，r_sib x30，r_hh x12。一个7兄弟姐妹子图，母系边较多，所有成员在同一家户中共同登记。2个样本中得分1.0。家户纽带将所有家庭成员聚合在一起，尽管母系谱系记录占主导。',
+  'Compact 4-sibling family (dense)': '6个节点：r_fs x4，r_ms x3，r_sib x12。一个亲本记录接近对称（缺一条母系边）的4子女家户。2个样本中得分1.0。12条兄弟姐妹边在4名子女中形成完全团。',
+  'Paternal-only 8-sibling family': '10个节点：r_fs x8，r_ms x1，r_sib x56。仅有一条母系边——几乎所有亲属连接均通过父亲传导。2个样本中得分1.0。这一极端父系偏向可能表明母亲记录不完整（早逝、未在登记册中出现，或其ID未被关联），但父亲的谱系在2跳窗口内持续记录。',
+  '4-household sprawling clan (mother-heavy)': '27个节点（23人 + 4个家户节点）：r_fs x18，r_ms x21，r_sib x212，r_hh x82。母系边多于父系，分布于4个家户，212条兄弟姐妹边表明约15名兄弟姐妹。2个样本中得分1.0。如此规模的母系主导较为罕见，可能反映一个母系家户支系，或有记录特别完整的女性先祖的家庭。',
+  '4-sibling family + household (variant A)': '7个节点（6人 + 1个家户）：r_fs x4，r_ms x4，r_sib x12，r_hh x6。一个亲本对称的4兄弟姐妹核心家庭，适度的家户共同登记（6条r_hh链接）。2个样本中得分1.0。与变体B（#48）密切相关，但在家户成员记录数量上有所不同。',
+  '4-sibling family + household (variant B)': '7个节点（6人 + 1个家户）：r_fs x4，r_ms x4，r_sib x12，r_hh x8。结构上与变体A（#47）相同，唯有r_hh边数为8而非6，表明4名兄弟姐妹及双亲在更多登记周期中均出现在家户名册上。2个样本中得分1.0。',
+  'Nuclear pair + shared household': '6个节点（5人 + 1个家户）：r_fs x2，r_ms x2，r_sib x2，r_hh x8。配对共享双亲（最简同父同母结构），且在同一家户中登记密集（跨多次调查共8条r_hh边）。2个样本中得分1.0。相对于家庭规模偏高的r_hh数量表明多次三年调查周期中持续共居的文档记录。',
+  '4-household medium clan': '18个节点（14人 + 4个家户节点）：r_fs x12，r_ms x11，r_sib x80，r_hh x40。一个父系边略多、分布于4次家户登记的10兄弟姐妹家庭。2个样本中得分1.0。介于紧凑家户增强模体和超级宗族极端案例之间：一个有完整亲属记录和多家户登记的中型扩展家庭。',
+};
+
+function T(key) {
+  return (STRINGS[currentLang] || STRINGS.en)[key] ?? STRINGS.en[key] ?? key;
+}
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.title = T('page_title');
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = T(el.dataset.i18nHtml); });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = T(el.dataset.i18nTitle); });
+  document.querySelectorAll('[data-i18n-opt]').forEach(el => { el.textContent = T(el.dataset.i18nOpt); });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  if (allMotifs.length > 0) renderAll();
+  if (document.getElementById('modal').classList.contains('open')) renderModal();
+}
+let sortedMotifs = [];  // current display order
+let sortKey = 'rank';
+let scoreExplanation = '';
+
+// modal state
+let modalIndex = -1;   // index into sortedMotifs
+let modalZoom = null;  // d3 zoom behavior
+let modalZoomTransform = d3.zoomIdentity;
+let modalZoomK = 1;    // current zoom scale (for interaction handlers)
+
+// ── relation label helper ──────────────────────────────────────────────────
+function neighborRelLabel(etype, dir) {
+  if (etype === 'r_fs') return dir === 'out' ? T('rel_child') : T('rel_father');
+  if (etype === 'r_ms') return dir === 'out' ? T('rel_child') : T('rel_mother');
+  if (etype === 'r_sib') return T('rel_sibling');
+  return etype;
+}
+
+// ── helpers ────────────────────────────────────────────────────────────────
+function drnlRadius(label, scale) {
+  const base = label <= 1 ? 9 : label === 2 ? 7 : 5.5;
+  return base * scale;
+}
+
+function buildGraphData(motif) {
+  const ex = motif.example;
+  const rawEdges = ex.edges || [];
+  const rawEtypes = ex.edge_types || [];
+  const rawNtypes = ex.node_types || [];
+
+  const keptEdgeIdx = [];
+  const hhEdgeIdx = [];
+  for (let i = 0; i < rawEdges.length; i++) {
+    const et = rawEtypes[i] || 'r_sib';
+    if (et === 'r_hh') { hhEdgeIdx.push(i); } else { keptEdgeIdx.push(i); }
+  }
+
+  // Build household groups: hhOrig (node index) → Set of person orig indices
+  const hhPersonMap = new Map();
+  for (const i of hhEdgeIdx) {
+    const [a, b] = rawEdges[i];
+    const aType = rawNtypes[a] || 'person';
+    const bType = rawNtypes[b] || 'person';
+    let personOrig, hhOrig;
+    if (aType === 'household' && bType === 'person')      { hhOrig = a; personOrig = b; }
+    else if (aType === 'person' && bType === 'household') { hhOrig = b; personOrig = a; }
+    else continue;
+    if (!hhPersonMap.has(hhOrig)) hhPersonMap.set(hhOrig, new Set());
+    hhPersonMap.get(hhOrig).add(personOrig);
+  }
+
+  const referenced = new Set([ex.src_local, ex.dst_local]);
+  for (const i of keptEdgeIdx) { referenced.add(rawEdges[i][0]); referenced.add(rawEdges[i][1]); }
+  for (const persons of hhPersonMap.values()) { for (const p of persons) referenced.add(p); }
+
+  const personOnly = new Set([ex.src_local, ex.dst_local]);
+  for (const ni of referenced) {
+    if ((rawNtypes[ni] || 'person') === 'person') personOnly.add(ni);
+  }
+
+  const sorted = Array.from(personOnly).sort((a, b) => a - b);
+  const remap = new Map(sorted.map((orig, i) => [orig, i]));
+
+  const nodes = sorted.map(orig => ({
+    id: remap.get(orig), orig,
+    label: ex.drnl_labels?.[orig] ?? 0,
+    isSrc: orig === ex.src_local,
+    isDst: orig === ex.dst_local,
+  }));
+
+  const edges = [];
+  for (const i of keptEdgeIdx) {
+    const [s, t] = rawEdges[i];
+    if (!personOnly.has(s) || !personOnly.has(t)) continue;
+    edges.push({ source: remap.get(s), target: remap.get(t), etype: rawEtypes[i] || 'r_sib' });
+  }
+
+  // hhGroups: each entry has id (stable key) and members (local remapped IDs)
+  const hhGroups = [];
+  for (const [hhOrig, persons] of hhPersonMap) {
+    const members = [];
+    for (const p of persons) {
+      if (personOnly.has(p) && remap.has(p)) members.push(remap.get(p));
+    }
+    if (members.length >= 1) hhGroups.push({ id: `hh${hhOrig}`, members });
+  }
+
+  return { nodes, edges, hhGroups };
+}
+
+// ── layout (parameterized by canvas dimensions and spring scale) ──────────
+function computeLayout(nodes, edges, w, h, pad, springScale, hhGroups) {
+  if (nodes.length === 0) return [];
+  if (nodes.length === 1) return [{ ...nodes[0], x: w / 2, y: h / 2 }];
+
+  const nodesCopy = nodes.map(n => ({ ...n }));
+  const linksCopy = edges.map(e => ({ source: e.source, target: e.target, etype: e.etype }));
+
+  const dist = springScale * (nodes.length <= 3 ? 55 : nodes.length <= 6 ? 45 : 38);
+  const charge = springScale * (nodes.length <= 4 ? -200 : -130);
+
+  const sim = d3.forceSimulation(nodesCopy)
+    .force('link', d3.forceLink(linksCopy).id(d => d.id).distance(dist).strength(0.7))
+    .force('charge', d3.forceManyBody().strength(charge))
+    .force('center', d3.forceCenter(w / 2, h / 2))
+    .force('collision', d3.forceCollide(springScale * 14))
+    .stop();
+
+  // Soft pull co-household members toward their group centroid
+  if (hhGroups && hhGroups.length > 0) {
+    sim.force('hh-cluster', () => {
+      for (const grp of hhGroups) {
+        const ms = grp.members.map(id => nodesCopy.find(n => n.id === id)).filter(Boolean);
+        if (ms.length < 2) continue;
+        const cx = ms.reduce((s, n) => s + (n.x || 0), 0) / ms.length;
+        const cy = ms.reduce((s, n) => s + (n.y || 0), 0) / ms.length;
+        for (const n of ms) { n.vx = (n.vx || 0) + (cx - n.x) * 0.10; n.vy = (n.vy || 0) + (cy - n.y) * 0.10; }
+      }
+    });
+  }
+
+  const ticks = Math.ceil(Math.log(sim.alphaMin()) / Math.log(1 - sim.alphaDecay()));
+  for (let i = 0; i < Math.min(ticks, 500); i++) sim.tick();
+
+  for (const n of nodesCopy) {
+    n.x = Math.max(pad + 12, Math.min(w - pad - 12, n.x));
+    n.y = Math.max(pad + 12, Math.min(h - pad - 12, n.y));
+  }
+  return nodesCopy;
+}
+
+// ── household convex hull regions ─────────────────────────────────────────
+function drawHulls(svgD3, nodeMap, hhGroups, hullPad) {
+  if (!hhGroups || hhGroups.length === 0) return;
+  const hullG = svgD3.append('g').attr('class', 'hh-hulls').lower(); // push behind other layers
+
+  for (let gi = 0; gi < hhGroups.length; gi++) {
+    const grp = hhGroups[gi];
+    const pal = HH_PALETTE[gi % HH_PALETTE.length];
+    const pts = grp.members.map(id => nodeMap.get(id)).filter(Boolean).map(n => [n.x, n.y]);
+    if (pts.length === 0) continue;
+
+    if (pts.length === 1) {
+      // single-node group → circle
+      hullG.append('circle')
+        .attr('cx', pts[0][0]).attr('cy', pts[0][1])
+        .attr('r', hullPad * 1.8)
+        .attr('fill', pal.fill).attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5).attr('stroke-dasharray', '4,3');
+      continue;
+    }
+
+    // For 2 or more points: expand each point by hullPad in 4 directions to
+    // get a capsule-like shape, then compute convex hull of those expanded points
+    const expandedPts = [];
+    for (const [px, py] of pts) {
+      expandedPts.push([px - hullPad, py - hullPad]);
+      expandedPts.push([px + hullPad, py - hullPad]);
+      expandedPts.push([px + hullPad, py + hullPad]);
+      expandedPts.push([px - hullPad, py + hullPad]);
+    }
+    const hull = d3.polygonHull(expandedPts);
+    if (!hull) continue;
+
+    const lineGen = d3.line().curve(d3.curveCatmullRomClosed.alpha(0.5));
+    hullG.append('path')
+      .attr('d', lineGen(hull))
+      .attr('fill', pal.fill).attr('stroke', pal.stroke)
+      .attr('stroke-width', 1.5).attr('stroke-dasharray', '4,3');
+  }
+}
+
+// ── draw into an svg element ───────────────────────────────────────────────
+function drawMotif(motif, svgEl, w, h, pad, nodeScale, uid) {
+  const { nodes: rawNodes, edges, hhGroups } = buildGraphData(motif);
+  const visibleEdges = edges.filter(e => activeFilters.has(e.etype));
+  const showHulls = activeFilters.has('r_hh') && hhGroups.length > 0;
+  const laid = computeLayout(rawNodes, visibleEdges, w, h, pad, nodeScale, showHulls ? hhGroups : []);
+  const nodeMap = new Map(laid.map(n => [n.id, n]));
+
+  const svg = d3.select(svgEl);
+  svg.selectAll('*').remove();
+
+  if (showHulls) {
+    const hullPad = Math.max(9, nodeScale * 10);
+    drawHulls(svg, nodeMap, hhGroups, hullPad);
+  }
+
+  const defs = svg.append('defs');
+  for (const [et, col] of Object.entries(EDGE_COLOR)) {
+    if (et === 'r_sib') continue;
+    defs.append('marker')
+      .attr('id', `arr-${et.replace('_', '-')}-${uid}`)
+      .attr('viewBox', '0 -4 8 8')
+      .attr('refX', 10 + nodeScale * 4)
+      .attr('refY', 0)
+      .attr('markerWidth', 4 + nodeScale)
+      .attr('markerHeight', 4 + nodeScale)
+      .attr('orient', 'auto')
+      .append('path').attr('d', 'M0,-4L8,0L0,4Z').attr('fill', col);
+  }
+
+  if (rawNodes.length === 0) return { laid, nodeMap, nodeElems: [], edgeElems: [], visibleEdges };
+
+  const strokeW = Math.max(1.2, nodeScale * 0.8);
+  const edgeElems = [];
+
+  const edgeG = svg.append('g').attr('class', 'edges');
+  for (let ei = 0; ei < visibleEdges.length; ei++) {
+    const e = visibleEdges[ei];
+    const s = nodeMap.get(typeof e.source === 'object' ? e.source.id : e.source);
+    const t = nodeMap.get(typeof e.target === 'object' ? e.target.id : e.target);
+    if (!s || !t) { edgeElems.push(null); continue; }
+    const col = EDGE_COLOR[e.etype] || '#888';
+    const isDir = e.etype !== 'r_sib';
+    const eGrp = edgeG.append('g');
+    // transparent wide hit area for easier clicking
+    eGrp.append('line')
+      .attr('x1', s.x).attr('y1', s.y).attr('x2', t.x).attr('y2', t.y)
+      .attr('stroke', 'transparent').attr('stroke-width', Math.max(strokeW * 5, 8));
+    const line = eGrp.append('line')
+      .attr('x1', s.x).attr('y1', s.y).attr('x2', t.x).attr('y2', t.y)
+      .attr('stroke', col).attr('stroke-width', strokeW).attr('stroke-opacity', .78);
+    if (isDir) line.attr('marker-end', `url(#arr-${e.etype.replace('_', '-')}-${uid})`);
+    edgeElems.push({ group: eGrp, line, baseStrokeW: strokeW, edgeData: e, srcNode: s, tgtNode: t });
+  }
+
+  const nodeElems = [];
+  const nodeG = svg.append('g').attr('class', 'nodes');
+  for (const n of laid) {
+    const isM = n.isSrc || n.isDst;
+    const r = drnlRadius(n.label, nodeScale);
+    const g = nodeG.append('g').attr('transform', `translate(${n.x},${n.y})`);
+    let ring = null;
+    if (isM) {
+      ring = g.append('circle').attr('r', r + 3.5 * nodeScale).attr('fill', 'none')
+       .attr('stroke', '#f5c842').attr('stroke-width', 1.2).attr('stroke-opacity', .5);
+    }
+    const circle = g.append('circle').attr('r', r)
+     .attr('fill', isM ? '#f5c842' : '#4a5070')
+     .attr('stroke', isM ? '#f0b800' : '#6a7090')
+     .attr('stroke-width', 1.2);
+    let textEl = null;
+    if (isM) {
+      textEl = g.append('text')
+       .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
+       .attr('font-size', Math.max(6, r * 0.85))
+       .attr('font-weight', '700').attr('fill', '#1a1d27')
+       .text(n.isSrc ? T('label_h') : T('label_w'));
+    }
+    nodeElems.push({ g, circle, ring, textEl, baseR: r, nodeData: n });
+  }
+
+  return { laid, nodeMap, nodeElems, edgeElems, visibleEdges };
+}
+
+// ── card rendering ─────────────────────────────────────────────────────────
+function renderCard(motif, rank, sortedIdx) {
+  const { nodes: rawNodes, edges, hhGroups } = buildGraphData(motif);
+  const personEdges = edges;
+  const etypesPresent = [...new Set(personEdges.map(e => e.etype))];
+  if (hhGroups.length > 0 && !etypesPresent.includes('r_hh')) etypesPresent.push('r_hh');
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.sortedIdx = sortedIdx;
+
+  const hdr = document.createElement('div');
+  hdr.className = 'card-header';
+  hdr.innerHTML = `<span class="rank-badge">#${rank}</span><span class="count-badge"><b>${motif.count}</b> ${T('card_pairs')}</span>`;
+  card.appendChild(hdr);
+
+  const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svgEl.setAttribute('viewBox', `0 0 ${CW} ${CH}`);
+  card.appendChild(svgEl);
+
+  const scoreVal = motif.avg_score ?? 0;
+  const scoreColor = scoreVal >= 0.95 ? '#3dba5f' : scoreVal >= 0.8 ? '#f5c842' : '#e07b39';
+  const footer = document.createElement('div');
+  footer.className = 'card-footer';
+  const cardTitle = motif.title
+    ? (currentLang === 'zh' ? (MOTIF_TITLES_ZH[motif.title] || motif.title) : motif.title)
+    : null;
+  footer.innerHTML = `
+    ${cardTitle ? `<div class="card-title-text">${cardTitle}</div>` : ''}
+    <div class="card-stat"><span>${T('card_score')}</span><b style="color:${scoreColor}">${scoreVal.toFixed(4)}</b></div>
+    <div class="card-stat"><span>${T('card_nodes_edges')}</span><b>${rawNodes.length} / ${personEdges.length}</b></div>
+    <div class="etype-pills">
+      ${etypesPresent.map(et => `<span class="epill ${et}">${et}</span>`).join('')}
+      ${!etypesPresent.length ? `<span class="epill" style="background:#333">${T('card_isolated')}</span>` : ''}
+    </div>
+  `;
+  card.appendChild(footer);
+
+  const hint = document.createElement('div');
+  hint.className = 'zoom-hint';
+  hint.textContent = T('card_zoom_hint');
+  card.appendChild(hint);
+
+  // tooltip
+  card.addEventListener('mouseenter', ev => showTip(ev, motif, rawNodes, personEdges, etypesPresent));
+  card.addEventListener('mousemove', moveTip);
+  card.addEventListener('mouseleave', () => { document.getElementById('tooltip').style.display = 'none'; });
+
+  card.addEventListener('click', () => openModal(sortedIdx));
+
+  return { card, svgEl };
+}
+
+// ── tooltip ────────────────────────────────────────────────────────────────
+function showTip(ev, motif, rawNodes, personEdges, etypesPresent) {
+  if (document.getElementById('modal').classList.contains('open')) return;
+  const tip = document.getElementById('tooltip');
+  const scoreVal = motif.avg_score ?? 0;
+  const titleLine = motif.title ? `<b style="color:#fff">${motif.title}</b><br>` : `<b>${motif.id}</b><br>`;
+  tip.innerHTML = `
+    ${titleLine}
+    <span style="color:var(--muted);font-size:10px">${motif.id}</span><br>
+    ${T('tip_occ')}: <b>${motif.count}</b><br>
+    ${T('tip_score')}: <b>${scoreVal.toFixed(4)}</b><br>
+    ${T('tip_size')}: <b>${motif.avg_size?.toFixed(1) ?? '—'}</b><br>
+    ${T('tip_persons')}: <b>${rawNodes.length}</b> · ${T('tip_kin_edges')}: <b>${personEdges.length}</b><br>
+    ${T('tip_etypes')}: <b>${etypesPresent.join(', ') || 'none'}</b><br>
+    <span class="hash">${motif.hash?.slice(0, 90) ?? ''}…</span>
+  `;
+  tip.style.display = 'block';
+  moveTip(ev);
+}
+function moveTip(ev) {
+  const tip = document.getElementById('tooltip');
+  let left = ev.clientX + 14, top = ev.clientY + 14;
+  if (left + 290 > window.innerWidth) left = ev.clientX - 290 - 14;
+  if (top + 200 > window.innerHeight) top = ev.clientY - 200;
+  tip.style.left = left + 'px';
+  tip.style.top = top + 'px';
+}
+
+// ── modal ──────────────────────────────────────────────────────────────────
+function openModal(sortedIdx) {
+  modalIndex = sortedIdx;
+  document.getElementById('tooltip').style.display = 'none';
+  document.getElementById('modal').classList.add('open');
+  renderModal();
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  modalIndex = -1;
+}
+
+function renderModal() {
+  const motif = sortedMotifs[modalIndex];
+  if (!motif) return;
+
+  const { nodes: rawNodes, edges: allEdges, hhGroups } = buildGraphData(motif);
+  const personEdges = allEdges;
+  const etypesPresent = [...new Set(personEdges.map(e => e.etype))];
+  if (hhGroups.length > 0 && !etypesPresent.includes('r_hh')) etypesPresent.push('r_hh');
+  const scoreVal = motif.avg_score ?? 0;
+  const scoreColor = scoreVal >= 0.95 ? '#3dba5f' : scoreVal >= 0.8 ? '#f5c842' : '#e07b39';
+
+  // title bar
+  document.getElementById('m-rank').textContent = `#${motif._rank}`;
+  document.getElementById('m-id').textContent = motif.id;
+  document.getElementById('m-score').innerHTML = `<span style="color:${scoreColor};font-weight:600">${scoreVal.toFixed(4)}</span>`;
+  document.getElementById('m-nav-pos').textContent = `${modalIndex + 1} / ${sortedMotifs.length}`;
+
+  // meta panel
+  document.getElementById('mm-rank').textContent = motif._rank;
+  document.getElementById('mm-count').textContent = motif.count;
+  document.getElementById('mm-score').innerHTML = `<span style="color:${scoreColor}">${scoreVal.toFixed(4)}</span>`;
+  document.getElementById('mm-size').textContent = motif.avg_size?.toFixed(1) ?? '—';
+  document.getElementById('mm-nodes').textContent = rawNodes.length;
+  document.getElementById('mm-edges').textContent = personEdges.length;
+  const pillsEl = document.getElementById('mm-etypes');
+  pillsEl.innerHTML = etypesPresent.map(et => `<span class="epill ${et}">${et}</span>`).join('') ||
+    '<span class="epill" style="background:#333">isolated</span>';
+
+  // family pattern section
+  const patSec = document.getElementById('mm-pattern-section');
+  const patTitle = document.getElementById('mm-pattern-title');
+  const patDesc = document.getElementById('mm-desc');
+  if (motif.title) {
+    patSec.style.display = '';
+    const titleZh = currentLang === 'zh' ? (MOTIF_TITLES_ZH[motif.title] || motif.title) : motif.title;
+    patTitle.textContent = titleZh;
+    const descZh = currentLang === 'zh' ? (MOTIF_DESCS_ZH[motif.title] || motif.desc || '') : (motif.desc || '');
+    patDesc.textContent = descZh;
+  } else {
+    patSec.style.display = 'none';
+  }
+
+  // score explanation — always re-set from STRINGS so language switch takes effect
+  const scoreInfoEl = document.getElementById('score-info-body');
+  const scoreInfoText = T('score_explanation') || scoreExplanation;
+  scoreInfoEl.textContent = scoreInfoText;
+
+  // also update modal title bar to include motif title (localised)
+  const displayTitle = motif.title
+    ? (currentLang === 'zh' ? (MOTIF_TITLES_ZH[motif.title] || motif.title) : motif.title)
+    : null;
+  document.getElementById('m-id').innerHTML =
+    `<span style="color:#8090c0">${motif.id}</span>` +
+    (displayTitle ? `<span style="color:#aaa;font-family:inherit;font-size:12px"> — ${displayTitle}</span>` : '');
+
+  // SVG
+  const wrap = document.getElementById('modal-svg-wrap');
+  const svgEl = document.getElementById('modal-svg');
+  const wrapW = wrap.clientWidth || MW;
+  const wrapH = wrap.clientHeight || MH;
+
+  svgEl.setAttribute('width', wrapW);
+  svgEl.setAttribute('height', wrapH);
+  svgEl.setAttribute('viewBox', `0 0 ${wrapW} ${wrapH}`);
+
+  const svgD3 = d3.select(svgEl);
+  svgD3.selectAll('*').remove();
+  const zoomG = svgD3.append('g').attr('id', 'modal-zoom-g');
+
+  const drawResult = drawMotif(motif, zoomG.node(), wrapW, wrapH, MP, 1.9, 'modal');
+  const { nodeElems, edgeElems, nodeMap: modalNodeMap, visibleEdges: modalEdges } = drawResult;
+
+  // Label layer — inside zoomG so it pans/zooms with the graph
+  const labelG = d3.select(zoomG.node()).append('g').attr('class', 'modal-labels');
+
+  // ── selection state ──────────────────────────────────────────────────────
+  let selNodeId = null, selEdgeIdx = -1;
+
+  function clearModalSel() {
+    selNodeId = null; selEdgeIdx = -1;
+    labelG.selectAll('*').remove();
+    for (const ne of nodeElems) ne.g.attr('opacity', 1);
+    const k = modalZoomK;
+    for (const ee of edgeElems) {
+      if (!ee) continue;
+      ee.line.attr('stroke-opacity', 0.78).attr('stroke-width', ee.baseStrokeW / k);
+    }
+  }
+
+  function applyNodeSel(nid) {
+    selNodeId = nid; selEdgeIdx = -1;
+    labelG.selectAll('*').remove();
+    const k = modalZoomK;
+    const connIds = new Set([nid]);
+    const connSet = new Set();
+    const nbInfo = [];
+    for (let i = 0; i < modalEdges.length; i++) {
+      if (!edgeElems[i]) continue;
+      const e = modalEdges[i];
+      const sid = typeof e.source === 'object' ? e.source.id : e.source;
+      const tid = typeof e.target === 'object' ? e.target.id : e.target;
+      if (sid === nid || tid === nid) {
+        connSet.add(i);
+        const nbId = sid === nid ? tid : sid;
+        const dir  = sid === nid ? 'out' : 'in';
+        connIds.add(nbId);
+        const nbNode = modalNodeMap.get(nbId);
+        if (nbNode) nbInfo.push({ n: nbNode, label: neighborRelLabel(e.etype, dir), col: EDGE_COLOR[e.etype] || '#aaa' });
+      }
+    }
+    for (const ne of nodeElems) ne.g.attr('opacity', connIds.has(ne.nodeData.id) ? 1 : 0.1);
+    for (let i = 0; i < edgeElems.length; i++) {
+      const ee = edgeElems[i]; if (!ee) continue;
+      const on = connSet.has(i);
+      ee.line.attr('stroke-opacity', on ? 1 : 0.05)
+             .attr('stroke-width', (on ? ee.baseStrokeW * 1.6 : ee.baseStrokeW * 0.5) / k);
+    }
+    for (const { n, label, col } of nbInfo) {
+      const r = drnlRadius(n.label, 1.9);
+      labelG.append('text')
+        .attr('x', n.x).attr('y', n.y + (r + 14) / k)
+        .attr('text-anchor', 'middle').attr('dominant-baseline', 'hanging')
+        .attr('font-size', 11 / k).attr('font-weight', '600')
+        .attr('fill', col)
+        .attr('stroke', '#0a0c14').attr('stroke-width', 3 / k).attr('paint-order', 'stroke')
+        .attr('class', 'modal-rel-label').text(label);
+    }
+  }
+
+  function applyEdgeSel(ei) {
+    selEdgeIdx = ei; selNodeId = null;
+    labelG.selectAll('*').remove();
+    const k = modalZoomK;
+    const ee = edgeElems[ei]; if (!ee) return;
+    const { srcNode, tgtNode, edgeData } = ee;
+    const sid = typeof edgeData.source === 'object' ? edgeData.source.id : edgeData.source;
+    const tid = typeof edgeData.target === 'object' ? edgeData.target.id : edgeData.target;
+    const connIds = new Set([sid, tid]);
+    for (const ne of nodeElems) ne.g.attr('opacity', connIds.has(ne.nodeData.id) ? 1 : 0.1);
+    for (let i = 0; i < edgeElems.length; i++) {
+      const e2 = edgeElems[i]; if (!e2) continue;
+      const on = i === ei;
+      e2.line.attr('stroke-opacity', on ? 1 : 0.05)
+             .attr('stroke-width', (on ? e2.baseStrokeW * 2 : e2.baseStrokeW * 0.5) / k);
+    }
+    const mx = (srcNode.x + tgtNode.x) / 2, my = (srcNode.y + tgtNode.y) / 2;
+    const etype = edgeData.etype;
+    const eLabel = { r_fs: T('edge_fs'), r_ms: T('edge_ms'), r_sib: T('edge_sib'), r_hh: T('edge_hh') }[etype] || etype;
+    const col = EDGE_COLOR[etype] || '#aaa';
+    labelG.append('text')
+      .attr('x', mx).attr('y', my - 8 / k)
+      .attr('text-anchor', 'middle').attr('dominant-baseline', 'auto')
+      .attr('font-size', 11 / k).attr('font-weight', '700')
+      .attr('fill', col)
+      .attr('stroke', '#0a0c14').attr('stroke-width', 3.5 / k).attr('paint-order', 'stroke')
+      .attr('class', 'modal-rel-label').text(eLabel);
+  }
+
+  // Node click handlers
+  for (const ne of nodeElems) {
+    ne.g.style('cursor', 'pointer').on('click', function(ev) {
+      ev.stopPropagation();
+      selNodeId === ne.nodeData.id ? clearModalSel() : applyNodeSel(ne.nodeData.id);
+    });
+  }
+  // Edge click handlers
+  for (let i = 0; i < edgeElems.length; i++) {
+    const ee = edgeElems[i]; if (!ee) continue;
+    const idx = i;
+    ee.group.style('cursor', 'pointer').on('click', function(ev) {
+      ev.stopPropagation();
+      selEdgeIdx === idx ? clearModalSel() : applyEdgeSel(idx);
+    });
+  }
+  // Background click clears selection
+  svgD3.on('click', clearModalSel);
+
+  // ── D3 zoom with scale-invariant nodes/edges ──────────────────────────────
+  if (modalZoom) svgD3.on('.zoom', null);
+  modalZoom = d3.zoom()
+    .scaleExtent([0.15, 8])
+    .on('zoom', (event) => {
+      const k = event.transform.k;
+      modalZoomK = k;
+      zoomG.attr('transform', event.transform);
+      modalZoomTransform = event.transform;
+      document.getElementById('zoom-pct').textContent = Math.round(k * 100) + '%';
+
+      // Compensate node visual sizes so they stay constant on screen
+      for (const ne of nodeElems) {
+        ne.circle.attr('r', ne.baseR / k).attr('stroke-width', 1.2 / k);
+        if (ne.ring) ne.ring.attr('r', (ne.baseR + 3.5 * 1.9) / k).attr('stroke-width', 1.2 / k);
+        if (ne.textEl) ne.textEl.attr('font-size', Math.max(4, ne.baseR * 0.85) / k);
+      }
+      // Compensate hull stroke
+      d3.select(zoomG.node()).selectAll('.hh-hulls path, .hh-hulls circle')
+        .attr('stroke-width', 1.5 / k).attr('stroke-dasharray', `${4/k},${3/k}`);
+
+      // Re-apply selection (handles edge widths + label positions with new k)
+      if (selNodeId !== null) applyNodeSel(selNodeId);
+      else if (selEdgeIdx >= 0) applyEdgeSel(selEdgeIdx);
+      else {
+        for (const ee of edgeElems) {
+          if (!ee) continue;
+          ee.line.attr('stroke-width', ee.baseStrokeW / k);
+        }
+      }
+    });
+
+  modalZoomK = 1;
+  modalZoomTransform = d3.zoomIdentity;
+  svgD3.call(modalZoom);
+  svgD3.call(modalZoom.transform, d3.zoomIdentity);
+  document.getElementById('zoom-pct').textContent = '100%';
+}
+
+function modalNavTo(idx) {
+  if (idx < 0 || idx >= sortedMotifs.length) return;
+  modalIndex = idx;
+  renderModal();
+}
+
+function fitModalView() {
+  const svgEl = document.getElementById('modal-svg');
+  const zoomG = document.getElementById('modal-zoom-g');
+  if (!svgEl || !zoomG || !modalZoom) return;
+
+  const svgD3 = d3.select(svgEl);
+  const wrapW = svgEl.clientWidth || MW;
+  const wrapH = svgEl.clientHeight || MH;
+
+  // get bounding box of drawn content
+  try {
+    const bb = zoomG.getBBox();
+    if (bb.width === 0 && bb.height === 0) {
+      svgD3.call(modalZoom.transform, d3.zoomIdentity);
+      return;
+    }
+    const scale = Math.min(0.92 * wrapW / bb.width, 0.92 * wrapH / bb.height, 4);
+    const tx = wrapW / 2 - scale * (bb.x + bb.width / 2);
+    const ty = wrapH / 2 - scale * (bb.y + bb.height / 2);
+    const t = d3.zoomIdentity.translate(tx, ty).scale(scale);
+    svgD3.transition().duration(280).call(modalZoom.transform, t);
+  } catch(e) {
+    svgD3.call(modalZoom.transform, d3.zoomIdentity);
+  }
+}
+
+// zoom button handlers
+document.getElementById('zoom-in').addEventListener('click', () => {
+  if (!modalZoom) return;
+  d3.select('#modal-svg').transition().duration(220).call(modalZoom.scaleBy, 1.4);
+});
+document.getElementById('zoom-out').addEventListener('click', () => {
+  if (!modalZoom) return;
+  d3.select('#modal-svg').transition().duration(220).call(modalZoom.scaleBy, 1 / 1.4);
+});
+document.getElementById('zoom-reset').addEventListener('click', fitModalView);
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal-prev').addEventListener('click', () => modalNavTo(modalIndex - 1));
+document.getElementById('modal-next').addEventListener('click', () => modalNavTo(modalIndex + 1));
+
+// click backdrop to close
+document.getElementById('modal').addEventListener('click', (ev) => {
+  if (ev.target === document.getElementById('modal')) closeModal();
+});
+
+// keyboard
+document.addEventListener('keydown', ev => {
+  const modal = document.getElementById('modal');
+  if (!modal.classList.contains('open')) return;
+  if (ev.key === 'Escape')      { closeModal(); }
+  else if (ev.key === 'ArrowLeft')  { modalNavTo(modalIndex - 1); }
+  else if (ev.key === 'ArrowRight') { modalNavTo(modalIndex + 1); }
+  else if (ev.key === '+' || ev.key === '=') {
+    d3.select('#modal-svg').transition().duration(180).call(modalZoom.scaleBy, 1.4);
+  }
+  else if (ev.key === '-') {
+    d3.select('#modal-svg').transition().duration(180).call(modalZoom.scaleBy, 1 / 1.4);
+  }
+  else if (ev.key === '0') { fitModalView(); }
+});
+
+// re-render modal on window resize
+window.addEventListener('resize', () => {
+  if (document.getElementById('modal').classList.contains('open')) renderModal();
+});
+
+// ── grid sort & render ─────────────────────────────────────────────────────
+function getSorted(motifs) {
+  const copy = motifs.map((m, i) => ({ ...m, _rank: i + 1 }));
+  if (sortKey === 'rank')  return copy;
+  if (sortKey === 'score') return copy.sort((a, b) => (b.avg_score ?? 0) - (a.avg_score ?? 0));
+  if (sortKey === 'count') return copy.sort((a, b) => b.count - a.count);
+  if (sortKey === 'nodes') return copy.sort((a, b) => buildGraphData(b).nodes.length - buildGraphData(a).nodes.length);
+  if (sortKey === 'edges') return copy.sort((a, b) => buildGraphData(b).edges.length - buildGraphData(a).edges.length);
+  return copy;
+}
+
+function renderAll() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  sortedMotifs = getSorted(allMotifs);
+  let shown = 0;
+
+  for (let si = 0; si < sortedMotifs.length; si++) {
+    const motif = sortedMotifs[si];
+    const { card, svgEl } = renderCard(motif, motif._rank, si);
+    grid.appendChild(card);
+
+    const { edges, hhGroups } = buildGraphData(motif);
+    const visibleEdges = edges.filter(e => activeFilters.has(e.etype));
+    const hasVisible = visibleEdges.length > 0 || (activeFilters.has('r_hh') && hhGroups.length > 0);
+    const hasAnything = edges.length > 0 || hhGroups.length > 0;
+    if (!hasVisible && hasAnything) {
+      card.classList.add('disabled');
+    } else { shown++; }
+
+    drawMotif(motif, svgEl, CW, CH, CP, 1, `c${si}`);
+  }
+
+  document.getElementById('shown-count').textContent = shown;
+}
+
+// ── legend filter ──────────────────────────────────────────────────────────
+document.querySelectorAll('.legend-item').forEach(el => {
+  el.addEventListener('click', () => {
+    const t = el.dataset.type;
+    activeFilters.has(t) ? (activeFilters.delete(t), el.classList.add('off'))
+                         : (activeFilters.add(t), el.classList.remove('off'));
+    renderAll();
+  });
+});
+
+document.getElementById('sort-sel').addEventListener('change', e => {
+  sortKey = e.target.value;
+  renderAll();
+});
+
+// score explanation toggle
+document.getElementById('score-toggle').addEventListener('click', () => {
+  const body = document.getElementById('score-info-body');
+  body.classList.toggle('open');
+  document.getElementById('score-toggle').textContent =
+    body.classList.contains('open') ? T('score_toggle_hide') : T('score_toggle');
+});
+
+// ── language toggle ────────────────────────────────────────────────────────
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+});
+
+// ── load ───────────────────────────────────────────────────────────────────
+(async () => {
+  let data;
+  try {
+    data = await (await fetch('./data/motifs.json')).json();
+  } catch (err) {
+    document.getElementById('grid').innerHTML =
+      `<p style="color:#e55;padding:20px">Failed to load motifs.json: ${err}</p>`;
+    return;
+  }
+  allMotifs = Array.isArray(data) ? data : (data.motifs ?? []);
+  if (!Array.isArray(data) && data.score_explanation) {
+    scoreExplanation = data.score_explanation;
+    document.getElementById('score-info-body').textContent = scoreExplanation;
+  }
+  renderAll();
+})();
+</script>
+</body>
+</html>
