@@ -538,6 +538,7 @@ const STRINGS = {
     edge_fs: 'father → child', edge_ms: 'mother → child',
     edge_sib: 'sibling ↔ sibling', edge_hh: 'household',
     label_h: 'H', label_w: 'W',
+    score_explanation: 'The SEAL score is the output of the trained SEAL classifier applied to this 2-hop enclosing subgraph pattern. It estimates the probability that this local pre-marriage kinship structure is associated with a real marriage event in the Qing Liaoning registers. Score 1.0 means the model assigns near-certainty to any marriage pair that shows this local kin topology. Score 0.85 (isolated pair) reflects high demographic confidence (age + banner match) even without visible kin structure. Score 0.90 (partial household link) reflects moderate structural evidence. Score 0.077 (pure household co-residence) is the only negative-signal motif: shared residence alone, without kinship edges, is a weak local predictor because co-residents include servants, lodgers, and non-marriage-eligible household members. Note that r_hh carries 60% of HGT global attention — the household signal operates at the network-wide level, not in local 2-hop subgraphs.',
   },
   zh: {
     page_title: '婚前亲属关系模体目录 — 规则可视化',
@@ -575,7 +576,61 @@ const STRINGS = {
     edge_fs: '父 → 子', edge_ms: '母 → 子',
     edge_sib: '兄弟姐妹 ↔ 兄弟姐妹', edge_hh: '家户',
     label_h: '夫', label_w: '妻',
+    score_explanation: 'SEAL得分是训练好的SEAL分类器对该2跳封闭子图模式的输出结果。它估计了局部婚前亲属结构与清代辽宁人口登记册中真实婚姻事件相关联的概率。得分1.0意味着模型对呈现该局部亲属拓扑的任何配对几乎确定无疑。得分0.85（孤立配对）反映人口统计置信度（年龄 + 旗籍匹配）即使无可见亲属结构时依然较高。得分0.90（部分家户联系）反映中等程度的结构证据。得分0.077（纯家户共居）是唯一的负信号模体：仅凭共居而无亲属边是较弱的局部预测，因为共居者中包括仆役、房客及不具婚配资格的家户成员。注意：r_hh在HGT全局注意力中占60%——家户信号在全图层面发挥作用，而非局限于局部2跳子图。',
   },
+};
+
+const MOTIF_TITLES_ZH = {
+  'Isolated pair': '孤立配对',
+  'Shared mother (maternal half-siblings)': '共母（同母异父兄弟姐妹）',
+  'Full-sibling family of 4': '四子女同父同母家庭',
+  'Compact nuclear family (2 siblings)': '核心家庭（2名兄弟姐妹）',
+  'Large sibling family (6 children)': '六子女大型兄弟姐妹家庭',
+  'Full-sibling family of 3': '三子女同父同母家庭',
+  'Shared mother (3 maternal children)': '共母（3名母方子女）',
+  'Full-sibling family of 5': '五子女同父同母家庭',
+  'Full-sibling family of 7': '七子女同父同母家庭',
+  'Asymmetric 7-node family (more mothers than fathers)': '非对称七节点家庭（母多于父）',
+  'Pure household co-residence (no kinship)': '纯家户共居（无血缘关系）',
+  '9-person family with asymmetric parents': '九人家庭（亲本不对称）',
+  'Extended family of 10 siblings': '十兄弟姐妹大家庭',
+  'Full-sibling family of 8': '八子女同父同母家庭',
+  'Full-sibling family + 2 shared households': '同父同母家庭 + 2个共居家户',
+  '9-sibling family (slightly asymmetric parents)': '九兄弟姐妹家庭（亲本略有不对称）',
+  'Blended family (one father, two mothers)': '重组家庭（一父两母）',
+  '4-sibling family shared across 4 households': '四兄弟姐妹家庭跨4个家户',
+  'Full-sibling family of 9': '九子女同父同母家庭',
+  '9-person family (more maternal links)': '九人家庭（母方联系较多）',
+  '8-person family (mixed parental records)': '八人家庭（混合亲本记录）',
+  'Shared mother + shared household': '共母 + 共居家户',
+  'Shared mother + two household registrations': '共母 + 两次家户登记',
+  'Extended family of 11 siblings': '十一兄弟姐妹大家庭',
+  'Household-linked pair with weak kin signal': '家户关联配对（亲属信号较弱）',
+  'Mega-clan (52 nodes)': '超大宗族（52节点）',
+  '5-sibling family + shared household': '五兄弟姐妹家庭 + 共居家户',
+  'Extended family of 12 siblings': '十二兄弟姐妹大家庭',
+  'Full-sibling family of 7 (symmetric)': '七子女同父同母家庭（对称型）',
+  'Multi-household clan (44 nodes, 13 households)': '多家户宗族（44节点，13个家户）',
+  'Paternal-dominant lineage (father-only side visible)': '父系主导（仅父方可见）',
+  'Small family + single shared household': '小型家庭 + 单一共居家户',
+  'Large family + 4 shared households': '大型家庭 + 4个共居家户',
+  'Asymmetric 8-node family': '非对称八节点家庭',
+  'Nuclear family of 3 (slightly asymmetric)': '三人核心家庭（略有不对称）',
+  '6-household extended clan': '六家户大家庭',
+  'Compact nuclear family + single household': '紧凑核心家庭 + 单一家户',
+  '9-household sprawling clan': '九家户散居宗族',
+  '5-household extended family': '五家户大家庭',
+  'Mother-heavy 3-sibling family': '母方偏重三兄弟姐妹家庭',
+  '8-sibling family (father-heavy)': '八兄弟姐妹家庭（父方偏重）',
+  '6-household extended clan (symmetric parents)': '六家户大家庭（对称亲本）',
+  'Complex family + single household (asymmetric)': '复杂家庭 + 单一家户（非对称）',
+  'Compact 4-sibling family (dense)': '紧凑四兄弟姐妹家庭（密集型）',
+  'Paternal-only 8-sibling family': '纯父系八兄弟姐妹家庭',
+  '4-household sprawling clan (mother-heavy)': '四家户散居宗族（母方偏重）',
+  '4-sibling family + household (variant A)': '四兄弟姐妹家庭 + 家户（变体A）',
+  '4-sibling family + household (variant B)': '四兄弟姐妹家庭 + 家户（变体B）',
+  'Nuclear pair + shared household': '核心配对 + 共居家户',
+  '4-household medium clan': '四家户中型宗族',
 };
 
 function T(key) {
@@ -876,8 +931,11 @@ function renderCard(motif, rank, sortedIdx) {
   const scoreColor = scoreVal >= 0.95 ? '#3dba5f' : scoreVal >= 0.8 ? '#f5c842' : '#e07b39';
   const footer = document.createElement('div');
   footer.className = 'card-footer';
+  const cardTitle = motif.title
+    ? (currentLang === 'zh' ? (MOTIF_TITLES_ZH[motif.title] || motif.title) : motif.title)
+    : null;
   footer.innerHTML = `
-    ${motif.title ? `<div class="card-title-text">${motif.title}</div>` : ''}
+    ${cardTitle ? `<div class="card-title-text">${cardTitle}</div>` : ''}
     <div class="card-stat"><span>${T('card_score')}</span><b style="color:${scoreColor}">${scoreVal.toFixed(4)}</b></div>
     <div class="card-stat"><span>${T('card_nodes_edges')}</span><b>${rawNodes.length} / ${personEdges.length}</b></div>
     <div class="etype-pills">
@@ -977,23 +1035,26 @@ function renderModal() {
   const patDesc = document.getElementById('mm-desc');
   if (motif.title) {
     patSec.style.display = '';
-    patTitle.textContent = motif.title;
+    const titleZh = currentLang === 'zh' ? (MOTIF_TITLES_ZH[motif.title] || motif.title) : motif.title;
+    patTitle.textContent = titleZh;
     patDesc.textContent = motif.desc || '';
+    patDesc.style.display = currentLang === 'zh' ? 'none' : '';
   } else {
     patSec.style.display = 'none';
   }
 
-  // score explanation (set once, toggle shows/hides)
+  // score explanation — always re-set from STRINGS so language switch takes effect
   const scoreInfoEl = document.getElementById('score-info-body');
-  if (scoreExplanation && !scoreInfoEl.textContent) {
-    scoreInfoEl.textContent = scoreExplanation;
-  }
+  const scoreInfoText = T('score_explanation') || scoreExplanation;
+  scoreInfoEl.textContent = scoreInfoText;
 
-  // also update modal title bar to include motif title
-  const mTitle = motif.title ? ` — ${motif.title}` : '';
+  // also update modal title bar to include motif title (localised)
+  const displayTitle = motif.title
+    ? (currentLang === 'zh' ? (MOTIF_TITLES_ZH[motif.title] || motif.title) : motif.title)
+    : null;
   document.getElementById('m-id').innerHTML =
     `<span style="color:#8090c0">${motif.id}</span>` +
-    (motif.title ? `<span style="color:#aaa;font-family:inherit;font-size:12px"> — ${motif.title}</span>` : '');
+    (displayTitle ? `<span style="color:#aaa;font-family:inherit;font-size:12px"> — ${displayTitle}</span>` : '');
 
   // SVG
   const wrap = document.getElementById('modal-svg-wrap');
