@@ -277,6 +277,10 @@
   }
   .score-info-body.open { display: block; }
 
+  /* interaction labels in modal */
+  .modal-labels { pointer-events: none; }
+  .modal-rel-label { font-family: 'Inter','Segoe UI',sans-serif; }
+
   /* keyboard hint */
   .modal-keyhint {
     flex-shrink: 0;
@@ -481,6 +485,15 @@ let scoreExplanation = '';
 let modalIndex = -1;   // index into sortedMotifs
 let modalZoom = null;  // d3 zoom behavior
 let modalZoomTransform = d3.zoomIdentity;
+let modalZoomK = 1;    // current zoom scale (for interaction handlers)
+
+// ── relation label helper ──────────────────────────────────────────────────
+function neighborRelLabel(etype, dir) {
+  if (etype === 'r_fs') return dir === 'out' ? 'child' : 'father';
+  if (etype === 'r_ms') return dir === 'out' ? 'child' : 'mother';
+  if (etype === 'r_sib') return 'sibling';
+  return etype;
+}
 
 // ── helpers ────────────────────────────────────────────────────────────────
 function drnlRadius(label, scale) {
@@ -647,7 +660,6 @@ function drawMotif(motif, svgEl, w, h, pad, nodeScale, uid) {
   const svg = d3.select(svgEl);
   svg.selectAll('*').remove();
 
-  // Draw household hulls first so they sit behind edges and nodes
   if (showHulls) {
     const hullPad = Math.max(9, nodeScale * 10);
     drawHulls(svg, nodeMap, hhGroups, hullPad);
@@ -667,48 +679,58 @@ function drawMotif(motif, svgEl, w, h, pad, nodeScale, uid) {
       .append('path').attr('d', 'M0,-4L8,0L0,4Z').attr('fill', col);
   }
 
-  if (rawNodes.length === 0) return { laid, nodeMap };
+  if (rawNodes.length === 0) return { laid, nodeMap, nodeElems: [], edgeElems: [], visibleEdges };
 
   const strokeW = Math.max(1.2, nodeScale * 0.8);
+  const edgeElems = [];
 
   const edgeG = svg.append('g').attr('class', 'edges');
-  for (const e of visibleEdges) {
+  for (let ei = 0; ei < visibleEdges.length; ei++) {
+    const e = visibleEdges[ei];
     const s = nodeMap.get(typeof e.source === 'object' ? e.source.id : e.source);
     const t = nodeMap.get(typeof e.target === 'object' ? e.target.id : e.target);
-    if (!s || !t) continue;
+    if (!s || !t) { edgeElems.push(null); continue; }
     const col = EDGE_COLOR[e.etype] || '#888';
     const isDir = e.etype !== 'r_sib';
-    const line = edgeG.append('line')
+    const eGrp = edgeG.append('g');
+    // transparent wide hit area for easier clicking
+    eGrp.append('line')
+      .attr('x1', s.x).attr('y1', s.y).attr('x2', t.x).attr('y2', t.y)
+      .attr('stroke', 'transparent').attr('stroke-width', Math.max(strokeW * 5, 8));
+    const line = eGrp.append('line')
       .attr('x1', s.x).attr('y1', s.y).attr('x2', t.x).attr('y2', t.y)
       .attr('stroke', col).attr('stroke-width', strokeW).attr('stroke-opacity', .78);
     if (isDir) line.attr('marker-end', `url(#arr-${e.etype.replace('_', '-')}-${uid})`);
+    edgeElems.push({ group: eGrp, line, baseStrokeW: strokeW, edgeData: e, srcNode: s, tgtNode: t });
   }
 
+  const nodeElems = [];
   const nodeG = svg.append('g').attr('class', 'nodes');
   for (const n of laid) {
     const isM = n.isSrc || n.isDst;
     const r = drnlRadius(n.label, nodeScale);
     const g = nodeG.append('g').attr('transform', `translate(${n.x},${n.y})`);
+    let ring = null;
     if (isM) {
-      g.append('circle').attr('r', r + 3.5 * nodeScale).attr('fill', 'none')
+      ring = g.append('circle').attr('r', r + 3.5 * nodeScale).attr('fill', 'none')
        .attr('stroke', '#f5c842').attr('stroke-width', 1.2).attr('stroke-opacity', .5);
     }
-    g.append('circle').attr('r', r)
+    const circle = g.append('circle').attr('r', r)
      .attr('fill', isM ? '#f5c842' : '#4a5070')
      .attr('stroke', isM ? '#f0b800' : '#6a7090')
      .attr('stroke-width', 1.2);
-
-    // label H/W on marriage pair
+    let textEl = null;
     if (isM) {
-      g.append('text')
+      textEl = g.append('text')
        .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
        .attr('font-size', Math.max(6, r * 0.85))
        .attr('font-weight', '700').attr('fill', '#1a1d27')
        .text(n.isSrc ? 'H' : 'W');
     }
+    nodeElems.push({ g, circle, ring, textEl, baseR: r, nodeData: n });
   }
 
-  return { laid, nodeMap };
+  return { laid, nodeMap, nodeElems, edgeElems, visibleEdges };
 }
 
 // ── card rendering ─────────────────────────────────────────────────────────
@@ -864,24 +886,151 @@ function renderModal() {
   svgEl.setAttribute('height', wrapH);
   svgEl.setAttribute('viewBox', `0 0 ${wrapW} ${wrapH}`);
 
-  // draw into a <g> that zoom will transform
   const svgD3 = d3.select(svgEl);
   svgD3.selectAll('*').remove();
   const zoomG = svgD3.append('g').attr('id', 'modal-zoom-g');
 
-  drawMotif(motif, zoomG.node(), wrapW, wrapH, MP, 1.9, 'modal');
+  const drawResult = drawMotif(motif, zoomG.node(), wrapW, wrapH, MP, 1.9, 'modal');
+  const { nodeElems, edgeElems, nodeMap: modalNodeMap, visibleEdges: modalEdges } = drawResult;
 
-  // set up D3 zoom
-  if (modalZoom) svgD3.on('.zoom', null);  // detach old
+  // Label layer — inside zoomG so it pans/zooms with the graph
+  const labelG = d3.select(zoomG.node()).append('g').attr('class', 'modal-labels');
+
+  // ── selection state ──────────────────────────────────────────────────────
+  let selNodeId = null, selEdgeIdx = -1;
+
+  function clearModalSel() {
+    selNodeId = null; selEdgeIdx = -1;
+    labelG.selectAll('*').remove();
+    for (const ne of nodeElems) ne.g.attr('opacity', 1);
+    const k = modalZoomK;
+    for (const ee of edgeElems) {
+      if (!ee) continue;
+      ee.line.attr('stroke-opacity', 0.78).attr('stroke-width', ee.baseStrokeW / k);
+    }
+  }
+
+  function applyNodeSel(nid) {
+    selNodeId = nid; selEdgeIdx = -1;
+    labelG.selectAll('*').remove();
+    const k = modalZoomK;
+    const connIds = new Set([nid]);
+    const connSet = new Set();
+    const nbInfo = [];
+    for (let i = 0; i < modalEdges.length; i++) {
+      if (!edgeElems[i]) continue;
+      const e = modalEdges[i];
+      const sid = typeof e.source === 'object' ? e.source.id : e.source;
+      const tid = typeof e.target === 'object' ? e.target.id : e.target;
+      if (sid === nid || tid === nid) {
+        connSet.add(i);
+        const nbId = sid === nid ? tid : sid;
+        const dir  = sid === nid ? 'out' : 'in';
+        connIds.add(nbId);
+        const nbNode = modalNodeMap.get(nbId);
+        if (nbNode) nbInfo.push({ n: nbNode, label: neighborRelLabel(e.etype, dir), col: EDGE_COLOR[e.etype] || '#aaa' });
+      }
+    }
+    for (const ne of nodeElems) ne.g.attr('opacity', connIds.has(ne.nodeData.id) ? 1 : 0.1);
+    for (let i = 0; i < edgeElems.length; i++) {
+      const ee = edgeElems[i]; if (!ee) continue;
+      const on = connSet.has(i);
+      ee.line.attr('stroke-opacity', on ? 1 : 0.05)
+             .attr('stroke-width', (on ? ee.baseStrokeW * 1.6 : ee.baseStrokeW * 0.5) / k);
+    }
+    for (const { n, label, col } of nbInfo) {
+      const r = drnlRadius(n.label, 1.9);
+      labelG.append('text')
+        .attr('x', n.x).attr('y', n.y + (r + 14) / k)
+        .attr('text-anchor', 'middle').attr('dominant-baseline', 'hanging')
+        .attr('font-size', 11 / k).attr('font-weight', '600')
+        .attr('fill', col)
+        .attr('stroke', '#0a0c14').attr('stroke-width', 3 / k).attr('paint-order', 'stroke')
+        .attr('class', 'modal-rel-label').text(label);
+    }
+  }
+
+  function applyEdgeSel(ei) {
+    selEdgeIdx = ei; selNodeId = null;
+    labelG.selectAll('*').remove();
+    const k = modalZoomK;
+    const ee = edgeElems[ei]; if (!ee) return;
+    const { srcNode, tgtNode, edgeData } = ee;
+    const sid = typeof edgeData.source === 'object' ? edgeData.source.id : edgeData.source;
+    const tid = typeof edgeData.target === 'object' ? edgeData.target.id : edgeData.target;
+    const connIds = new Set([sid, tid]);
+    for (const ne of nodeElems) ne.g.attr('opacity', connIds.has(ne.nodeData.id) ? 1 : 0.1);
+    for (let i = 0; i < edgeElems.length; i++) {
+      const e2 = edgeElems[i]; if (!e2) continue;
+      const on = i === ei;
+      e2.line.attr('stroke-opacity', on ? 1 : 0.05)
+             .attr('stroke-width', (on ? e2.baseStrokeW * 2 : e2.baseStrokeW * 0.5) / k);
+    }
+    const mx = (srcNode.x + tgtNode.x) / 2, my = (srcNode.y + tgtNode.y) / 2;
+    const etype = edgeData.etype;
+    const eLabel = { r_fs: 'father → child', r_ms: 'mother → child', r_sib: 'sibling ↔ sibling', r_hh: 'household' }[etype] || etype;
+    const col = EDGE_COLOR[etype] || '#aaa';
+    labelG.append('text')
+      .attr('x', mx).attr('y', my - 8 / k)
+      .attr('text-anchor', 'middle').attr('dominant-baseline', 'auto')
+      .attr('font-size', 11 / k).attr('font-weight', '700')
+      .attr('fill', col)
+      .attr('stroke', '#0a0c14').attr('stroke-width', 3.5 / k).attr('paint-order', 'stroke')
+      .attr('class', 'modal-rel-label').text(eLabel);
+  }
+
+  // Node click handlers
+  for (const ne of nodeElems) {
+    ne.g.style('cursor', 'pointer').on('click', function(ev) {
+      ev.stopPropagation();
+      selNodeId === ne.nodeData.id ? clearModalSel() : applyNodeSel(ne.nodeData.id);
+    });
+  }
+  // Edge click handlers
+  for (let i = 0; i < edgeElems.length; i++) {
+    const ee = edgeElems[i]; if (!ee) continue;
+    const idx = i;
+    ee.group.style('cursor', 'pointer').on('click', function(ev) {
+      ev.stopPropagation();
+      selEdgeIdx === idx ? clearModalSel() : applyEdgeSel(idx);
+    });
+  }
+  // Background click clears selection
+  svgD3.on('click', clearModalSel);
+
+  // ── D3 zoom with scale-invariant nodes/edges ──────────────────────────────
+  if (modalZoom) svgD3.on('.zoom', null);
   modalZoom = d3.zoom()
     .scaleExtent([0.15, 8])
     .on('zoom', (event) => {
+      const k = event.transform.k;
+      modalZoomK = k;
       zoomG.attr('transform', event.transform);
       modalZoomTransform = event.transform;
-      document.getElementById('zoom-pct').textContent =
-        Math.round(event.transform.k * 100) + '%';
+      document.getElementById('zoom-pct').textContent = Math.round(k * 100) + '%';
+
+      // Compensate node visual sizes so they stay constant on screen
+      for (const ne of nodeElems) {
+        ne.circle.attr('r', ne.baseR / k).attr('stroke-width', 1.2 / k);
+        if (ne.ring) ne.ring.attr('r', (ne.baseR + 3.5 * 1.9) / k).attr('stroke-width', 1.2 / k);
+        if (ne.textEl) ne.textEl.attr('font-size', Math.max(4, ne.baseR * 0.85) / k);
+      }
+      // Compensate hull stroke
+      d3.select(zoomG.node()).selectAll('.hh-hulls path, .hh-hulls circle')
+        .attr('stroke-width', 1.5 / k).attr('stroke-dasharray', `${4/k},${3/k}`);
+
+      // Re-apply selection (handles edge widths + label positions with new k)
+      if (selNodeId !== null) applyNodeSel(selNodeId);
+      else if (selEdgeIdx >= 0) applyEdgeSel(selEdgeIdx);
+      else {
+        for (const ee of edgeElems) {
+          if (!ee) continue;
+          ee.line.attr('stroke-width', ee.baseStrokeW / k);
+        }
+      }
     });
 
+  modalZoomK = 1;
   modalZoomTransform = d3.zoomIdentity;
   svgD3.call(modalZoom);
   svgD3.call(modalZoom.transform, d3.zoomIdentity);
