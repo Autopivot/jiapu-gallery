@@ -1,0 +1,31 @@
+{
+  "random": {
+    "auc": 0.9848871999999999,
+    "pct_connected": 0.06,
+    "n_pairs": 1000,
+    "n_neg": 5000
+  },
+  "community": {
+    "auc": 0.9511512907744646,
+    "pct_connected": 6.48389033420052,
+    "n_pairs": 1000,
+    "n_neg": 4997
+  },
+  "2hop": {
+    "auc": 0.5547221444288858,
+    "pct_connected": 81.0362072414483,
+    "n_pairs": 1000,
+    "n_neg": 4999
+  },
+  "positive": {
+    "pct_connected": 97.7
+  },
+  "_meta": {
+    "seed": 42,
+    "k_neg": 5,
+    "mean_2hop_pool_size": 5.836,
+    "n_valid_pos": 1000,
+    "model_found": true,
+    "timestamp": "2026-04-23T13:05:59.210514+00:00"
+  }
+}

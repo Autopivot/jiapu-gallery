@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEAL Hard-Negative Validation — RuleVis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0f1117;
+    --surface:  #1a1d27;
+    --surface2: #21253a;
+    --border:   #2e3346;
+    --text:     #e2e4ef;
+    --muted:    #7a7f9a;
+    --gold:     #f5c842;
+    --c-random:    #e05555;
+    --c-community: #e09320;
+    --c-twohop:    #3dba5f;
+    --c-pos:       #4a7fe5;
+    --radius:   10px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+  }
+
+  /* ── header ── */
+  header {
+    padding: 32px 40px 24px;
+    border-bottom: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 10px; }
+  header h1 { font-size: 22px; font-weight: 600; letter-spacing: -.3px; color: #fff; }
+  header p  { color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 780px; }
+  .lang-group { display: flex; gap: 6px; flex-shrink: 0; margin-top: 2px; }
+  .lang-btn {
+    padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+    border: 1.5px solid var(--border); background: transparent; color: var(--muted);
+    cursor: pointer; transition: all .15s;
+  }
+  .lang-btn.active, .lang-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── breadcrumb ── */
+  .breadcrumb {
+    max-width: 1200px; margin: 0 auto;
+    padding: 10px 40px; font-size: 12px; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .breadcrumb a { color: var(--muted); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb span { margin: 0 6px; }
+
+  /* ── main layout ── */
+  .main { max-width: 1200px; margin: 0 auto; padding: 32px 40px 80px; }
+
+  /* ── condition cards ── */
+  .cards-row { display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+  .cond-card {
+    flex: 1; min-width: 240px;
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+    position: relative; overflow: hidden;
+  }
+  .cond-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .cond-card.random::before  { background: var(--c-random); }
+  .cond-card.community::before { background: var(--c-community); }
+  .cond-card.twohop::before  { background: var(--c-twohop); }
+  .cond-badge {
+    display: inline-block; padding: 2px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .random  .cond-badge { background: rgba(224,85,85,.15);  color: var(--c-random); }
+  .community .cond-badge { background: rgba(224,147,32,.15); color: var(--c-community); }
+  .twohop  .cond-badge { background: rgba(61,186,95,.15);  color: var(--c-twohop); }
+  .cond-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: #fff; }
+  .cond-desc { font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 16px; }
+  .cond-metrics { display: flex; gap: 20px; }
+  .metric { display: flex; flex-direction: column; gap: 3px; }
+  .metric-val {
+    font-size: 28px; font-weight: 700; letter-spacing: -.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .metric-val.auc { color: #fff; }
+  .metric-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+  .metric-conn { color: var(--muted); font-size: 18px; font-weight: 600; }
+  .metric-conn.high { color: var(--c-twohop); }
+  .metric-conn.mid  { color: var(--c-community); }
+  .metric-conn.low  { color: var(--c-random); }
+
+  /* ── positive reference row ── */
+  .pos-ref {
+    background: var(--surface2); border: 1px dashed var(--border);
+    border-radius: var(--radius); padding: 14px 22px;
+    display: flex; align-items: center; gap: 20px;
+    margin-bottom: 32px; flex-wrap: wrap;
+  }
+  .pos-ref-label { font-size: 12px; font-weight: 600; color: var(--c-pos); text-transform: uppercase; letter-spacing: .3px; }
+  .pos-ref-val   { font-size: 16px; font-weight: 600; color: #fff; }
+  .pos-ref-desc  { font-size: 12px; color: var(--muted); }
+
+  /* ── chart section ── */
+  .charts-row { display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+  .chart-panel {
+    flex: 1; min-width: 300px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+  }
+  .chart-panel h3 { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 16px; }
+  .chart-wrap { width: 100%; }
+  svg.bar-chart { width: 100%; height: 180px; }
+  .bar-label { fill: var(--text); font-size: 12px; font-family: 'Inter', sans-serif; }
+  .bar-val   { fill: #fff;        font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; }
+  .bar-muted { fill: var(--muted); font-size: 11px; font-family: 'Inter', sans-serif; }
+
+  /* ── explanation section ── */
+  .explain-section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 32px; overflow: hidden;
+  }
+  .explain-header {
+    padding: 16px 22px; display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; user-select: none; gap: 12px;
+  }
+  .explain-header:hover { background: rgba(255,255,255,.03); }
+  .explain-header h3 { font-size: 14px; font-weight: 600; color: #fff; }
+  .explain-toggle { font-size: 18px; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
+  .explain-toggle.open { transform: rotate(45deg); }
+  .explain-body {
+    padding: 0 22px; max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s;
+  }
+  .explain-body.open { max-height: 1200px; padding: 0 22px 22px; }
+  .explain-body p { color: var(--muted); font-size: 13px; line-height: 1.7; margin-bottom: 12px; }
+  .explain-body p:last-child { margin-bottom: 0; }
+  .explain-body strong { color: var(--text); }
+  .explain-body .highlight-box {
+    background: rgba(245,200,66,.06); border-left: 3px solid var(--gold);
+    padding: 12px 16px; border-radius: 0 6px 6px 0;
+    margin: 14px 0;
+  }
+  .explain-body .highlight-box p { margin-bottom: 0; }
+  .step-list { list-style: none; margin: 12px 0; }
+  .step-list li {
+    padding: 8px 12px 8px 36px; position: relative;
+    border-left: 1px solid var(--border); margin-bottom: 8px;
+    color: var(--muted); font-size: 12.5px; line-height: 1.6;
+  }
+  .step-list li::before {
+    content: attr(data-n);
+    position: absolute; left: -12px; top: 6px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--surface2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--text);
+    line-height: 22px; text-align: center;
+  }
+  .step-list li strong { color: var(--text); }
+
+  /* ── meta strip ── */
+  .meta-strip {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 22px;
+    display: flex; gap: 28px; flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-key { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+  .meta-val { font-size: 14px; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+
+  /* ── loading / error ── */
+  .loading-msg { text-align: center; padding: 60px; color: var(--muted); }
+  .error-msg { text-align: center; padding: 40px; color: var(--c-random); font-size: 13px; }
+
+  /* ── responsive ── */
+  @media (max-width: 700px) {
+    header, .breadcrumb, .main { padding-left: 16px; padding-right: 16px; }
+    .cond-card { min-width: 100%; }
+    .chart-panel { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1 data-i18n="title">SEAL Hard-Negative Validation</h1>
+    <div class="lang-group">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="zh">中文</button>
+    </div>
+  </div>
+  <p data-i18n-html="header_desc">
+    Re-evaluates the trained SEAL classifier under three negative-sampling conditions to validate
+    whether AUC 0.9912 reflects genuine motif discrimination or a simpler
+    <em>connectivity collapse</em> artifact.
+  </p>
+</header>
+
+<nav class="breadcrumb">
+  <a href="motifs-gallery.html" data-i18n="nav_motifs">Motif Catalog</a>
+  <span>›</span>
+  <span data-i18n="nav_current">Hard-Negative Validation</span>
+</nav>
+
+<div class="main" id="app">
+  <div class="loading-msg" id="loading" data-i18n="loading">Loading results…</div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+// ── i18n ───────────────────────────────────────────────────────────────────
+let currentLang = 'en';
+
+const STRINGS = {
+  en: {
+    page_title: 'SEAL Hard-Negative Validation — RuleVis',
+    title: 'SEAL Hard-Negative Validation',
+    header_desc: 'Re-evaluates the trained SEAL classifier under three negative-sampling conditions to validate whether AUC 0.9912 reflects genuine motif discrimination or a simpler <em>connectivity collapse</em> artifact.',
+    nav_motifs: 'Motif Catalog',
+    nav_current: 'Hard-Negative Validation',
+    loading: 'Loading results…',
+    error: 'Could not load hard_neg_eval.json — run evaluate_seal_hard_negatives.py first.',
+
+    // condition names
+    cond_random: 'Random',
+    cond_community: 'Community',
+    cond_twohop: '2-Hop Hard',
+    badge_random: 'Baseline',
+    badge_community: 'Structured',
+    badge_twohop: 'Hard',
+    desc_random: 'Negative female drawn uniformly at random from the full population (~260 K persons). The 2-hop enclosing subgraph almost always consists of two disconnected components.',
+    desc_community: 'Negative female matched to the same community and approximate age bracket as the positive wife. Higher structural overlap than random.',
+    desc_twohop: 'Negative female guaranteed to share a 2-hop path with the husband in the pre-marriage kin graph. Forces structural connectivity similar to positive pairs.',
+
+    // metrics
+    lbl_auc: 'AUC-ROC',
+    lbl_conn: '% Connected (neg)',
+    lbl_npairs: 'Test pairs',
+    lbl_nneg: 'Neg samples',
+
+    // positive reference
+    pos_label: 'Positive pairs (reference)',
+    pos_conn_label: '% connected subgraphs',
+    pos_desc: 'True married couples — subgraphs are nearly always connected via pre-marriage kin or household paths.',
+
+    // chart titles
+    chart_auc: 'AUC-ROC by Condition',
+    chart_conn: '% Connected Subgraphs',
+
+    // explanation
+    explain_title: 'The Connectivity Collapse Hypothesis',
+    explain_p1: 'SEAL AUC of <strong>0.9912</strong> was obtained with random sex-filtered negative sampling. This result is <strong>not</strong> an artifact of data leakage — the pipeline applies strict temporal cutoff (t<sub>edge</sub> &lt; t<sub>m</sub>), downward truncation, and heterogeneous edge retention. But the <em>evaluation difficulty</em> is very low.',
+    explain_p2: 'When a random female f<sup>−</sup> is drawn from ~260,000 persons, the 2-hop enclosing subgraph S(m, f<sup>−</sup>) is almost certainly two completely disconnected components — one centred on the husband\'s kin cluster, one on the random female\'s. <strong>DRNL assigns label 0 to all unreachable nodes</strong>, so the GCN receives all-zero features for most nodes and trivially classifies the subgraph as a negative.',
+    explain_highlight: '"In the population network of Qing Liaoning, marriage almost never occurred between strangers with no 2-hop pre-marriage path." This is the sociological content of AUC 0.9912.',
+    explain_p3: 'The three-condition evaluation separates these effects. If AUC drops substantially under 2-hop hard negatives (condition 3), SEAL learned connectivity detection, not motifs. If AUC stays high (≥ 0.90), the motif catalogue captures genuine fine-grained structure beyond connectivity.',
+    explain_steps_title: 'How 2-Hop Hard Negatives Are Constructed',
+    step1: '<strong>Filter graph</strong> to pre-marriage edges only (r_fs, r_ms, r_sib with t < t<sub>m</sub>).',
+    step2: '<strong>BFS 2 hops</strong> from husband m — collect all female nodes in that neighborhood.',
+    step3: '<strong>Sample k = 5</strong> females from that pool. Fallback to community-matched if pool is too small.',
+    step4: 'Extract SEAL subgraph for each (m, f<sup>−</sup>, t<sub>m</sub>) pair and score with the trained model.',
+
+    // meta
+    meta_seed: 'Seed',
+    meta_kneg: 'k-neg',
+    meta_pool: 'Mean 2-hop pool',
+    meta_npairs: 'Valid pos pairs',
+    meta_model: 'Model',
+    meta_found: 'found',
+    meta_missing: 'MISSING',
+    meta_ts: 'Evaluated',
+    warn_no_model_title: 'Model not found.',
+    warn_no_model_body: 'seal_best.pt was not located — AUC values are 0.5 (random chance). Run evaluate_seal_hard_negatives.py with --model pointing to seal_best.pt.',
+    pos_short: 'Positive',
+    interp_title: 'How to interpret the 2-hop AUC',
+    interp_high_val: 'AUC ≥ 0.90',
+    interp_high: 'SEAL learned genuine motif discrimination beyond connectivity. The motif catalogue captures fine-grained structural patterns that distinguish real marriages from structurally-similar non-marriages.',
+    interp_mid_val: '0.75–0.90',
+    interp_mid: 'Mixed signal: SEAL uses both connectivity and motif cues. The model learned something beyond trivial disconnectedness, but connectivity still contributes substantially.',
+    interp_low_val: '0.50–0.75',
+    interp_low: 'SEAL primarily learned connectivity detection. AUC collapses when negatives are forced to be connected, confirming the original 0.9912 was driven by the triviality of disconnected negatives.',
+  },
+  zh: {
+    page_title: 'SEAL强负样本验证 — 规则可视化',
+    title: 'SEAL 强负样本验证',
+    header_desc: '在三种负采样条件下重新评估训练好的SEAL分类器，验证AUC 0.9912是否反映了真正的模体判别能力，还是更简单的<em>连通性崩塌</em>现象。',
+    nav_motifs: '模体目录',
+    nav_current: '强负样本验证',
+    loading: '加载结果中…',
+    error: '无法加载 hard_neg_eval.json — 请先运行 evaluate_seal_hard_negatives.py',
+
+    cond_random: '随机',
+    cond_community: '社区匹配',
+    cond_twohop: '2跳强负样本',
+    badge_random: '基线',
+    badge_community: '结构化',
+    badge_twohop: '强',
+    desc_random: '从全体人口（约26万人）均匀随机抽取负样本女性。2跳闭合子图几乎总是由两个完全不相连的连通分量组成。',
+    desc_community: '负样本女性与正样本妻子来自同一社区且年龄相近。与随机负样本相比，结构重叠度更高。',
+    desc_twohop: '负样本女性被强制保证在婚前亲属图中与丈夫存在2跳路径，迫使子图具有与正样本相似的结构连通性。',
+
+    lbl_auc: 'AUC-ROC',
+    lbl_conn: '连通率（负样本）',
+    lbl_npairs: '测试配对数',
+    lbl_nneg: '负样本数',
+
+    pos_label: '正样本配对（参考）',
+    pos_conn_label: '子图连通率',
+    pos_desc: '真实婚配夫妇——子图几乎总是通过婚前亲属或共户路径相连。',
+
+    chart_auc: '各条件下的 AUC-ROC',
+    chart_conn: '负样本子图连通率 (%)',
+
+    explain_title: '连通性崩塌假设',
+    explain_p1: 'SEAL在随机性别过滤负采样下获得了<strong>0.9912</strong>的AUC。这一结果<strong>并非</strong>数据泄露的产物——流水线采用了严格的时间截止（t<sub>edge</sub> &lt; t<sub>m</sub>）、向下截断和异质边保留。但<em>评估难度</em>非常低。',
+    explain_p2: '当从约26万人中随机抽取女性f<sup>−</sup>时，2跳闭合子图S(m, f<sup>−</sup>)几乎必然由两个完全不相连的连通分量组成——一个以丈夫的亲属群为中心，一个以随机女性的亲属群为中心。<strong>DRNL对所有不可达节点赋予标签0</strong>，因此GCN接收到大多数节点的全零特征，将子图平凡地分类为负样本。',
+    explain_highlight: '"在清代辽宁人口网络中，婚姻几乎从不发生在婚前网络中2跳距离之外的陌生人之间。"这正是AUC 0.9912的社会学内涵。',
+    explain_p3: '三条件评估将这些效应分离开来。如果在2跳强负样本（条件3）下AUC大幅下降，则SEAL学习的是连通性检测，而非模体判别。如果AUC保持较高（≥0.90），则模体目录确实捕获了超越连通性的精细结构特征。',
+    explain_steps_title: '2跳强负样本的构建方式',
+    step1: '<strong>图过滤</strong>：仅保留婚前边（r_fs、r_ms、r_sib，且 t &lt; t<sub>m</sub>）。',
+    step2: '<strong>BFS 2跳</strong>：从丈夫m出发，收集该邻域内的所有女性节点。',
+    step3: '<strong>采样 k=5</strong> 名女性。若池子太小则退回到社区匹配。',
+    step4: '为每个 (m, f<sup>−</sup>, t<sub>m</sub>) 配对提取SEAL子图，并用训练好的模型打分。',
+
+    meta_seed: '随机种子',
+    meta_kneg: '每正样本负样本数',
+    meta_pool: '平均2跳池大小',
+    meta_npairs: '有效正样本对',
+    meta_model: '模型',
+    meta_found: '已找到',
+    meta_missing: '未找到',
+    meta_ts: '评估时间',
+    warn_no_model_title: '模型未找到。',
+    warn_no_model_body: '未找到 seal_best.pt — AUC 值为 0.5（随机猜测）。请运行 evaluate_seal_hard_negatives.py 并通过 --model 参数指定 seal_best.pt 的路径。',
+    pos_short: '正样本',
+    interp_title: '如何解读2跳AUC结果',
+    interp_high_val: 'AUC ≥ 0.90',
+    interp_high: 'SEAL学习了超越连通性的真正模体判别能力。模体目录捕获了区分真实婚姻与结构相似非婚姻的精细结构特征。',
+    interp_mid_val: '0.75–0.90',
+    interp_mid: '混合信号：SEAL同时使用了连通性和模体线索。模型学到了超越简单不连通性的东西，但连通性仍有相当贡献。',
+    interp_low_val: '0.50–0.75',
+    interp_low: 'SEAL主要学习了连通性检测。当负样本被迫保持连通时AUC崩塌，证实了原始0.9912主要由不连通负样本的平凡性所驱动。',
+  },
+};
+
+function T(key) {
+  return (STRINGS[currentLang] || STRINGS.en)[key] ?? STRINGS.en[key] ?? key;
+}
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.title = T('page_title');
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = T(el.dataset.i18nHtml); });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  if (window._evalData) renderAll(window._evalData);
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+});
+
+
+// ── chart helpers ──────────────────────────────────────────────────────────
+function renderBarChart(svgEl, items) {
+  // items: [{label, value, color, max}]
+  const W = svgEl.clientWidth || 400;
+  const H = 180;
+  const marginL = 110, marginR = 55, marginT = 10, marginB = 10;
+  const barW = (H - marginT - marginB) / items.length - 8;
+  const chartW = W - marginL - marginR;
+
+  const maxVal = items[0].max ?? d3.max(items, d => d.value);
+
+  const svg = d3.select(svgEl)
+    .attr('viewBox', `0 0 ${W} ${H}`)
+    .attr('preserveAspectRatio', 'xMidYMid meet');
+  svg.selectAll('*').remove();
+
+  const g = svg.append('g').attr('transform', `translate(${marginL},${marginT})`);
+  const innerH = H - marginT - marginB;
+
+  // y scale
+  const y = d3.scaleBand()
+    .domain(items.map((_, i) => i))
+    .range([0, innerH])
+    .padding(0.35);
+
+  // x scale
+  const x = d3.scaleLinear().domain([0, maxVal]).range([0, chartW]);
+
+  // background track
+  g.selectAll('.track')
+    .data(items)
+    .enter().append('rect')
+    .attr('class', 'track')
+    .attr('x', 0).attr('y', (_, i) => y(i))
+    .attr('width', chartW).attr('height', y.bandwidth())
+    .attr('rx', 3).attr('fill', 'rgba(255,255,255,.04)');
+
+  // bars
+  g.selectAll('.bar')
+    .data(items)
+    .enter().append('rect')
+    .attr('class', 'bar')
+    .attr('x', 0).attr('y', (_, i) => y(i))
+    .attr('width', d => x(d.value)).attr('height', y.bandwidth())
+    .attr('rx', 3).attr('fill', d => d.color);
+
+  // value labels
+  g.selectAll('.val-label')
+    .data(items)
+    .enter().append('text')
+    .attr('class', 'bar-val')
+    .attr('x', d => x(d.value) + 6)
+    .attr('y', (_, i) => y(i) + y.bandwidth() / 2 + 4)
+    .text(d => d.fmt ? d.fmt(d.value) : d.value.toFixed(4));
+
+  // row labels
+  g.selectAll('.row-label')
+    .data(items)
+    .enter().append('text')
+    .attr('class', 'bar-label')
+    .attr('x', -8).attr('y', (_, i) => y(i) + y.bandwidth() / 2 + 4)
+    .attr('text-anchor', 'end')
+    .text(d => d.label);
+}
+
+
+// ── render ─────────────────────────────────────────────────────────────────
+function connClass(pct) {
+  if (pct >= 65) return 'high';
+  if (pct >= 25) return 'mid';
+  return 'low';
+}
+
+function renderAll(data) {
+  const app = document.getElementById('app');
+  const loading = document.getElementById('loading');
+  if (loading) loading.remove();
+  const meta = data._meta || {};
+
+  // ── model-missing warning ──
+  let warningHtml = '';
+  if (meta.model_found === false) {
+    warningHtml = `
+    <div style="background:rgba(224,85,85,.1);border:1px solid rgba(224,85,85,.4);border-radius:var(--radius);padding:12px 18px;margin-bottom:20px;color:#e07070;font-size:12.5px;">
+      <strong>${T('warn_no_model_title')}</strong> ${T('warn_no_model_body')}
+    </div>`;
+  }
+
+  const r   = data.random    || {};
+  const c   = data.community || {};
+  const h   = data['2hop']   || {};
+  const pos = data.positive  || {};
+
+  const conditions = [
+    { key: 'random',    d: r, cls: 'random',    nameKey: 'cond_random',    badgeKey: 'badge_random',    descKey: 'desc_random' },
+    { key: 'community', d: c, cls: 'community',  nameKey: 'cond_community', badgeKey: 'badge_community', descKey: 'desc_community' },
+    { key: '2hop',      d: h, cls: 'twohop',     nameKey: 'cond_twohop',    badgeKey: 'badge_twohop',    descKey: 'desc_twohop' },
+  ];
+
+  const colors = { random: 'var(--c-random)', community: 'var(--c-community)', twohop: 'var(--c-twohop)' };
+  const hexColors = { random: '#e05555', community: '#e09320', twohop: '#3dba5f' };
+
+  // ── condition cards ──
+  let cardsHtml = '<div class="cards-row">';
+  for (const { d, cls, nameKey, badgeKey, descKey } of conditions) {
+    const auc = typeof d.auc === 'number' ? d.auc.toFixed(4) : '—';
+    const pct = typeof d.pct_connected === 'number' ? d.pct_connected.toFixed(1) + '%' : '—';
+    const pctCls = typeof d.pct_connected === 'number' ? connClass(d.pct_connected) : '';
+    cardsHtml += `
+    <div class="cond-card ${cls}">
+      <div class="cond-badge">${T(badgeKey)}</div>
+      <div class="cond-name">${T(nameKey)}</div>
+      <div class="cond-desc">${T(descKey)}</div>
+      <div class="cond-metrics">
+        <div class="metric">
+          <div class="metric-val auc">${auc}</div>
+          <div class="metric-label">${T('lbl_auc')}</div>
+        </div>
+        <div class="metric">
+          <div class="metric-conn ${pctCls}">${pct}</div>
+          <div class="metric-label">${T('lbl_conn')}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+  cardsHtml += '</div>';
+
+  // ── positive reference ──
+  const posConn = typeof pos.pct_connected === 'number' ? pos.pct_connected.toFixed(1) + '%' : '—';
+  const posHtml = `
+  <div class="pos-ref">
+    <div class="pos-ref-label">${T('pos_label')}</div>
+    <div style="display:flex;gap:16px;align-items:center;flex:1">
+      <div class="metric" style="flex-direction:row;align-items:center;gap:10px">
+        <div class="pos-ref-val" style="color:var(--c-pos)">${posConn}</div>
+        <div class="metric-label">${T('pos_conn_label')}</div>
+      </div>
+      <div class="pos-ref-desc">${T('pos_desc')}</div>
+    </div>
+  </div>`;
+
+  // ── charts ──
+  const chartsHtml = `
+  <div class="charts-row">
+    <div class="chart-panel">
+      <h3>${T('chart_auc')}</h3>
+      <div class="chart-wrap"><svg class="bar-chart" id="chart-auc"></svg></div>
+    </div>
+    <div class="chart-panel">
+      <h3>${T('chart_conn')}</h3>
+      <div class="chart-wrap"><svg class="bar-chart" id="chart-conn"></svg></div>
+    </div>
+  </div>`;
+
+  // ── explanation ──
+  const explainHtml = `
+  <div class="explain-section">
+    <div class="explain-header" id="explain-toggle-btn">
+      <h3>${T('explain_title')}</h3>
+      <div class="explain-toggle open" id="explain-icon">−</div>
+    </div>
+    <div class="explain-body open" id="explain-body">
+      <p>${T('explain_p1')}</p>
+      <p>${T('explain_p2')}</p>
+      <div class="highlight-box"><p>${T('explain_highlight')}</p></div>
+      <p>${T('explain_p3')}</p>
+      <p><strong>${T('explain_steps_title')}</strong></p>
+      <ul class="step-list">
+        <li data-n="1">${T('step1')}</li>
+        <li data-n="2">${T('step2')}</li>
+        <li data-n="3">${T('step3')}</li>
+        <li data-n="4">${T('step4')}</li>
+      </ul>
+      <div style="margin-top:16px">
+        <p><strong>${T('interp_title')}</strong></p>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;background:rgba(61,186,95,.07);border-radius:6px;border-left:3px solid var(--c-twohop)">
+            <div style="font-size:16px;font-weight:700;color:var(--c-twohop);min-width:80px;flex-shrink:0">${T('interp_high_val')}</div>
+            <div style="color:var(--muted);font-size:12.5px;line-height:1.6">${T('interp_high')}</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;background:rgba(224,147,32,.07);border-radius:6px;border-left:3px solid var(--c-community)">
+            <div style="font-size:16px;font-weight:700;color:var(--c-community);min-width:80px;flex-shrink:0">${T('interp_mid_val')}</div>
+            <div style="color:var(--muted);font-size:12.5px;line-height:1.6">${T('interp_mid')}</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;background:rgba(224,85,85,.07);border-radius:6px;border-left:3px solid var(--c-random)">
+            <div style="font-size:16px;font-weight:700;color:var(--c-random);min-width:80px;flex-shrink:0">${T('interp_low_val')}</div>
+            <div style="color:var(--muted);font-size:12.5px;line-height:1.6">${T('interp_low')}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  // ── meta strip ──
+  const ts = meta.timestamp ? new Date(meta.timestamp).toLocaleString() : '—';
+  const modelStatus = meta.model_found === true ? T('meta_found') : meta.model_found === false ? T('meta_missing') : '—';
+  const metaHtml = `
+  <div class="meta-strip">
+    <div class="meta-item"><div class="meta-key">${T('meta_seed')}</div><div class="meta-val">${meta.seed ?? '—'}</div></div>
+    <div class="meta-item"><div class="meta-key">${T('meta_kneg')}</div><div class="meta-val">${meta.k_neg ?? '—'}</div></div>
+    <div class="meta-item"><div class="meta-key">${T('meta_pool')}</div><div class="meta-val">${typeof meta.mean_2hop_pool_size === 'number' ? meta.mean_2hop_pool_size.toFixed(1) : '—'}</div></div>
+    <div class="meta-item"><div class="meta-key">${T('meta_npairs')}</div><div class="meta-val">${meta.n_valid_pos ?? '—'}</div></div>
+    <div class="meta-item"><div class="meta-key">${T('meta_model')}</div><div class="meta-val">${modelStatus}</div></div>
+    <div class="meta-item"><div class="meta-key">${T('meta_ts')}</div><div class="meta-val" style="font-size:12px">${ts}</div></div>
+  </div>`;
+
+  app.innerHTML = warningHtml + cardsHtml + posHtml + chartsHtml + explainHtml + metaHtml;
+
+  // ── draw charts ──
+  const aucItems = conditions.map(({ key, d, cls }) => ({
+    label: T({ random: 'cond_random', community: 'cond_community', '2hop': 'cond_twohop' }[key]),
+    value: typeof d.auc === 'number' ? d.auc : 0,
+    color: hexColors[cls],
+    max: 1.0,
+    fmt: v => v.toFixed(4),
+  }));
+  const connItems = [
+    ...conditions.map(({ key, d, cls }) => ({
+      label: T({ random: 'cond_random', community: 'cond_community', '2hop': 'cond_twohop' }[key]),
+      value: typeof d.pct_connected === 'number' ? d.pct_connected : 0,
+      color: hexColors[cls],
+      max: 100,
+      fmt: v => v.toFixed(1) + '%',
+    })),
+    {
+      label: T('pos_short'),
+      value: typeof pos.pct_connected === 'number' ? pos.pct_connected : 0,
+      color: '#4a7fe5',
+      max: 100,
+      fmt: v => v.toFixed(1) + '%',
+    },
+  ];
+
+  renderBarChart(document.getElementById('chart-auc'), aucItems);
+  renderBarChart(document.getElementById('chart-conn'), connItems);
+
+  // ── explain toggle ──
+  document.getElementById('explain-toggle-btn').addEventListener('click', () => {
+    const body = document.getElementById('explain-body');
+    const icon = document.getElementById('explain-icon');
+    body.classList.toggle('open');
+    icon.classList.toggle('open');
+    icon.textContent = body.classList.contains('open') ? '−' : '+';
+  });
+}
+
+
+// ── fetch data ──────────────────────────────────────────────────────────────
+fetch('data/hard_neg_eval.json')
+  .then(r => {
+    if (!r.ok) throw new Error(r.status);
+    return r.json();
+  })
+  .then(data => {
+    window._evalData = data;
+    renderAll(data);
+  })
+  .catch(() => {
+    const app = document.getElementById('app');
+    app.innerHTML = `<div class="error-msg">${T('error')}</div>`;
+  });
+</script>
+</body>
+</html>
