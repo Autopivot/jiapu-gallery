@@ -1,0 +1,19 @@
+{
+  "node_counts": {
+    "person": 266091,
+    "household": 217227,
+    "community": 698,
+    "banner": 4
+  },
+  "edge_counts": {
+    "r_hw (married)": 47879,
+    "r_hi (in-household)": 266091,
+    "r_hc (community)": 217227,
+    "r_ci (census)": 21287,
+    "r_cb (banner)": 698
+  },
+  "year_range": [
+    1749,
+    1909
+  ]
+}

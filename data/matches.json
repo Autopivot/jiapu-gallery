@@ -1,0 +1,4502 @@
+[
+  {
+    "male_idx": 166441,
+    "female_idx": 166816,
+    "score": 12.453509330749512,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 118231,
+    "female_idx": 118232,
+    "score": 12.453142166137695,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 49609,
+    "female_idx": 49992,
+    "score": 12.452564239501951,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 205883,
+    "female_idx": 208223,
+    "score": 12.4470853805542,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188828,
+    "female_idx": 188829,
+    "score": 12.440813064575195,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 205716,
+    "female_idx": 208002,
+    "score": 12.43044376373291,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 129511,
+    "female_idx": 130226,
+    "score": 12.423883438110352,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 118219,
+    "female_idx": 118220,
+    "score": 12.419134140014648,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 118241,
+    "female_idx": 118242,
+    "score": 12.412671089172363,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206922,
+    "female_idx": 208028,
+    "score": 12.39295768737793,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 77190,
+    "female_idx": 77201,
+    "score": 12.340957641601562,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 246038,
+    "female_idx": 246039,
+    "score": 12.335235595703123,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 118245,
+    "female_idx": 118246,
+    "score": 12.323406219482422,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207065,
+    "female_idx": 209221,
+    "score": 12.319522857666016,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114182,
+    "female_idx": 118205,
+    "score": 12.316253662109377,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 77246,
+    "female_idx": 77257,
+    "score": 12.314424514770508,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 77312,
+    "female_idx": 77323,
+    "score": 12.314422607421877,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 96469,
+    "female_idx": 96470,
+    "score": 12.293075561523438,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207022,
+    "female_idx": 208061,
+    "score": 12.290760040283203,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 117941,
+    "female_idx": 117942,
+    "score": 12.290191650390623,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259308,
+    "female_idx": 261245,
+    "score": 12.276636123657228,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188547,
+    "female_idx": 188548,
+    "score": 12.276227951049805,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73410,
+    "female_idx": 75122,
+    "score": 12.262346267700195,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 56291,
+    "female_idx": 85768,
+    "score": 12.261944770812988,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 59149,
+    "female_idx": 59836,
+    "score": 12.25952434539795,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 77925,
+    "female_idx": 77936,
+    "score": 12.25564193725586,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 151053,
+    "female_idx": 152110,
+    "score": 12.254801750183104,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114152,
+    "female_idx": 117864,
+    "score": 12.24996280670166,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 167981,
+    "female_idx": 167982,
+    "score": 12.247504234313965,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232283,
+    "female_idx": 233275,
+    "score": 12.24485206604004,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114183,
+    "female_idx": 118211,
+    "score": 12.244301795959473,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206573,
+    "female_idx": 207924,
+    "score": 12.242534637451172,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165721,
+    "female_idx": 167443,
+    "score": 12.232985496520996,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 27057,
+    "female_idx": 27059,
+    "score": 12.22886848449707,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 180720,
+    "female_idx": 181590,
+    "score": 12.227436065673828,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 75667,
+    "female_idx": 75670,
+    "score": 12.224173545837402,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 260755,
+    "female_idx": 260756,
+    "score": 12.220088005065918,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165927,
+    "female_idx": 166928,
+    "score": 12.216323852539062,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 118239,
+    "female_idx": 118240,
+    "score": 12.212761878967283,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 243418,
+    "female_idx": 244018,
+    "score": 12.210378646850586,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 166151,
+    "female_idx": 167853,
+    "score": 12.21000862121582,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207063,
+    "female_idx": 209217,
+    "score": 12.207775115966797,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 71812,
+    "female_idx": 74806,
+    "score": 12.20420265197754,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114432,
+    "female_idx": 119972,
+    "score": 12.197186470031738,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 24931,
+    "female_idx": 26379,
+    "score": 12.194646835327148,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25325,
+    "female_idx": 27711,
+    "score": 12.191177368164062,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 74575,
+    "female_idx": 74576,
+    "score": 12.18722915649414,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206923,
+    "female_idx": 209065,
+    "score": 12.186344146728516,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115389,
+    "female_idx": 118044,
+    "score": 12.185731887817385,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 199732,
+    "female_idx": 199733,
+    "score": 12.180858612060549,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 119539,
+    "female_idx": 119540,
+    "score": 12.180278778076172,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 198366,
+    "female_idx": 198367,
+    "score": 12.177201271057127,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 49296,
+    "female_idx": 50960,
+    "score": 12.174149513244627,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181683,
+    "female_idx": 182596,
+    "score": 12.17375373840332,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 72214,
+    "female_idx": 73843,
+    "score": 12.173591613769531,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 166030,
+    "female_idx": 167451,
+    "score": 12.168928146362305,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 210523,
+    "female_idx": 207583,
+    "score": 12.164031982421877,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 167171,
+    "female_idx": 167172,
+    "score": 12.162124633789062,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 27534,
+    "female_idx": 27536,
+    "score": 12.157465934753418,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25700,
+    "female_idx": 27715,
+    "score": 12.150690078735352,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259307,
+    "female_idx": 261240,
+    "score": 12.149004936218262,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258664,
+    "female_idx": 261388,
+    "score": 12.14895725250244,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 209234,
+    "female_idx": 210197,
+    "score": 12.146835327148438,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95885,
+    "female_idx": 96848,
+    "score": 12.14255428314209,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 118105,
+    "female_idx": 118106,
+    "score": 12.142112731933594,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 49261,
+    "female_idx": 50508,
+    "score": 12.13736629486084,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188628,
+    "female_idx": 188246,
+    "score": 12.12957000732422,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 166152,
+    "female_idx": 167857,
+    "score": 12.12827968597412,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 68713,
+    "female_idx": 68724,
+    "score": 12.126668930053713,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 60059,
+    "female_idx": 60060,
+    "score": 12.12663745880127,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 244662,
+    "female_idx": 244663,
+    "score": 12.126171112060549,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259400,
+    "female_idx": 261786,
+    "score": 12.125765800476074,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 97338,
+    "female_idx": 97339,
+    "score": 12.124189376831056,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232969,
+    "female_idx": 232970,
+    "score": 12.12172031402588,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 257694,
+    "female_idx": 259533,
+    "score": 12.116493225097656,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 63968,
+    "female_idx": 77423,
+    "score": 12.115509033203123,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 96125,
+    "female_idx": 96126,
+    "score": 12.110746383666992,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 71578,
+    "female_idx": 73841,
+    "score": 12.11024284362793,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 1538,
+    "female_idx": 2105,
+    "score": 12.108386993408203,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232132,
+    "female_idx": 232399,
+    "score": 12.108375549316406,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73055,
+    "female_idx": 75640,
+    "score": 12.108352661132812,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 84330,
+    "female_idx": 85063,
+    "score": 12.107664108276367,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 9926,
+    "female_idx": 10953,
+    "score": 12.107229232788086,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 168660,
+    "female_idx": 168661,
+    "score": 12.105113983154297,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 151462,
+    "female_idx": 152071,
+    "score": 12.104852676391602,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 77335,
+    "female_idx": 77346,
+    "score": 12.104549407958984,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 241616,
+    "female_idx": 244847,
+    "score": 12.100159645080566,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258244,
+    "female_idx": 260630,
+    "score": 12.098211288452148,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259077,
+    "female_idx": 259888,
+    "score": 12.097875595092772,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233745,
+    "female_idx": 233150,
+    "score": 12.097623825073242,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206624,
+    "female_idx": 208852,
+    "score": 12.095962524414062,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 178206,
+    "female_idx": 178410,
+    "score": 12.092365264892578,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 120566,
+    "female_idx": 116590,
+    "score": 12.092296600341797,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95884,
+    "female_idx": 96845,
+    "score": 12.09214973449707,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 10057,
+    "female_idx": 10059,
+    "score": 12.091560363769531,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 199261,
+    "female_idx": 199262,
+    "score": 12.090742111206056,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 180227,
+    "female_idx": 181515,
+    "score": 12.088337898254396,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 197712,
+    "female_idx": 199256,
+    "score": 12.088051795959473,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 48916,
+    "female_idx": 49982,
+    "score": 12.086666107177734,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165787,
+    "female_idx": 168073,
+    "score": 12.085824012756348,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233226,
+    "female_idx": 233228,
+    "score": 12.08551025390625,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 197542,
+    "female_idx": 197543,
+    "score": 12.085441589355469,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258474,
+    "female_idx": 261076,
+    "score": 12.083089828491213,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 197544,
+    "female_idx": 197545,
+    "score": 12.079755783081056,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 242748,
+    "female_idx": 243831,
+    "score": 12.078895568847656,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232847,
+    "female_idx": 232848,
+    "score": 12.078415870666504,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 130232,
+    "female_idx": 130233,
+    "score": 12.077857971191406,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 221978,
+    "female_idx": 222556,
+    "score": 12.076315879821776,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233695,
+    "female_idx": 232207,
+    "score": 12.075908660888672,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 245996,
+    "female_idx": 245997,
+    "score": 12.075072288513184,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 59898,
+    "female_idx": 59692,
+    "score": 12.074188232421877,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 80857,
+    "female_idx": 65301,
+    "score": 12.072795867919922,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 38747,
+    "female_idx": 40429,
+    "score": 12.071139335632324,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 70213,
+    "female_idx": 70225,
+    "score": 12.068161010742188,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188236,
+    "female_idx": 188541,
+    "score": 12.067227363586426,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206594,
+    "female_idx": 208831,
+    "score": 12.06720733642578,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40221,
+    "female_idx": 40222,
+    "score": 12.0661039352417,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 153266,
+    "female_idx": 152109,
+    "score": 12.065214157104492,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 183372,
+    "female_idx": 183373,
+    "score": 12.06238079071045,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181661,
+    "female_idx": 182457,
+    "score": 12.061147689819336,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 68746,
+    "female_idx": 68757,
+    "score": 12.060638427734377,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 71563,
+    "female_idx": 73754,
+    "score": 12.059720039367676,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 152568,
+    "female_idx": 150561,
+    "score": 12.05906105041504,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 9925,
+    "female_idx": 10947,
+    "score": 12.05726432800293,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 151344,
+    "female_idx": 151983,
+    "score": 12.055081367492676,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73309,
+    "female_idx": 74497,
+    "score": 12.05500602722168,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259434,
+    "female_idx": 261967,
+    "score": 12.054039001464844,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 153167,
+    "female_idx": 153169,
+    "score": 12.05290699005127,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 117867,
+    "female_idx": 117868,
+    "score": 12.052777290344238,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 49451,
+    "female_idx": 50520,
+    "score": 12.052705764770508,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 151784,
+    "female_idx": 150712,
+    "score": 12.05105686187744,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 61313,
+    "female_idx": 71524,
+    "score": 12.04859447479248,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 84455,
+    "female_idx": 85643,
+    "score": 12.04765510559082,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258341,
+    "female_idx": 260853,
+    "score": 12.04684066772461,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114322,
+    "female_idx": 119309,
+    "score": 12.046479225158691,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181544,
+    "female_idx": 180254,
+    "score": 12.045101165771484,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181568,
+    "female_idx": 182152,
+    "score": 12.042567253112791,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 152073,
+    "female_idx": 152074,
+    "score": 12.042343139648438,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 222180,
+    "female_idx": 223363,
+    "score": 12.041497230529783,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 52324,
+    "female_idx": 66892,
+    "score": 12.041069984436035,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 72177,
+    "female_idx": 73759,
+    "score": 12.040562629699709,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181684,
+    "female_idx": 182597,
+    "score": 12.038496017456056,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 169375,
+    "female_idx": 169376,
+    "score": 12.038471221923828,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25632,
+    "female_idx": 27120,
+    "score": 12.03741455078125,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206863,
+    "female_idx": 208012,
+    "score": 12.035406112670898,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73485,
+    "female_idx": 75584,
+    "score": 12.0339994430542,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 209231,
+    "female_idx": 209232,
+    "score": 12.032649993896484,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 75526,
+    "female_idx": 75527,
+    "score": 12.032236099243164,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 144575,
+    "female_idx": 144576,
+    "score": 12.031292915344238,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 222066,
+    "female_idx": 223064,
+    "score": 12.030585289001465,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 142394,
+    "female_idx": 143169,
+    "score": 12.028270721435549,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258940,
+    "female_idx": 261958,
+    "score": 12.0274076461792,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 1404,
+    "female_idx": 1816,
+    "score": 12.026397705078123,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 50562,
+    "female_idx": 50563,
+    "score": 12.025797843933104,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 246296,
+    "female_idx": 246297,
+    "score": 12.025202751159668,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 241557,
+    "female_idx": 244778,
+    "score": 12.0242280960083,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165794,
+    "female_idx": 168107,
+    "score": 12.024154663085938,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 179135,
+    "female_idx": 178241,
+    "score": 12.023933410644531,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 144528,
+    "female_idx": 142748,
+    "score": 12.023441314697266,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 75587,
+    "female_idx": 75586,
+    "score": 12.022951126098633,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232293,
+    "female_idx": 233324,
+    "score": 12.02291488647461,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 177689,
+    "female_idx": 178249,
+    "score": 12.021170616149902,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115950,
+    "female_idx": 120820,
+    "score": 12.020689964294434,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181141,
+    "female_idx": 182409,
+    "score": 12.020505905151367,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 198275,
+    "female_idx": 197572,
+    "score": 12.019886016845703,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 60054,
+    "female_idx": 60055,
+    "score": 12.019712448120115,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 152900,
+    "female_idx": 152901,
+    "score": 12.016992568969728,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 84496,
+    "female_idx": 85829,
+    "score": 12.016416549682615,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 117887,
+    "female_idx": 117888,
+    "score": 12.016172409057615,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 117882,
+    "female_idx": 117883,
+    "score": 12.015427589416504,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 180581,
+    "female_idx": 181900,
+    "score": 12.01402473449707,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 166584,
+    "female_idx": 167986,
+    "score": 12.013894081115724,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 80913,
+    "female_idx": 55446,
+    "score": 12.01308536529541,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233763,
+    "female_idx": 233258,
+    "score": 12.012721061706545,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 166114,
+    "female_idx": 167719,
+    "score": 12.012659072875977,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 231879,
+    "female_idx": 232397,
+    "score": 12.00983428955078,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 150368,
+    "female_idx": 152116,
+    "score": 12.009504318237305,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 116228,
+    "female_idx": 118046,
+    "score": 12.008234977722168,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 124908,
+    "female_idx": 125319,
+    "score": 12.006634712219238,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 72117,
+    "female_idx": 73626,
+    "score": 12.00645923614502,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 261472,
+    "female_idx": 259339,
+    "score": 12.00627899169922,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 65301,
+    "female_idx": 80857,
+    "score": 12.006183624267578,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 208099,
+    "female_idx": 209422,
+    "score": 12.006143569946287,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 2015,
+    "female_idx": 2016,
+    "score": 12.005369186401367,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232498,
+    "female_idx": 232499,
+    "score": 12.004399299621582,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233258,
+    "female_idx": 233763,
+    "score": 12.003690719604492,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 97109,
+    "female_idx": 97110,
+    "score": 12.003186225891112,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181625,
+    "female_idx": 182342,
+    "score": 12.00279140472412,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 152497,
+    "female_idx": 152498,
+    "score": 12.00160789489746,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 130503,
+    "female_idx": 129871,
+    "score": 12.001235961914062,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207587,
+    "female_idx": 208151,
+    "score": 11.997777938842772,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 197784,
+    "female_idx": 197785,
+    "score": 11.997720718383787,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207023,
+    "female_idx": 209187,
+    "score": 11.996068954467772,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188821,
+    "female_idx": 188822,
+    "score": 11.995417594909668,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25096,
+    "female_idx": 26901,
+    "score": 11.992385864257812,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 222447,
+    "female_idx": 223241,
+    "score": 11.991289138793944,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73526,
+    "female_idx": 75756,
+    "score": 11.989700317382812,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25308,
+    "female_idx": 27656,
+    "score": 11.989507675170898,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95841,
+    "female_idx": 96488,
+    "score": 11.988308906555176,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 59360,
+    "female_idx": 60722,
+    "score": 11.98707675933838,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95837,
+    "female_idx": 96474,
+    "score": 11.986547470092772,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 62035,
+    "female_idx": 73268,
+    "score": 11.9860200881958,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207690,
+    "female_idx": 209770,
+    "score": 11.984861373901367,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 96753,
+    "female_idx": 96754,
+    "score": 11.984685897827148,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 244665,
+    "female_idx": 244666,
+    "score": 11.981496810913086,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40841,
+    "female_idx": 40842,
+    "score": 11.981193542480469,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73475,
+    "female_idx": 75522,
+    "score": 11.98097038269043,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 50887,
+    "female_idx": 50888,
+    "score": 11.980717658996582,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25597,
+    "female_idx": 26855,
+    "score": 11.979933738708496,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114930,
+    "female_idx": 117871,
+    "score": 11.9766263961792,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232031,
+    "female_idx": 233148,
+    "score": 11.976444244384766,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 244775,
+    "female_idx": 244776,
+    "score": 11.976359367370604,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 27663,
+    "female_idx": 27664,
+    "score": 11.976112365722656,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95778,
+    "female_idx": 97485,
+    "score": 11.97544288635254,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 152109,
+    "female_idx": 153266,
+    "score": 11.975176811218262,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232030,
+    "female_idx": 233147,
+    "score": 11.97160530090332,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 151708,
+    "female_idx": 152254,
+    "score": 11.97085952758789,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114894,
+    "female_idx": 117551,
+    "score": 11.968761444091797,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 178278,
+    "female_idx": 178822,
+    "score": 11.967496871948242,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 199734,
+    "female_idx": 199735,
+    "score": 11.966618537902832,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233762,
+    "female_idx": 233257,
+    "score": 11.966400146484377,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 49455,
+    "female_idx": 50550,
+    "score": 11.965865135192873,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40103,
+    "female_idx": 40104,
+    "score": 11.965594291687012,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 117740,
+    "female_idx": 117741,
+    "score": 11.963994979858398,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188308,
+    "female_idx": 188675,
+    "score": 11.963455200195312,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115119,
+    "female_idx": 119098,
+    "score": 11.962494850158691,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 245339,
+    "female_idx": 245340,
+    "score": 11.96074676513672,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207588,
+    "female_idx": 209680,
+    "score": 11.960491180419922,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 77279,
+    "female_idx": 77290,
+    "score": 11.960297584533691,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206847,
+    "female_idx": 208005,
+    "score": 11.959985733032228,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 210618,
+    "female_idx": 205940,
+    "score": 11.959342002868652,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95842,
+    "female_idx": 96489,
+    "score": 11.959335327148438,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 120947,
+    "female_idx": 120948,
+    "score": 11.957818984985352,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207084,
+    "female_idx": 209260,
+    "score": 11.956636428833008,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 144946,
+    "female_idx": 143905,
+    "score": 11.955421447753906,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 172804,
+    "female_idx": 172805,
+    "score": 11.95541000366211,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 10955,
+    "female_idx": 10956,
+    "score": 11.95474338531494,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 260262,
+    "female_idx": 260263,
+    "score": 11.95406723022461,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165895,
+    "female_idx": 166772,
+    "score": 11.953317642211914,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259508,
+    "female_idx": 259007,
+    "score": 11.952766418457031,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 113886,
+    "female_idx": 120182,
+    "score": 11.952322006225586,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 10664,
+    "female_idx": 10665,
+    "score": 11.95172882080078,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 57713,
+    "female_idx": 73146,
+    "score": 11.950800895690918,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 10667,
+    "female_idx": 10670,
+    "score": 11.95059585571289,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 197208,
+    "female_idx": 198890,
+    "score": 11.949759483337402,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 144574,
+    "female_idx": 143087,
+    "score": 11.949207305908203,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 199735,
+    "female_idx": 199734,
+    "score": 11.94831657409668,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165942,
+    "female_idx": 166995,
+    "score": 11.947574615478516,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232207,
+    "female_idx": 233695,
+    "score": 11.946870803833008,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 172814,
+    "female_idx": 172815,
+    "score": 11.945961952209473,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 120560,
+    "female_idx": 116588,
+    "score": 11.945898056030272,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165743,
+    "female_idx": 167714,
+    "score": 11.945659637451172,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 10894,
+    "female_idx": 10895,
+    "score": 11.945615768432615,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 243861,
+    "female_idx": 243862,
+    "score": 11.945426940917969,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188785,
+    "female_idx": 188786,
+    "score": 11.945416450500488,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 168117,
+    "female_idx": 168118,
+    "score": 11.945128440856934,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 120981,
+    "female_idx": 116658,
+    "score": 11.945018768310549,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 257877,
+    "female_idx": 259884,
+    "score": 11.944428443908691,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 223244,
+    "female_idx": 222448,
+    "score": 11.9443359375,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 143589,
+    "female_idx": 143588,
+    "score": 11.94412326812744,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 9612,
+    "female_idx": 10055,
+    "score": 11.943658828735352,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 129671,
+    "female_idx": 130784,
+    "score": 11.943392753601074,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40431,
+    "female_idx": 40432,
+    "score": 11.942432403564451,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 243754,
+    "female_idx": 246283,
+    "score": 11.942421913146973,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 96400,
+    "female_idx": 97564,
+    "score": 11.942283630371094,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 97111,
+    "female_idx": 97702,
+    "score": 11.94225025177002,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 222766,
+    "female_idx": 221948,
+    "score": 11.94198989868164,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206971,
+    "female_idx": 208044,
+    "score": 11.94064235687256,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 24930,
+    "female_idx": 26377,
+    "score": 11.94052505493164,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40104,
+    "female_idx": 40103,
+    "score": 11.940502166748049,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115977,
+    "female_idx": 120926,
+    "score": 11.939760208129885,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 49628,
+    "female_idx": 50088,
+    "score": 11.939520835876465,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 172714,
+    "female_idx": 172715,
+    "score": 11.938106536865234,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 172727,
+    "female_idx": 172728,
+    "score": 11.93781280517578,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40468,
+    "female_idx": 41053,
+    "score": 11.937366485595703,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181974,
+    "female_idx": 181975,
+    "score": 11.937236785888672,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233257,
+    "female_idx": 233762,
+    "score": 11.936529159545898,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114619,
+    "female_idx": 120942,
+    "score": 11.935847282409668,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114931,
+    "female_idx": 117884,
+    "score": 11.93498420715332,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115762,
+    "female_idx": 120268,
+    "score": 11.934600830078123,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206844,
+    "female_idx": 207999,
+    "score": 11.934173583984377,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206754,
+    "female_idx": 207971,
+    "score": 11.933650970458984,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 61324,
+    "female_idx": 71535,
+    "score": 11.93354606628418,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115315,
+    "female_idx": 117528,
+    "score": 11.932550430297852,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 116590,
+    "female_idx": 120566,
+    "score": 11.932546615600586,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 71679,
+    "female_idx": 74302,
+    "score": 11.932279586791992,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 9694,
+    "female_idx": 10630,
+    "score": 11.931361198425291,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 145155,
+    "female_idx": 142329,
+    "score": 11.930517196655272,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165398,
+    "female_idx": 167049,
+    "score": 11.929473876953123,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 197572,
+    "female_idx": 198275,
+    "score": 11.929332733154297,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40323,
+    "female_idx": 40325,
+    "score": 11.928542137145996,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188364,
+    "female_idx": 188625,
+    "score": 11.927654266357422,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 50090,
+    "female_idx": 50092,
+    "score": 11.927583694458008,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 99962,
+    "female_idx": 100248,
+    "score": 11.926880836486816,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 198179,
+    "female_idx": 197567,
+    "score": 11.926873207092283,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 49625,
+    "female_idx": 50054,
+    "score": 11.926872253417969,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258284,
+    "female_idx": 260751,
+    "score": 11.924094200134276,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207124,
+    "female_idx": 208077,
+    "score": 11.92271614074707,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73844,
+    "female_idx": 72215,
+    "score": 11.921789169311523,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115953,
+    "female_idx": 120842,
+    "score": 11.92168426513672,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 72340,
+    "female_idx": 74099,
+    "score": 11.92142391204834,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 60691,
+    "female_idx": 70202,
+    "score": 11.921398162841797,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258665,
+    "female_idx": 261391,
+    "score": 11.92116355895996,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181249,
+    "female_idx": 182763,
+    "score": 11.92019271850586,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25628,
+    "female_idx": 27055,
+    "score": 11.920166969299316,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 243755,
+    "female_idx": 246285,
+    "score": 11.918313026428224,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73748,
+    "female_idx": 75921,
+    "score": 11.917633056640623,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 119306,
+    "female_idx": 119307,
+    "score": 11.91751480102539,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 221800,
+    "female_idx": 222601,
+    "score": 11.916803359985352,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 172721,
+    "female_idx": 172722,
+    "score": 11.91655158996582,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 153037,
+    "female_idx": 151662,
+    "score": 11.916437149047852,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 210527,
+    "female_idx": 207589,
+    "score": 11.916423797607422,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 75586,
+    "female_idx": 75587,
+    "score": 11.916115760803224,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 198085,
+    "female_idx": 198086,
+    "score": 11.915846824645996,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 242716,
+    "female_idx": 246099,
+    "score": 11.9157075881958,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 39355,
+    "female_idx": 38897,
+    "score": 11.91551113128662,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 66903,
+    "female_idx": 85090,
+    "score": 11.915441513061523,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 231758,
+    "female_idx": 232777,
+    "score": 11.91528034210205,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 112458,
+    "female_idx": 117875,
+    "score": 11.915005683898926,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115766,
+    "female_idx": 120305,
+    "score": 11.913851737976074,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 198088,
+    "female_idx": 198089,
+    "score": 11.912556648254396,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 197527,
+    "female_idx": 197528,
+    "score": 11.912352561950684,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 1600,
+    "female_idx": 1819,
+    "score": 11.912054061889648,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115685,
+    "female_idx": 119785,
+    "score": 11.910999298095703,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 129855,
+    "female_idx": 130485,
+    "score": 11.9105224609375,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 223290,
+    "female_idx": 222645,
+    "score": 11.91030502319336,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 49691,
+    "female_idx": 85013,
+    "score": 11.910226821899414,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 221961,
+    "female_idx": 222798,
+    "score": 11.909900665283203,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 166481,
+    "female_idx": 167085,
+    "score": 11.909422874450684,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 179164,
+    "female_idx": 178126,
+    "score": 11.90942096710205,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165775,
+    "female_idx": 167996,
+    "score": 11.908926010131836,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 27532,
+    "female_idx": 25275,
+    "score": 11.907992362976074,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 180719,
+    "female_idx": 181589,
+    "score": 11.90793800354004,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259339,
+    "female_idx": 261472,
+    "score": 11.907381057739258,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181124,
+    "female_idx": 182340,
+    "score": 11.906780242919922,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 83415,
+    "female_idx": 85422,
+    "score": 11.90312385559082,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 145156,
+    "female_idx": 142856,
+    "score": 11.902812957763672,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258858,
+    "female_idx": 261783,
+    "score": 11.902107238769531,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232087,
+    "female_idx": 233473,
+    "score": 11.901026725769045,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258146,
+    "female_idx": 260407,
+    "score": 11.90005111694336,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73067,
+    "female_idx": 75664,
+    "score": 11.898496627807615,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 243553,
+    "female_idx": 244819,
+    "score": 11.89838981628418,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25095,
+    "female_idx": 26896,
+    "score": 11.898360252380373,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258606,
+    "female_idx": 261285,
+    "score": 11.89801025390625,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233696,
+    "female_idx": 232897,
+    "score": 11.897045135498049,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 231965,
+    "female_idx": 232844,
+    "score": 11.89690113067627,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 243606,
+    "female_idx": 245301,
+    "score": 11.895981788635254,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95567,
+    "female_idx": 96287,
+    "score": 11.89547348022461,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188861,
+    "female_idx": 189111,
+    "score": 11.8945894241333,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 260333,
+    "female_idx": 260334,
+    "score": 11.894338607788086,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 26898,
+    "female_idx": 26899,
+    "score": 11.894105911254885,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 197566,
+    "female_idx": 198178,
+    "score": 11.894001007080078,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188284,
+    "female_idx": 188545,
+    "score": 11.893817901611328,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 80891,
+    "female_idx": 80902,
+    "score": 11.893569946289062,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 38884,
+    "female_idx": 40254,
+    "score": 11.89356803894043,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40032,
+    "female_idx": 40033,
+    "score": 11.892904281616213,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165720,
+    "female_idx": 167437,
+    "score": 11.892172813415527,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 59837,
+    "female_idx": 60727,
+    "score": 11.892034530639648,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 61302,
+    "female_idx": 71513,
+    "score": 11.891727447509766,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 172734,
+    "female_idx": 172733,
+    "score": 11.891624450683594,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 245541,
+    "female_idx": 245542,
+    "score": 11.891387939453123,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 120927,
+    "female_idx": 120928,
+    "score": 11.891350746154783,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 74117,
+    "female_idx": 74118,
+    "score": 11.89052391052246,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 27966,
+    "female_idx": 25420,
+    "score": 11.890252113342283,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 141422,
+    "female_idx": 143254,
+    "score": 11.889724731445312,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 222775,
+    "female_idx": 222776,
+    "score": 11.888240814208984,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 116162,
+    "female_idx": 117312,
+    "score": 11.887453079223633,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 245711,
+    "female_idx": 245712,
+    "score": 11.887002944946287,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 58646,
+    "female_idx": 79702,
+    "score": 11.886892318725586,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 116636,
+    "female_idx": 120822,
+    "score": 11.88656997680664,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 75867,
+    "female_idx": 75869,
+    "score": 11.88593292236328,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 241955,
+    "female_idx": 245829,
+    "score": 11.88585376739502,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 243752,
+    "female_idx": 246258,
+    "score": 11.88380241394043,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73411,
+    "female_idx": 75123,
+    "score": 11.883167266845703,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 181281,
+    "female_idx": 182860,
+    "score": 11.88254165649414,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 72081,
+    "female_idx": 73586,
+    "score": 11.882513046264648,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 116800,
+    "female_idx": 116801,
+    "score": 11.881659507751465,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 150920,
+    "female_idx": 151706,
+    "score": 11.881539344787598,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165687,
+    "female_idx": 167059,
+    "score": 11.881426811218262,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 116032,
+    "female_idx": 121099,
+    "score": 11.881091117858888,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 143588,
+    "female_idx": 143589,
+    "score": 11.88050651550293,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 178562,
+    "female_idx": 178237,
+    "score": 11.880426406860352,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232133,
+    "female_idx": 232420,
+    "score": 11.88035011291504,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 232897,
+    "female_idx": 233696,
+    "score": 11.880130767822266,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 246958,
+    "female_idx": 246960,
+    "score": 11.87999153137207,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233279,
+    "female_idx": 233767,
+    "score": 11.879934310913086,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 182598,
+    "female_idx": 183529,
+    "score": 11.879396438598633,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 38882,
+    "female_idx": 39304,
+    "score": 11.879175186157228,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 152256,
+    "female_idx": 152257,
+    "score": 11.878984451293944,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73505,
+    "female_idx": 75666,
+    "score": 11.878984451293944,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 198374,
+    "female_idx": 198375,
+    "score": 11.877371788024902,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40321,
+    "female_idx": 40322,
+    "score": 11.877141952514648,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 188246,
+    "female_idx": 188628,
+    "score": 11.876659393310549,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 245792,
+    "female_idx": 246836,
+    "score": 11.875905990600586,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 119315,
+    "female_idx": 116398,
+    "score": 11.875187873840332,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 77568,
+    "female_idx": 77579,
+    "score": 11.87501335144043,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 116801,
+    "female_idx": 116800,
+    "score": 11.874438285827637,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 72346,
+    "female_idx": 74115,
+    "score": 11.874414443969728,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 117082,
+    "female_idx": 117083,
+    "score": 11.874298095703123,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 242220,
+    "female_idx": 244999,
+    "score": 11.873907089233398,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 167600,
+    "female_idx": 165738,
+    "score": 11.873712539672852,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 75671,
+    "female_idx": 75672,
+    "score": 11.873526573181152,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115653,
+    "female_idx": 119639,
+    "score": 11.87278175354004,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 182830,
+    "female_idx": 182831,
+    "score": 11.872490882873535,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165925,
+    "female_idx": 166916,
+    "score": 11.872328758239746,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 178641,
+    "female_idx": 178117,
+    "score": 11.871042251586914,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 209067,
+    "female_idx": 206924,
+    "score": 11.870790481567385,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 242712,
+    "female_idx": 246055,
+    "score": 11.870630264282228,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73262,
+    "female_idx": 74197,
+    "score": 11.870498657226562,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115982,
+    "female_idx": 120945,
+    "score": 11.87006950378418,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 84101,
+    "female_idx": 84113,
+    "score": 11.869693756103516,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 167900,
+    "female_idx": 166161,
+    "score": 11.868483543395996,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 10119,
+    "female_idx": 11147,
+    "score": 11.868267059326172,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 2031,
+    "female_idx": 2032,
+    "score": 11.86701202392578,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 166310,
+    "female_idx": 168341,
+    "score": 11.86676025390625,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 116588,
+    "female_idx": 120560,
+    "score": 11.86582851409912,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 26104,
+    "female_idx": 25493,
+    "score": 11.865586280822754,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259233,
+    "female_idx": 260733,
+    "score": 11.865509033203123,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 246967,
+    "female_idx": 246968,
+    "score": 11.865371704101562,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 208391,
+    "female_idx": 208392,
+    "score": 11.86496353149414,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 166284,
+    "female_idx": 168290,
+    "score": 11.863115310668944,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 208568,
+    "female_idx": 209958,
+    "score": 11.863082885742188,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 85233,
+    "female_idx": 85234,
+    "score": 11.862568855285645,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 151489,
+    "female_idx": 152111,
+    "score": 11.862135887145996,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 199744,
+    "female_idx": 199745,
+    "score": 11.86178970336914,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 114249,
+    "female_idx": 118606,
+    "score": 11.861706733703612,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 167989,
+    "female_idx": 167990,
+    "score": 11.861370086669922,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 72945,
+    "female_idx": 75374,
+    "score": 11.861261367797852,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207085,
+    "female_idx": 209262,
+    "score": 11.861135482788086,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 120628,
+    "female_idx": 121986,
+    "score": 11.85970973968506,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259513,
+    "female_idx": 257676,
+    "score": 11.859498977661133,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 221958,
+    "female_idx": 222795,
+    "score": 11.859403610229492,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 117142,
+    "female_idx": 117143,
+    "score": 11.85858154296875,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 59524,
+    "female_idx": 85068,
+    "score": 11.858484268188477,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 143003,
+    "female_idx": 144063,
+    "score": 11.858141899108888,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 223663,
+    "female_idx": 223366,
+    "score": 11.857379913330078,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 243484,
+    "female_idx": 244306,
+    "score": 11.857192993164062,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95603,
+    "female_idx": 96486,
+    "score": 11.857172966003418,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 144604,
+    "female_idx": 144605,
+    "score": 11.856852531433104,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 85351,
+    "female_idx": 84093,
+    "score": 11.856340408325195,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 115470,
+    "female_idx": 118634,
+    "score": 11.855110168457031,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 170600,
+    "female_idx": 170601,
+    "score": 11.854701042175291,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 244176,
+    "female_idx": 244177,
+    "score": 11.854698181152344,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 260406,
+    "female_idx": 257414,
+    "score": 11.85430908203125,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 167513,
+    "female_idx": 158591,
+    "score": 11.85422706604004,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 167901,
+    "female_idx": 166162,
+    "score": 11.85395622253418,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 197540,
+    "female_idx": 196621,
+    "score": 11.853516578674316,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 261241,
+    "female_idx": 261242,
+    "score": 11.853438377380373,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 120823,
+    "female_idx": 120825,
+    "score": 11.852944374084473,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 180267,
+    "female_idx": 182104,
+    "score": 11.85276699066162,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 222601,
+    "female_idx": 221800,
+    "score": 11.85267448425293,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 129871,
+    "female_idx": 130503,
+    "score": 11.85244846343994,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 144474,
+    "female_idx": 144475,
+    "score": 11.851821899414062,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 59487,
+    "female_idx": 60385,
+    "score": 11.85150146484375,
+    "year": null,
+    "source": "hgt",
+    "same_banner": false,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25144,
+    "female_idx": 27052,
+    "score": 11.851240158081056,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 207062,
+    "female_idx": 209214,
+    "score": 11.85117530822754,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 172717,
+    "female_idx": 172718,
+    "score": 11.850303649902344,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 180708,
+    "female_idx": 181550,
+    "score": 11.849916458129885,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 180253,
+    "female_idx": 181543,
+    "score": 11.848833084106444,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259362,
+    "female_idx": 261560,
+    "score": 11.848676681518556,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259319,
+    "female_idx": 261344,
+    "score": 11.847759246826172,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 27666,
+    "female_idx": 27667,
+    "score": 11.847052574157717,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 208386,
+    "female_idx": 209910,
+    "score": 11.84687614440918,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 40411,
+    "female_idx": 40412,
+    "score": 11.846580505371094,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 54846,
+    "female_idx": 77836,
+    "score": 11.846190452575684,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 116607,
+    "female_idx": 121985,
+    "score": 11.846160888671877,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 26388,
+    "female_idx": 24934,
+    "score": 11.846136093139648,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 209221,
+    "female_idx": 207065,
+    "score": 11.845252990722656,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 231687,
+    "female_idx": 233548,
+    "score": 11.84446144104004,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 206291,
+    "female_idx": 207885,
+    "score": 11.844242095947266,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 10618,
+    "female_idx": 9861,
+    "score": 11.844019889831545,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 96140,
+    "female_idx": 96141,
+    "score": 11.843507766723633,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 152290,
+    "female_idx": 153493,
+    "score": 11.843178749084473,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25309,
+    "female_idx": 27659,
+    "score": 11.84226417541504,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 70391,
+    "female_idx": 70402,
+    "score": 11.842233657836914,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 85044,
+    "female_idx": 85045,
+    "score": 11.842058181762695,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 50856,
+    "female_idx": 50858,
+    "score": 11.841411590576172,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 233152,
+    "female_idx": 232032,
+    "score": 11.841227531433104,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 167841,
+    "female_idx": 169570,
+    "score": 11.840957641601562,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 166162,
+    "female_idx": 167901,
+    "score": 11.840900421142578,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 165399,
+    "female_idx": 167052,
+    "score": 11.839959144592283,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 177859,
+    "female_idx": 178422,
+    "score": 11.8387451171875,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 246057,
+    "female_idx": 246058,
+    "score": 11.83849811553955,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95621,
+    "female_idx": 96572,
+    "score": 11.837860107421877,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 258605,
+    "female_idx": 261284,
+    "score": 11.837533950805664,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 1589,
+    "female_idx": 1795,
+    "score": 11.837316513061523,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 172810,
+    "female_idx": 172811,
+    "score": 11.83720874786377,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 259097,
+    "female_idx": 259987,
+    "score": 11.836912155151367,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 73054,
+    "female_idx": 75638,
+    "score": 11.836466789245604,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 199741,
+    "female_idx": 199742,
+    "score": 11.836277961730955,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 117560,
+    "female_idx": 116188,
+    "score": 11.835777282714844,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 26009,
+    "female_idx": 26008,
+    "score": 11.835369110107422,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 168110,
+    "female_idx": 166221,
+    "score": 11.834630966186523,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 95678,
+    "female_idx": 96916,
+    "score": 11.833940505981444,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 118254,
+    "female_idx": 115401,
+    "score": 11.833852767944336,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 257778,
+    "female_idx": 259689,
+    "score": 11.83366584777832,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 196242,
+    "female_idx": 197608,
+    "score": 11.833439826965332,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 80735,
+    "female_idx": 80746,
+    "score": 11.833295822143556,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 25419,
+    "female_idx": 27964,
+    "score": 11.833114624023438,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  },
+  {
+    "male_idx": 72237,
+    "female_idx": 73888,
+    "score": 11.83306121826172,
+    "year": null,
+    "source": "hgt",
+    "same_banner": true,
+    "motif_id": null
+  }
+]

@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Marriage Kinship Motif Catalog — RuleVis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0f1117;
+    --surface:  #1a1d27;
+    --border:   #2e3346;
+    --text:     #e2e4ef;
+    --muted:    #7a7f9a;
+    --gold:     #f5c842;
+    --c-fs:     #4a7fe5;
+    --c-ms:     #b55fd6;
+    --c-sib:    #3dba5f;
+    --c-hh:     #2db56d;
+    --card-w:   180px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+  }
+
+  /* ── header ── */
+  header {
+    padding: 32px 40px 24px;
+    border-bottom: 1px solid var(--border);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  header h1 { font-size: 22px; font-weight: 600; letter-spacing: -.3px; color: #fff; margin-bottom: 6px; }
+  header p  { color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 720px; }
+
+  /* ── controls ── */
+  .controls {
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    padding: 16px 40px; border-bottom: 1px solid var(--border);
+    max-width: 1400px; margin: 0 auto;
+  }
+  .legend { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    cursor: pointer; user-select: none;
+    padding: 4px 10px; border-radius: 20px;
+    border: 1.5px solid transparent; transition: border-color .15s, opacity .15s;
+  }
+  .legend-item.off { opacity: .3; }
+  .legend-item:hover { border-color: var(--border); }
+  .legend-swatch { width: 22px; height: 3px; border-radius: 2px; }
+  .legend-swatch.arrow-swatch { position: relative; height: 3px; }
+  .legend-swatch.arrow-swatch::after {
+    content: ''; position: absolute; right: -1px; top: 50%;
+    transform: translateY(-50%);
+    border: 4px solid transparent; border-left-width: 6px;
+  }
+  .legend-swatch.fs { background: var(--c-fs); }
+  .legend-swatch.fs::after { border-left-color: var(--c-fs); }
+  .legend-swatch.ms { background: var(--c-ms); }
+  .legend-swatch.ms::after { border-left-color: var(--c-ms); }
+  .legend-swatch.sib { background: var(--c-sib); }
+  .legend-swatch.hh {
+    background: rgba(45,181,109,0.18);
+    border: 1.5px dashed #2db56d;
+    height: 12px; width: 22px;
+    border-radius: 3px;
+  }
+  .sep { width: 1px; height: 24px; background: var(--border); }
+  .stats-pill { display: flex; gap: 16px; color: var(--muted); font-size: 12px; }
+  .stats-pill span b { color: var(--text); font-weight: 600; }
+  .sort-group { display: flex; gap: 8px; align-items: center; margin-left: auto; }
+  .sort-group label { color: var(--muted); font-size: 12px; }
+  .sort-group select {
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 4px 8px; font-size: 12px; cursor: pointer;
+  }
+
+  /* ── grid ── */
+  .grid-wrap { max-width: 1400px; margin: 0 auto; padding: 28px 40px 60px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--card-w));
+    gap: 16px;
+  }
+
+  /* ── card ── */
+  .card {
+    width: var(--card-w);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+    transition: border-color .15s, transform .15s, box-shadow .15s;
+    cursor: pointer;
+  }
+  .card:hover { border-color: #4a5180; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,.4); }
+  .card.disabled { opacity: .35; filter: grayscale(1); }
+  .card-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 10px 0;
+  }
+  .rank-badge {
+    background: #252940; color: var(--muted);
+    font-size: 10px; font-weight: 600;
+    padding: 2px 6px; border-radius: 4px; letter-spacing: .3px;
+  }
+  .count-badge { font-size: 11px; color: var(--muted); }
+  .count-badge b { color: var(--text); }
+  .card svg { display: block; width: 100%; height: 150px; }
+  .card-footer { padding: 6px 10px 9px; display: flex; flex-direction: column; gap: 3px; }
+  .card-stat { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+  .card-stat b { color: var(--text); font-weight: 500; }
+  .etype-pills { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 2px; }
+  .epill {
+    font-size: 9px; padding: 1px 5px; border-radius: 3px;
+    font-weight: 600; letter-spacing: .2px; color: #fff;
+  }
+  .epill.r_fs  { background: #2d52a8; }
+  .epill.r_ms  { background: #7a3fa0; }
+  .epill.r_sib { background: #277a3f; }
+  .epill.r_hh  { background: #1d7a52; }
+  .zoom-hint {
+    font-size: 9px; color: var(--muted); text-align: center;
+    padding: 2px 0 4px; opacity: 0; transition: opacity .15s;
+    pointer-events: none;
+  }
+  .card:hover .zoom-hint { opacity: 1; }
+
+  /* ── tooltip ── */
+  #tooltip {
+    position: fixed; pointer-events: none; z-index: 900;
+    background: #0d0f19; border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 12px; font-size: 11px; line-height: 1.7; color: var(--text);
+    max-width: 280px; box-shadow: 0 8px 32px rgba(0,0,0,.5); display: none;
+  }
+  #tooltip b { color: #fff; font-weight: 600; }
+  #tooltip .hash { font-family: monospace; color: var(--muted); font-size: 10px; word-break: break-all; }
+
+  /* ── modal overlay ── */
+  #modal {
+    display: none;
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0, 0, 0, .75);
+    backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+  }
+  #modal.open { display: flex; }
+
+  .modal-panel {
+    background: #13161f;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    width: min(900px, 95vw);
+    max-height: 92vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,.7);
+    overflow: hidden;
+  }
+
+  /* title bar */
+  .modal-title {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .modal-rank { font-size: 11px; font-weight: 700; color: var(--muted); background: #252940; padding: 2px 7px; border-radius: 5px; }
+  .modal-id   { font-size: 12px; font-family: monospace; color: #8090c0; }
+  .modal-score { font-size: 12px; }
+  .modal-nav  { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+  .modal-nav button, .modal-close {
+    background: #252940; border: 1px solid var(--border); color: var(--text);
+    border-radius: 6px; cursor: pointer; font-size: 13px;
+    padding: 4px 10px; transition: background .12s;
+    line-height: 1;
+  }
+  .modal-nav button:hover, .modal-close:hover { background: #33375a; }
+  .modal-nav-pos { font-size: 11px; color: var(--muted); min-width: 48px; text-align: center; }
+  .modal-close { padding: 4px 9px; font-size: 15px; }
+
+  /* body: svg + meta side-by-side */
+  .modal-body {
+    display: flex; flex: 1; min-height: 0; overflow: hidden;
+  }
+
+  /* svg area */
+  .modal-svg-wrap {
+    flex: 1; position: relative; overflow: hidden;
+    background: #0d0f18;
+    border-right: 1px solid var(--border);
+  }
+  #modal-svg {
+    width: 100%; height: 100%;
+    display: block;
+  }
+
+  /* zoom controls */
+  .zoom-controls {
+    position: absolute; bottom: 14px; right: 14px;
+    display: flex; flex-direction: column; gap: 4px; align-items: center;
+  }
+  .zoom-btn {
+    width: 30px; height: 30px;
+    background: #252940; border: 1px solid var(--border); color: var(--text);
+    border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .12s; user-select: none;
+  }
+  .zoom-btn:hover { background: #33375a; }
+  .zoom-btn.reset { font-size: 11px; }
+  #zoom-pct {
+    font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums;
+    min-width: 34px; text-align: center;
+  }
+
+  /* drag hint */
+  .drag-hint {
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; color: var(--muted); pointer-events: none;
+    opacity: 0; transition: opacity .3s;
+  }
+  .modal-svg-wrap:hover .drag-hint { opacity: 1; }
+
+  /* right meta panel */
+  .modal-meta {
+    width: 220px; flex-shrink: 0;
+    padding: 20px 16px; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .meta-section h4 {
+    font-size: 10px; font-weight: 700; letter-spacing: .6px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+  }
+  .meta-row {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--muted); margin-bottom: 5px;
+  }
+  .meta-row b { color: var(--text); font-weight: 500; }
+  .meta-etypes { display: flex; gap: 4px; flex-wrap: wrap; }
+  .meta-legend { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .meta-legend-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+  .meta-swatch { width: 18px; height: 3px; border-radius: 1px; flex-shrink: 0; }
+  .node-legend { display: flex; flex-direction: column; gap: 6px; }
+  .node-legend-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+  .node-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+  /* card title */
+  .card-title-text {
+    font-size: 10px; font-weight: 600; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    line-height: 1.3; padding-bottom: 3px;
+    border-bottom: 1px solid var(--border); margin-bottom: 2px;
+  }
+
+  /* modal description */
+  .meta-pattern-title {
+    font-size: 12px; font-weight: 700; color: #fff;
+    line-height: 1.4; margin-bottom: 7px;
+  }
+  .meta-desc {
+    font-size: 11px; color: var(--muted); line-height: 1.65;
+  }
+  .score-info-toggle {
+    font-size: 10px; color: #5a6090; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 2px;
+    margin-top: 5px; display: inline-block;
+  }
+  .score-info-body {
+    font-size: 10.5px; color: #606480; line-height: 1.6; margin-top: 6px;
+    display: none;
+  }
+  .score-info-body.open { display: block; }
+
+  /* keyboard hint */
+  .modal-keyhint {
+    flex-shrink: 0;
+    padding: 6px 18px;
+    border-top: 1px solid var(--border);
+    font-size: 10px; color: #44485a;
+    display: flex; gap: 16px;
+  }
+  .modal-keyhint kbd {
+    background: #252940; border: 1px solid #363a55; border-radius: 3px;
+    padding: 1px 5px; font-family: inherit; font-size: 9px; color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Pre-Marriage Kinship Motif Catalog</h1>
+  <p>
+    Top 50 recurring subgraph structures extracted by heterogeneous SEAL from 3,130 distinct motifs
+    found in 4,000 training-set marriage pairs (train ≤ 1860). Each graph shows the 2-hop enclosing
+    kinship subgraph around a husband–wife pair <span style="color:var(--gold)">●</span> after
+    applying temporal cutoff (no post-marriage edges) and downward truncation (no shared children).
+    Household co-residence shown as shaded regions. <strong style="color:var(--text)">Click any card to zoom.</strong>
+  </p>
+</header>
+
+<div class="controls">
+  <div class="legend">
+    <div class="legend-item" data-type="r_fs" title="Toggle father→child edges">
+      <div class="legend-swatch arrow-swatch fs"></div>
+      <span>r_fs · father→child</span>
+    </div>
+    <div class="legend-item" data-type="r_ms" title="Toggle mother→child edges">
+      <div class="legend-swatch arrow-swatch ms"></div>
+      <span>r_ms · mother→child</span>
+    </div>
+    <div class="legend-item" data-type="r_sib" title="Toggle sibling edges">
+      <div class="legend-swatch sib"></div>
+      <span>r_sib · sibling</span>
+    </div>
+    <div class="legend-item" data-type="r_hh" title="Toggle household co-residence regions">
+      <div class="legend-swatch hh"></div>
+      <span>r_hh · household</span>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="stats-pill">
+    <span>Motifs: <b id="shown-count">50</b></span>
+    <span>Distinct: <b>3,130</b></span>
+    <span>Pairs sampled: <b>4,000</b></span>
+    <span>SEAL AUC: <b>0.9912</b></span>
+  </div>
+
+  <div class="sort-group">
+    <label for="sort-sel">Sort by</label>
+    <select id="sort-sel">
+      <option value="rank">Rank (count ↓ score ↓)</option>
+      <option value="score">Avg SEAL score ↓</option>
+      <option value="count">Occurrence count ↓</option>
+      <option value="nodes">Node count ↓</option>
+      <option value="edges">Kin edge count ↓</option>
+    </select>
+  </div>
+</div>
+
+<div class="grid-wrap">
+  <div class="grid" id="grid"></div>
+</div>
+
+<div id="tooltip"></div>
+
+<!-- ── modal ── -->
+<div id="modal" role="dialog" aria-modal="true">
+  <div class="modal-panel">
+
+    <div class="modal-title">
+      <span class="modal-rank" id="m-rank">#1</span>
+      <span class="modal-id"  id="m-id">—</span>
+      <span class="modal-score" id="m-score"></span>
+      <div class="modal-nav">
+        <button id="modal-prev" title="Previous (←)">&#8592;</button>
+        <span class="modal-nav-pos" id="m-nav-pos">1 / 50</span>
+        <button id="modal-next" title="Next (→)">&#8594;</button>
+      </div>
+      <button class="modal-close" id="modal-close" title="Close (Esc)">&#10005;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-svg-wrap" id="modal-svg-wrap">
+        <svg id="modal-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="drag-hint">scroll to zoom · drag to pan</div>
+        <div class="zoom-controls">
+          <div class="zoom-btn" id="zoom-in"  title="Zoom in (+)">+</div>
+          <div class="zoom-btn reset" id="zoom-reset" title="Fit view (0)">fit</div>
+          <div class="zoom-btn" id="zoom-out" title="Zoom out (−)">−</div>
+          <div id="zoom-pct">100%</div>
+        </div>
+      </div>
+
+      <div class="modal-meta">
+        <div class="meta-section">
+          <h4>Statistics</h4>
+          <div class="meta-row"><span>Rank</span>         <b id="mm-rank">—</b></div>
+          <div class="meta-row"><span>Occurrences</span>  <b id="mm-count">—</b></div>
+          <div class="meta-row"><span>Avg SEAL score</span><b id="mm-score">—</b></div>
+          <div class="meta-row"><span>Avg subgraph size</span><b id="mm-size">—</b></div>
+          <div class="meta-row"><span>Person nodes</span> <b id="mm-nodes">—</b></div>
+          <div class="meta-row"><span>Kin edges</span>    <b id="mm-edges">—</b></div>
+          <div style="margin-top:4px" class="meta-row"><span>Edge types</span></div>
+          <div class="meta-etypes" id="mm-etypes"></div>
+        </div>
+
+        <div class="meta-section">
+          <h4>Edge Legend</h4>
+          <div class="meta-legend">
+            <div class="meta-legend-row">
+              <div class="meta-swatch" style="background:#4a7fe5"></div>
+              <span>r_fs · father → child</span>
+            </div>
+            <div class="meta-legend-row">
+              <div class="meta-swatch" style="background:#b55fd6"></div>
+              <span>r_ms · mother → child</span>
+            </div>
+            <div class="meta-legend-row">
+              <div class="meta-swatch" style="background:#3dba5f"></div>
+              <span>r_sib · sibling ↔ sibling</span>
+            </div>
+            <div class="meta-legend-row">
+              <div class="meta-swatch" style="background:rgba(45,181,109,0.3);border:1.5px dashed #2db56d;height:10px;border-radius:2px"></div>
+              <span>r_hh · household region</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="meta-section">
+          <h4>Node Legend</h4>
+          <div class="node-legend">
+            <div class="node-legend-row">
+              <div class="node-dot" style="background:#f5c842; border:1.5px solid #f0b800"></div>
+              <span><b>H</b> / <b>W</b> — marriage pair</span>
+            </div>
+            <div class="node-legend-row">
+              <div class="node-dot" style="background:#4a5070; border:1.5px solid #6a7090"></div>
+              <span>kin node (1–2 hop)</span>
+            </div>
+          </div>
+          <p style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5">
+            Node size ∝ closeness (DRNL label). Larger = closer to the pair.
+          </p>
+        </div>
+
+        <div class="meta-section" id="mm-pattern-section" style="display:none">
+          <h4>Family Pattern</h4>
+          <p class="meta-pattern-title" id="mm-pattern-title"></p>
+          <p class="meta-desc" id="mm-desc"></p>
+        </div>
+
+        <div class="meta-section">
+          <h4>SEAL Score</h4>
+          <span class="score-info-toggle" id="score-toggle">What does the score mean?</span>
+          <div class="score-info-body" id="score-info-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-keyhint">
+      <span><kbd>←</kbd> <kbd>→</kbd> navigate</span>
+      <span><kbd>+</kbd> <kbd>−</kbd> zoom</span>
+      <span><kbd>0</kbd> fit view</span>
+      <span><kbd>Esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+// ── constants ──────────────────────────────────────────────────────────────
+const EDGE_COLOR = { r_fs: '#4a7fe5', r_ms: '#b55fd6', r_sib: '#3dba5f' };
+const HH_PALETTE = [
+  { fill: 'rgba(45,181,109,0.13)',  stroke: '#2db56d' },
+  { fill: 'rgba(90,110,200,0.13)',  stroke: '#5a6ec8' },
+  { fill: 'rgba(220,150,40,0.13)', stroke: '#dc9628' },
+  { fill: 'rgba(200,80,80,0.13)',   stroke: '#c85050' },
+  { fill: 'rgba(160,100,220,0.13)', stroke: '#a064dc' },
+];
+
+// card SVG dimensions
+const CW = 180, CH = 150, CP = 18;
+// modal SVG natural dimensions (force runs in this space)
+const MW = 640, MH = 480, MP = 36;
+
+let activeFilters = new Set(['r_fs', 'r_ms', 'r_sib', 'r_hh']);
+let allMotifs = [];
+let sortedMotifs = [];  // current display order
+let sortKey = 'rank';
+let scoreExplanation = '';
+
+// modal state
+let modalIndex = -1;   // index into sortedMotifs
+let modalZoom = null;  // d3 zoom behavior
+let modalZoomTransform = d3.zoomIdentity;
+
+// ── helpers ────────────────────────────────────────────────────────────────
+function drnlRadius(label, scale) {
+  const base = label <= 1 ? 9 : label === 2 ? 7 : 5.5;
+  return base * scale;
+}
+
+function buildGraphData(motif) {
+  const ex = motif.example;
+  const rawEdges = ex.edges || [];
+  const rawEtypes = ex.edge_types || [];
+  const rawNtypes = ex.node_types || [];
+
+  const keptEdgeIdx = [];
+  const hhEdgeIdx = [];
+  for (let i = 0; i < rawEdges.length; i++) {
+    const et = rawEtypes[i] || 'r_sib';
+    if (et === 'r_hh') { hhEdgeIdx.push(i); } else { keptEdgeIdx.push(i); }
+  }
+
+  // Build household groups: hhOrig (node index) → Set of person orig indices
+  const hhPersonMap = new Map();
+  for (const i of hhEdgeIdx) {
+    const [a, b] = rawEdges[i];
+    const aType = rawNtypes[a] || 'person';
+    const bType = rawNtypes[b] || 'person';
+    let personOrig, hhOrig;
+    if (aType === 'household' && bType === 'person')      { hhOrig = a; personOrig = b; }
+    else if (aType === 'person' && bType === 'household') { hhOrig = b; personOrig = a; }
+    else continue;
+    if (!hhPersonMap.has(hhOrig)) hhPersonMap.set(hhOrig, new Set());
+    hhPersonMap.get(hhOrig).add(personOrig);
+  }
+
+  const referenced = new Set([ex.src_local, ex.dst_local]);
+  for (const i of keptEdgeIdx) { referenced.add(rawEdges[i][0]); referenced.add(rawEdges[i][1]); }
+  for (const persons of hhPersonMap.values()) { for (const p of persons) referenced.add(p); }
+
+  const personOnly = new Set([ex.src_local, ex.dst_local]);
+  for (const ni of referenced) {
+    if ((rawNtypes[ni] || 'person') === 'person') personOnly.add(ni);
+  }
+
+  const sorted = Array.from(personOnly).sort((a, b) => a - b);
+  const remap = new Map(sorted.map((orig, i) => [orig, i]));
+
+  const nodes = sorted.map(orig => ({
+    id: remap.get(orig), orig,
+    label: ex.drnl_labels?.[orig] ?? 0,
+    isSrc: orig === ex.src_local,
+    isDst: orig === ex.dst_local,
+  }));
+
+  const edges = [];
+  for (const i of keptEdgeIdx) {
+    const [s, t] = rawEdges[i];
+    if (!personOnly.has(s) || !personOnly.has(t)) continue;
+    edges.push({ source: remap.get(s), target: remap.get(t), etype: rawEtypes[i] || 'r_sib' });
+  }
+
+  // hhGroups: each entry has id (stable key) and members (local remapped IDs)
+  const hhGroups = [];
+  for (const [hhOrig, persons] of hhPersonMap) {
+    const members = [];
+    for (const p of persons) {
+      if (personOnly.has(p) && remap.has(p)) members.push(remap.get(p));
+    }
+    if (members.length >= 1) hhGroups.push({ id: `hh${hhOrig}`, members });
+  }
+
+  return { nodes, edges, hhGroups };
+}
+
+// ── layout (parameterized by canvas dimensions and spring scale) ──────────
+function computeLayout(nodes, edges, w, h, pad, springScale, hhGroups) {
+  if (nodes.length === 0) return [];
+  if (nodes.length === 1) return [{ ...nodes[0], x: w / 2, y: h / 2 }];
+
+  const nodesCopy = nodes.map(n => ({ ...n }));
+  const linksCopy = edges.map(e => ({ source: e.source, target: e.target, etype: e.etype }));
+
+  const dist = springScale * (nodes.length <= 3 ? 55 : nodes.length <= 6 ? 45 : 38);
+  const charge = springScale * (nodes.length <= 4 ? -200 : -130);
+
+  const sim = d3.forceSimulation(nodesCopy)
+    .force('link', d3.forceLink(linksCopy).id(d => d.id).distance(dist).strength(0.7))
+    .force('charge', d3.forceManyBody().strength(charge))
+    .force('center', d3.forceCenter(w / 2, h / 2))
+    .force('collision', d3.forceCollide(springScale * 14))
+    .stop();
+
+  // Soft pull co-household members toward their group centroid
+  if (hhGroups && hhGroups.length > 0) {
+    sim.force('hh-cluster', () => {
+      for (const grp of hhGroups) {
+        const ms = grp.members.map(id => nodesCopy.find(n => n.id === id)).filter(Boolean);
+        if (ms.length < 2) continue;
+        const cx = ms.reduce((s, n) => s + (n.x || 0), 0) / ms.length;
+        const cy = ms.reduce((s, n) => s + (n.y || 0), 0) / ms.length;
+        for (const n of ms) { n.vx = (n.vx || 0) + (cx - n.x) * 0.10; n.vy = (n.vy || 0) + (cy - n.y) * 0.10; }
+      }
+    });
+  }
+
+  const ticks = Math.ceil(Math.log(sim.alphaMin()) / Math.log(1 - sim.alphaDecay()));
+  for (let i = 0; i < Math.min(ticks, 500); i++) sim.tick();
+
+  for (const n of nodesCopy) {
+    n.x = Math.max(pad + 12, Math.min(w - pad - 12, n.x));
+    n.y = Math.max(pad + 12, Math.min(h - pad - 12, n.y));
+  }
+  return nodesCopy;
+}
+
+// ── household convex hull regions ─────────────────────────────────────────
+function drawHulls(svgD3, nodeMap, hhGroups, hullPad) {
+  if (!hhGroups || hhGroups.length === 0) return;
+  const hullG = svgD3.append('g').attr('class', 'hh-hulls').lower(); // push behind other layers
+
+  for (let gi = 0; gi < hhGroups.length; gi++) {
+    const grp = hhGroups[gi];
+    const pal = HH_PALETTE[gi % HH_PALETTE.length];
+    const pts = grp.members.map(id => nodeMap.get(id)).filter(Boolean).map(n => [n.x, n.y]);
+    if (pts.length === 0) continue;
+
+    if (pts.length === 1) {
+      // single-node group → circle
+      hullG.append('circle')
+        .attr('cx', pts[0][0]).attr('cy', pts[0][1])
+        .attr('r', hullPad * 1.8)
+        .attr('fill', pal.fill).attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5).attr('stroke-dasharray', '4,3');
+      continue;
+    }
+
+    // For 2 or more points: expand each point by hullPad in 4 directions to
+    // get a capsule-like shape, then compute convex hull of those expanded points
+    const expandedPts = [];
+    for (const [px, py] of pts) {
+      expandedPts.push([px - hullPad, py - hullPad]);
+      expandedPts.push([px + hullPad, py - hullPad]);
+      expandedPts.push([px + hullPad, py + hullPad]);
+      expandedPts.push([px - hullPad, py + hullPad]);
+    }
+    const hull = d3.polygonHull(expandedPts);
+    if (!hull) continue;
+
+    const lineGen = d3.line().curve(d3.curveCatmullRomClosed.alpha(0.5));
+    hullG.append('path')
+      .attr('d', lineGen(hull))
+      .attr('fill', pal.fill).attr('stroke', pal.stroke)
+      .attr('stroke-width', 1.5).attr('stroke-dasharray', '4,3');
+  }
+}
+
+// ── draw into an svg element ───────────────────────────────────────────────
+function drawMotif(motif, svgEl, w, h, pad, nodeScale, uid) {
+  const { nodes: rawNodes, edges, hhGroups } = buildGraphData(motif);
+  const visibleEdges = edges.filter(e => activeFilters.has(e.etype));
+  const showHulls = activeFilters.has('r_hh') && hhGroups.length > 0;
+  const laid = computeLayout(rawNodes, visibleEdges, w, h, pad, nodeScale, showHulls ? hhGroups : []);
+  const nodeMap = new Map(laid.map(n => [n.id, n]));
+
+  const svg = d3.select(svgEl);
+  svg.selectAll('*').remove();
+
+  // Draw household hulls first so they sit behind edges and nodes
+  if (showHulls) {
+    const hullPad = Math.max(9, nodeScale * 10);
+    drawHulls(svg, nodeMap, hhGroups, hullPad);
+  }
+
+  const defs = svg.append('defs');
+  for (const [et, col] of Object.entries(EDGE_COLOR)) {
+    if (et === 'r_sib') continue;
+    defs.append('marker')
+      .attr('id', `arr-${et.replace('_', '-')}-${uid}`)
+      .attr('viewBox', '0 -4 8 8')
+      .attr('refX', 10 + nodeScale * 4)
+      .attr('refY', 0)
+      .attr('markerWidth', 4 + nodeScale)
+      .attr('markerHeight', 4 + nodeScale)
+      .attr('orient', 'auto')
+      .append('path').attr('d', 'M0,-4L8,0L0,4Z').attr('fill', col);
+  }
+
+  if (rawNodes.length === 0) return { laid, nodeMap };
+
+  const strokeW = Math.max(1.2, nodeScale * 0.8);
+
+  const edgeG = svg.append('g').attr('class', 'edges');
+  for (const e of visibleEdges) {
+    const s = nodeMap.get(typeof e.source === 'object' ? e.source.id : e.source);
+    const t = nodeMap.get(typeof e.target === 'object' ? e.target.id : e.target);
+    if (!s || !t) continue;
+    const col = EDGE_COLOR[e.etype] || '#888';
+    const isDir = e.etype !== 'r_sib';
+    const line = edgeG.append('line')
+      .attr('x1', s.x).attr('y1', s.y).attr('x2', t.x).attr('y2', t.y)
+      .attr('stroke', col).attr('stroke-width', strokeW).attr('stroke-opacity', .78);
+    if (isDir) line.attr('marker-end', `url(#arr-${e.etype.replace('_', '-')}-${uid})`);
+  }
+
+  const nodeG = svg.append('g').attr('class', 'nodes');
+  for (const n of laid) {
+    const isM = n.isSrc || n.isDst;
+    const r = drnlRadius(n.label, nodeScale);
+    const g = nodeG.append('g').attr('transform', `translate(${n.x},${n.y})`);
+    if (isM) {
+      g.append('circle').attr('r', r + 3.5 * nodeScale).attr('fill', 'none')
+       .attr('stroke', '#f5c842').attr('stroke-width', 1.2).attr('stroke-opacity', .5);
+    }
+    g.append('circle').attr('r', r)
+     .attr('fill', isM ? '#f5c842' : '#4a5070')
+     .attr('stroke', isM ? '#f0b800' : '#6a7090')
+     .attr('stroke-width', 1.2);
+
+    // label H/W on marriage pair
+    if (isM) {
+      g.append('text')
+       .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
+       .attr('font-size', Math.max(6, r * 0.85))
+       .attr('font-weight', '700').attr('fill', '#1a1d27')
+       .text(n.isSrc ? 'H' : 'W');
+    }
+  }
+
+  return { laid, nodeMap };
+}
+
+// ── card rendering ─────────────────────────────────────────────────────────
+function renderCard(motif, rank, sortedIdx) {
+  const { nodes: rawNodes, edges, hhGroups } = buildGraphData(motif);
+  const personEdges = edges;
+  const etypesPresent = [...new Set(personEdges.map(e => e.etype))];
+  if (hhGroups.length > 0 && !etypesPresent.includes('r_hh')) etypesPresent.push('r_hh');
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.sortedIdx = sortedIdx;
+
+  const hdr = document.createElement('div');
+  hdr.className = 'card-header';
+  hdr.innerHTML = `<span class="rank-badge">#${rank}</span><span class="count-badge"><b>${motif.count}</b> pairs</span>`;
+  card.appendChild(hdr);
+
+  const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svgEl.setAttribute('viewBox', `0 0 ${CW} ${CH}`);
+  card.appendChild(svgEl);
+
+  const scoreVal = motif.avg_score ?? 0;
+  const scoreColor = scoreVal >= 0.95 ? '#3dba5f' : scoreVal >= 0.8 ? '#f5c842' : '#e07b39';
+  const footer = document.createElement('div');
+  footer.className = 'card-footer';
+  footer.innerHTML = `
+    ${motif.title ? `<div class="card-title-text">${motif.title}</div>` : ''}
+    <div class="card-stat"><span>Score</span><b style="color:${scoreColor}">${scoreVal.toFixed(4)}</b></div>
+    <div class="card-stat"><span>Nodes / edges</span><b>${rawNodes.length} / ${personEdges.length}</b></div>
+    <div class="etype-pills">
+      ${etypesPresent.map(et => `<span class="epill ${et}">${et}</span>`).join('')}
+      ${!etypesPresent.length ? '<span class="epill" style="background:#333">isolated</span>' : ''}
+    </div>
+  `;
+  card.appendChild(footer);
+
+  const hint = document.createElement('div');
+  hint.className = 'zoom-hint';
+  hint.textContent = 'click to zoom';
+  card.appendChild(hint);
+
+  // tooltip
+  card.addEventListener('mouseenter', ev => showTip(ev, motif, rawNodes, personEdges, etypesPresent));
+  card.addEventListener('mousemove', moveTip);
+  card.addEventListener('mouseleave', () => { document.getElementById('tooltip').style.display = 'none'; });
+
+  card.addEventListener('click', () => openModal(sortedIdx));
+
+  return { card, svgEl };
+}
+
+// ── tooltip ────────────────────────────────────────────────────────────────
+function showTip(ev, motif, rawNodes, personEdges, etypesPresent) {
+  if (document.getElementById('modal').classList.contains('open')) return;
+  const tip = document.getElementById('tooltip');
+  const scoreVal = motif.avg_score ?? 0;
+  const titleLine = motif.title ? `<b style="color:#fff">${motif.title}</b><br>` : `<b>${motif.id}</b><br>`;
+  tip.innerHTML = `
+    ${titleLine}
+    <span style="color:var(--muted);font-size:10px">${motif.id}</span><br>
+    Occurrence count: <b>${motif.count}</b><br>
+    Avg SEAL score: <b>${scoreVal.toFixed(4)}</b><br>
+    Avg subgraph size: <b>${motif.avg_size?.toFixed(1) ?? '—'}</b><br>
+    Person nodes: <b>${rawNodes.length}</b> · Kin edges: <b>${personEdges.length}</b><br>
+    Edge types: <b>${etypesPresent.join(', ') || 'none'}</b><br>
+    <span class="hash">${motif.hash?.slice(0, 90) ?? ''}…</span>
+  `;
+  tip.style.display = 'block';
+  moveTip(ev);
+}
+function moveTip(ev) {
+  const tip = document.getElementById('tooltip');
+  let left = ev.clientX + 14, top = ev.clientY + 14;
+  if (left + 290 > window.innerWidth) left = ev.clientX - 290 - 14;
+  if (top + 200 > window.innerHeight) top = ev.clientY - 200;
+  tip.style.left = left + 'px';
+  tip.style.top = top + 'px';
+}
+
+// ── modal ──────────────────────────────────────────────────────────────────
+function openModal(sortedIdx) {
+  modalIndex = sortedIdx;
+  document.getElementById('tooltip').style.display = 'none';
+  document.getElementById('modal').classList.add('open');
+  renderModal();
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  modalIndex = -1;
+}
+
+function renderModal() {
+  const motif = sortedMotifs[modalIndex];
+  if (!motif) return;
+
+  const { nodes: rawNodes, edges: allEdges, hhGroups } = buildGraphData(motif);
+  const personEdges = allEdges;
+  const etypesPresent = [...new Set(personEdges.map(e => e.etype))];
+  if (hhGroups.length > 0 && !etypesPresent.includes('r_hh')) etypesPresent.push('r_hh');
+  const scoreVal = motif.avg_score ?? 0;
+  const scoreColor = scoreVal >= 0.95 ? '#3dba5f' : scoreVal >= 0.8 ? '#f5c842' : '#e07b39';
+
+  // title bar
+  document.getElementById('m-rank').textContent = `#${motif._rank}`;
+  document.getElementById('m-id').textContent = motif.id;
+  document.getElementById('m-score').innerHTML = `<span style="color:${scoreColor};font-weight:600">${scoreVal.toFixed(4)}</span>`;
+  document.getElementById('m-nav-pos').textContent = `${modalIndex + 1} / ${sortedMotifs.length}`;
+
+  // meta panel
+  document.getElementById('mm-rank').textContent = motif._rank;
+  document.getElementById('mm-count').textContent = motif.count;
+  document.getElementById('mm-score').innerHTML = `<span style="color:${scoreColor}">${scoreVal.toFixed(4)}</span>`;
+  document.getElementById('mm-size').textContent = motif.avg_size?.toFixed(1) ?? '—';
+  document.getElementById('mm-nodes').textContent = rawNodes.length;
+  document.getElementById('mm-edges').textContent = personEdges.length;
+  const pillsEl = document.getElementById('mm-etypes');
+  pillsEl.innerHTML = etypesPresent.map(et => `<span class="epill ${et}">${et}</span>`).join('') ||
+    '<span class="epill" style="background:#333">isolated</span>';
+
+  // family pattern section
+  const patSec = document.getElementById('mm-pattern-section');
+  const patTitle = document.getElementById('mm-pattern-title');
+  const patDesc = document.getElementById('mm-desc');
+  if (motif.title) {
+    patSec.style.display = '';
+    patTitle.textContent = motif.title;
+    patDesc.textContent = motif.desc || '';
+  } else {
+    patSec.style.display = 'none';
+  }
+
+  // score explanation (set once, toggle shows/hides)
+  const scoreInfoEl = document.getElementById('score-info-body');
+  if (scoreExplanation && !scoreInfoEl.textContent) {
+    scoreInfoEl.textContent = scoreExplanation;
+  }
+
+  // also update modal title bar to include motif title
+  const mTitle = motif.title ? ` — ${motif.title}` : '';
+  document.getElementById('m-id').innerHTML =
+    `<span style="color:#8090c0">${motif.id}</span>` +
+    (motif.title ? `<span style="color:#aaa;font-family:inherit;font-size:12px"> — ${motif.title}</span>` : '');
+
+  // SVG
+  const wrap = document.getElementById('modal-svg-wrap');
+  const svgEl = document.getElementById('modal-svg');
+  const wrapW = wrap.clientWidth || MW;
+  const wrapH = wrap.clientHeight || MH;
+
+  svgEl.setAttribute('width', wrapW);
+  svgEl.setAttribute('height', wrapH);
+  svgEl.setAttribute('viewBox', `0 0 ${wrapW} ${wrapH}`);
+
+  // draw into a <g> that zoom will transform
+  const svgD3 = d3.select(svgEl);
+  svgD3.selectAll('*').remove();
+  const zoomG = svgD3.append('g').attr('id', 'modal-zoom-g');
+
+  drawMotif(motif, zoomG.node(), wrapW, wrapH, MP, 1.9, 'modal');
+
+  // set up D3 zoom
+  if (modalZoom) svgD3.on('.zoom', null);  // detach old
+  modalZoom = d3.zoom()
+    .scaleExtent([0.15, 8])
+    .on('zoom', (event) => {
+      zoomG.attr('transform', event.transform);
+      modalZoomTransform = event.transform;
+      document.getElementById('zoom-pct').textContent =
+        Math.round(event.transform.k * 100) + '%';
+    });
+
+  modalZoomTransform = d3.zoomIdentity;
+  svgD3.call(modalZoom);
+  svgD3.call(modalZoom.transform, d3.zoomIdentity);
+  document.getElementById('zoom-pct').textContent = '100%';
+}
+
+function modalNavTo(idx) {
+  if (idx < 0 || idx >= sortedMotifs.length) return;
+  modalIndex = idx;
+  renderModal();
+}
+
+function fitModalView() {
+  const svgEl = document.getElementById('modal-svg');
+  const zoomG = document.getElementById('modal-zoom-g');
+  if (!svgEl || !zoomG || !modalZoom) return;
+
+  const svgD3 = d3.select(svgEl);
+  const wrapW = svgEl.clientWidth || MW;
+  const wrapH = svgEl.clientHeight || MH;
+
+  // get bounding box of drawn content
+  try {
+    const bb = zoomG.getBBox();
+    if (bb.width === 0 && bb.height === 0) {
+      svgD3.call(modalZoom.transform, d3.zoomIdentity);
+      return;
+    }
+    const scale = Math.min(0.92 * wrapW / bb.width, 0.92 * wrapH / bb.height, 4);
+    const tx = wrapW / 2 - scale * (bb.x + bb.width / 2);
+    const ty = wrapH / 2 - scale * (bb.y + bb.height / 2);
+    const t = d3.zoomIdentity.translate(tx, ty).scale(scale);
+    svgD3.transition().duration(280).call(modalZoom.transform, t);
+  } catch(e) {
+    svgD3.call(modalZoom.transform, d3.zoomIdentity);
+  }
+}
+
+// zoom button handlers
+document.getElementById('zoom-in').addEventListener('click', () => {
+  if (!modalZoom) return;
+  d3.select('#modal-svg').transition().duration(220).call(modalZoom.scaleBy, 1.4);
+});
+document.getElementById('zoom-out').addEventListener('click', () => {
+  if (!modalZoom) return;
+  d3.select('#modal-svg').transition().duration(220).call(modalZoom.scaleBy, 1 / 1.4);
+});
+document.getElementById('zoom-reset').addEventListener('click', fitModalView);
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal-prev').addEventListener('click', () => modalNavTo(modalIndex - 1));
+document.getElementById('modal-next').addEventListener('click', () => modalNavTo(modalIndex + 1));
+
+// click backdrop to close
+document.getElementById('modal').addEventListener('click', (ev) => {
+  if (ev.target === document.getElementById('modal')) closeModal();
+});
+
+// keyboard
+document.addEventListener('keydown', ev => {
+  const modal = document.getElementById('modal');
+  if (!modal.classList.contains('open')) return;
+  if (ev.key === 'Escape')      { closeModal(); }
+  else if (ev.key === 'ArrowLeft')  { modalNavTo(modalIndex - 1); }
+  else if (ev.key === 'ArrowRight') { modalNavTo(modalIndex + 1); }
+  else if (ev.key === '+' || ev.key === '=') {
+    d3.select('#modal-svg').transition().duration(180).call(modalZoom.scaleBy, 1.4);
+  }
+  else if (ev.key === '-') {
+    d3.select('#modal-svg').transition().duration(180).call(modalZoom.scaleBy, 1 / 1.4);
+  }
+  else if (ev.key === '0') { fitModalView(); }
+});
+
+// re-render modal on window resize
+window.addEventListener('resize', () => {
+  if (document.getElementById('modal').classList.contains('open')) renderModal();
+});
+
+// ── grid sort & render ─────────────────────────────────────────────────────
+function getSorted(motifs) {
+  const copy = motifs.map((m, i) => ({ ...m, _rank: i + 1 }));
+  if (sortKey === 'rank')  return copy;
+  if (sortKey === 'score') return copy.sort((a, b) => (b.avg_score ?? 0) - (a.avg_score ?? 0));
+  if (sortKey === 'count') return copy.sort((a, b) => b.count - a.count);
+  if (sortKey === 'nodes') return copy.sort((a, b) => buildGraphData(b).nodes.length - buildGraphData(a).nodes.length);
+  if (sortKey === 'edges') return copy.sort((a, b) => buildGraphData(b).edges.length - buildGraphData(a).edges.length);
+  return copy;
+}
+
+function renderAll() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  sortedMotifs = getSorted(allMotifs);
+  let shown = 0;
+
+  for (let si = 0; si < sortedMotifs.length; si++) {
+    const motif = sortedMotifs[si];
+    const { card, svgEl } = renderCard(motif, motif._rank, si);
+    grid.appendChild(card);
+
+    const { edges, hhGroups } = buildGraphData(motif);
+    const visibleEdges = edges.filter(e => activeFilters.has(e.etype));
+    const hasVisible = visibleEdges.length > 0 || (activeFilters.has('r_hh') && hhGroups.length > 0);
+    const hasAnything = edges.length > 0 || hhGroups.length > 0;
+    if (!hasVisible && hasAnything) {
+      card.classList.add('disabled');
+    } else { shown++; }
+
+    drawMotif(motif, svgEl, CW, CH, CP, 1, `c${si}`);
+  }
+
+  document.getElementById('shown-count').textContent = shown;
+}
+
+// ── legend filter ──────────────────────────────────────────────────────────
+document.querySelectorAll('.legend-item').forEach(el => {
+  el.addEventListener('click', () => {
+    const t = el.dataset.type;
+    activeFilters.has(t) ? (activeFilters.delete(t), el.classList.add('off'))
+                         : (activeFilters.add(t), el.classList.remove('off'));
+    renderAll();
+  });
+});
+
+document.getElementById('sort-sel').addEventListener('change', e => {
+  sortKey = e.target.value;
+  renderAll();
+});
+
+// score explanation toggle
+document.getElementById('score-toggle').addEventListener('click', () => {
+  const body = document.getElementById('score-info-body');
+  body.classList.toggle('open');
+  document.getElementById('score-toggle').textContent =
+    body.classList.contains('open') ? 'Hide explanation' : 'What does the score mean?';
+});
+
+// ── load ───────────────────────────────────────────────────────────────────
+(async () => {
+  let data;
+  try {
+    data = await (await fetch('./data/motifs.json')).json();
+  } catch (err) {
+    document.getElementById('grid').innerHTML =
+      `<p style="color:#e55;padding:20px">Failed to load motifs.json: ${err}</p>`;
+    return;
+  }
+  allMotifs = Array.isArray(data) ? data : (data.motifs ?? []);
+  if (!Array.isArray(data) && data.score_explanation) {
+    scoreExplanation = data.score_explanation;
+    document.getElementById('score-info-body').textContent = scoreExplanation;
+  }
+  renderAll();
+})();
+</script>
+</body>
+</html>

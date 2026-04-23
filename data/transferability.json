@@ -1,0 +1,46 @@
+{
+  "endogamy": {
+    "domain_a": 0.9624,
+    "domain_b": 0.9607,
+    "kl_divergence": 0.0,
+    "domain_b_n": 42573
+  },
+  "rules": [
+    {
+      "name": "banner_endogamy",
+      "domain_a": 0.96,
+      "domain_b": 0.958,
+      "kl_div": 0.023
+    },
+    {
+      "name": "age_gap",
+      "domain_a": 0.78,
+      "domain_b": 0.81,
+      "kl_div": 0.011
+    },
+    {
+      "name": "community_proximity",
+      "domain_a": 1.19,
+      "domain_b": 1.24,
+      "kl_div": 0.034
+    },
+    {
+      "name": "household_rank",
+      "domain_a": 0.61,
+      "domain_b": 0.58,
+      "kl_div": 0.019
+    },
+    {
+      "name": "temporal_decay",
+      "domain_a": 0.93,
+      "domain_b": 0.89,
+      "kl_div": 0.041
+    },
+    {
+      "name": "motif_bonus",
+      "domain_a": 1.08,
+      "domain_b": 1.12,
+      "kl_div": 0.028
+    }
+  ]
+}
