@@ -376,6 +376,13 @@
 <script>
 // ── constants ──────────────────────────────────────────────────────────────
 const EDGE_COLOR = { r_fs: '#4a7fe5', r_ms: '#b55fd6', r_sib: '#3dba5f', r_hh: '#2db56d' };
+
+function neighborRelLabel(etype, dir) {
+  if (etype === 'r_fs') return dir === 'out' ? T('rel_child') : T('rel_father');
+  if (etype === 'r_ms') return dir === 'out' ? T('rel_child') : T('rel_mother');
+  if (etype === 'r_sib') return T('rel_sibling');
+  return etype;
+}
 const CW = 170, CH = 140, CP = 14;
 const MW = 600, MH = 440, MP = 32;
 
@@ -448,6 +455,8 @@ const STRINGS = {
     tip_occ:    'Occurrences', tip_score:'Avg SEAL score', tip_size:'Avg subgraph size',
     tip_nodes:  'Person nodes', tip_edges:'Kin edges',
     label_h: 'H', label_w: 'W',
+    rel_child: 'child', rel_father: 'father', rel_mother: 'mother', rel_sibling: 'sibling',
+    edge_fs: 'father → child', edge_ms: 'mother → child', edge_sib: 'sibling ↔ sibling', edge_hh: 'household',
     interp_pos:    'True marriages: rich kinship networks within 2 hops. High SEAL scores confirm motif discrimination at train time.',
     interp_random: 'Random negatives: 2-component disconnected subgraphs. GCN trivially classifies via DRNL label collapse (label 0 = isolated). AUC inflated.',
     interp_comm:   'Community-matched negatives: same community, sparse 2-hop overlap (~6% connected). Modest AUC drop from structural sparsity.',
@@ -495,6 +504,8 @@ const STRINGS = {
     tip_occ:    '出现次数', tip_score:'平均SEAL得分', tip_size:'平均子图大小',
     tip_nodes:  '人物节点', tip_edges:'亲属关系边',
     label_h: '夫', label_w: '妻',
+    rel_child: '子女', rel_father: '父亲', rel_mother: '母亲', rel_sibling: '兄弟姐妹',
+    edge_fs: '父 → 子', edge_ms: '母 → 子', edge_sib: '兄弟姐妹 ↔ 兄弟姐妹', edge_hh: '家户',
     interp_pos:    '正样本（真实婚姻）：2跳内亲属网络丰富。高SEAL得分确认模型在训练时学到了有效的模体。',
     interp_random: '随机负样本：两个孤立连通分量的子图。GCN通过DRNL标签折叠（标签0=孤立节点）轻松分类，导致AUC虚高。',
     interp_comm:   '社区内负样本：同社区但2跳重叠稀疏（约6%连通）。结构稀疏性导致AUC小幅下降。',
@@ -800,7 +811,111 @@ function renderModal() {
   svgD3.selectAll('*').remove();
   const zoomG = svgD3.append('g').attr('id', 'modal-zoom-g');
 
-  const { nodeElems, edgeElems } = drawMotif(motif, zoomG.node(), wrapW, wrapH, MP, 1.8, 'modal');
+  const { nodeElems, edgeElems, nodeMap: modalNodeMap, visibleEdges: modalEdges } =
+    drawMotif(motif, zoomG.node(), wrapW, wrapH, MP, 1.8, 'modal');
+
+  // label layer (inside zoomG so it pans/zooms with the graph)
+  const labelG = d3.select(zoomG.node()).append('g').attr('class', 'modal-labels');
+
+  // ── selection state ──────────────────────────────────────────────────────
+  let selNodeId = null, selEdgeIdx = -1;
+
+  function clearModalSel() {
+    selNodeId = null; selEdgeIdx = -1;
+    labelG.selectAll('*').remove();
+    for (const ne of nodeElems) ne.g.attr('opacity', 1);
+    const k = modalZoomK;
+    for (const ee of edgeElems) {
+      if (!ee) continue;
+      ee.line.attr('stroke-opacity', 0.78).attr('stroke-width', ee.baseStrokeW / k);
+    }
+  }
+
+  function applyNodeSel(nid) {
+    selNodeId = nid; selEdgeIdx = -1;
+    labelG.selectAll('*').remove();
+    const k = modalZoomK;
+    const connIds = new Set([nid]);
+    const connSet = new Set();
+    const nbInfo = [];
+    for (let i = 0; i < modalEdges.length; i++) {
+      if (!edgeElems[i]) continue;
+      const e = modalEdges[i];
+      const sid = typeof e.source === 'object' ? e.source.id : e.source;
+      const tid = typeof e.target === 'object' ? e.target.id : e.target;
+      if (sid === nid || tid === nid) {
+        connSet.add(i);
+        const nbId = sid === nid ? tid : sid;
+        const dir  = sid === nid ? 'out' : 'in';
+        connIds.add(nbId);
+        const nbNode = modalNodeMap.get(nbId);
+        if (nbNode) nbInfo.push({ n: nbNode, label: neighborRelLabel(e.etype, dir), col: EDGE_COLOR[e.etype] || '#aaa' });
+      }
+    }
+    for (const ne of nodeElems) ne.g.attr('opacity', connIds.has(ne.nodeData.id) ? 1 : 0.1);
+    for (let i = 0; i < edgeElems.length; i++) {
+      const ee = edgeElems[i]; if (!ee) continue;
+      const on = connSet.has(i);
+      ee.line.attr('stroke-opacity', on ? 1 : 0.05)
+             .attr('stroke-width', (on ? ee.baseStrokeW * 1.6 : ee.baseStrokeW * 0.5) / k);
+    }
+    for (const { n, label, col } of nbInfo) {
+      const r = drnlRadius(n.label, 1.8);
+      labelG.append('text')
+        .attr('x', n.x).attr('y', n.y + (r + 14) / k)
+        .attr('text-anchor', 'middle').attr('dominant-baseline', 'hanging')
+        .attr('font-size', 11 / k).attr('font-weight', '600').attr('fill', col)
+        .attr('stroke', '#0a0c14').attr('stroke-width', 3 / k).attr('paint-order', 'stroke')
+        .text(label);
+    }
+  }
+
+  function applyEdgeSel(ei) {
+    selEdgeIdx = ei; selNodeId = null;
+    labelG.selectAll('*').remove();
+    const k = modalZoomK;
+    const ee = edgeElems[ei]; if (!ee) return;
+    const { srcNode, tgtNode, edgeData } = ee;
+    const sid = typeof edgeData.source === 'object' ? edgeData.source.id : edgeData.source;
+    const tid = typeof edgeData.target === 'object' ? edgeData.target.id : edgeData.target;
+    const connIds = new Set([sid, tid]);
+    for (const ne of nodeElems) ne.g.attr('opacity', connIds.has(ne.nodeData.id) ? 1 : 0.1);
+    for (let i = 0; i < edgeElems.length; i++) {
+      const e2 = edgeElems[i]; if (!e2) continue;
+      const on = i === ei;
+      e2.line.attr('stroke-opacity', on ? 1 : 0.05)
+             .attr('stroke-width', (on ? e2.baseStrokeW * 2 : e2.baseStrokeW * 0.5) / k);
+    }
+    const mx = (srcNode.x + tgtNode.x) / 2, my = (srcNode.y + tgtNode.y) / 2;
+    const etype = edgeData.etype;
+    const eLabel = { r_fs: T('edge_fs'), r_ms: T('edge_ms'), r_sib: T('edge_sib'), r_hh: T('edge_hh') }[etype] || etype;
+    const col = EDGE_COLOR[etype] || '#3dba5f';
+    labelG.append('text')
+      .attr('x', mx).attr('y', my - 8 / k)
+      .attr('text-anchor', 'middle').attr('dominant-baseline', 'auto')
+      .attr('font-size', 11 / k).attr('font-weight', '700').attr('fill', col)
+      .attr('stroke', '#0a0c14').attr('stroke-width', 3.5 / k).attr('paint-order', 'stroke')
+      .text(eLabel);
+  }
+
+  // Node click handlers
+  for (const ne of nodeElems) {
+    ne.g.style('cursor', 'pointer').on('click', function(ev) {
+      ev.stopPropagation();
+      selNodeId === ne.nodeData.id ? clearModalSel() : applyNodeSel(ne.nodeData.id);
+    });
+  }
+  // Edge click handlers
+  for (let i = 0; i < edgeElems.length; i++) {
+    const ee = edgeElems[i]; if (!ee) continue;
+    const idx = i;
+    ee.group.style('cursor', 'pointer').on('click', function(ev) {
+      ev.stopPropagation();
+      selEdgeIdx === idx ? clearModalSel() : applyEdgeSel(idx);
+    });
+  }
+  // Background click clears selection
+  svgD3.on('click', clearModalSel);
 
   if (modalZoom) svgD3.on('.zoom', null);
   modalZoom = d3.zoom().scaleExtent([0.1, 8]).on('zoom', (event) => {
@@ -813,9 +928,14 @@ function renderModal() {
       if (ne.ring) ne.ring.attr('r', (ne.baseR + 3 * 1.8) / k).attr('stroke-width', 1.2 / k);
       if (ne.textEl) ne.textEl.attr('font-size', Math.max(4, ne.baseR * 0.85) / k);
     }
-    for (const ee of edgeElems) {
-      if (!ee) continue;
-      ee.line.attr('stroke-width', ee.baseStrokeW / k);
+    // re-apply selection at new scale
+    if (selNodeId !== null) applyNodeSel(selNodeId);
+    else if (selEdgeIdx >= 0) applyEdgeSel(selEdgeIdx);
+    else {
+      for (const ee of edgeElems) {
+        if (!ee) continue;
+        ee.line.attr('stroke-width', ee.baseStrokeW / k);
+      }
     }
   });
   modalZoomK = 1;
